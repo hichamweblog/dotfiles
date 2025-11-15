@@ -101,21 +101,121 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# zoxide
-eval "$(zoxide init zsh)"
+
+# Better completion
+autoload -Uz compinit
+compinit
+
+# Case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Partial completion suggestions
+zstyle ':completion:*' list-suffixes
+zstyle ':completion:*' expand prefix suffix
+
+# fzf configuration
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+# Key bindings (if fzf is installed)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh    # For zsh
+
+# Make directory and cd into it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Extract any archive
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2)   tar xjf "$1"     ;;
+            *.tar.gz)    tar xzf "$1"     ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.rar)       unrar x "$1"     ;;
+            *.gz)        gunzip "$1"      ;;
+            *.tar)       tar xf "$1"      ;;
+            *.tbz2)      tar xjf "$1"     ;;
+            *.tgz)       tar xzf "$1"     ;;
+            *.zip)       unzip "$1"       ;;
+            *.Z)         uncompress "$1"  ;;
+            *.7z)        7z x "$1"        ;;
+            *.xz)        unxz "$1"        ;;
+            *.exe)       cabextract "$1"  ;;
+            *)           echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# Create a new script file with shebang and make it executable
+newsh() {
+    if [ -z "$1" ]; then
+        echo "Usage: newsh <filename>"
+        return 1
+    fi
+    echo '#!/usr/bin/env bash\n' > "$1"
+    chmod +x "$1"
+    $EDITOR "$1"
+}
+
+# Search history with fzf (if installed)
+fh() {
+    print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+# For zsh only:
+setopt HIST_IGNORE_ALL_DUPS  # Remove older duplicate entries
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY         # Share history between sessions
 
 # Aliases & PATHs
+alias c="clear"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias h="history"
 alias ls='eza --color=auto --icons=auto'
 alias lh='eza -lh --icons --git'
-alias la='eza -lha --icons --git'
 alias lt='eza -lT --icons'
 alias l='eza -1 --icons'
+alias ll='eza -l --icons --git'
+alias la='eza -la --icons --git'
+alias tree='eza --tree --icons'
+alias lt2='eza -lT --level=2 --icons'
+alias lt3='eza -lT --level=3 --icons'
+alias cat="bat"
 
+# Git shortcuts
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate'
+
+
+# Better defaults
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+alias grep='grep --color=auto'
+
+# Safety nets
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Quick edit configs
+alias ezsh='$EDITOR ~/.zshrc'
+alias szsh='source ~/.zshrc'
+
+export EDITOR=nvim
+export VISUAL=nvim
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-
+# zoxide
+eval "$(zoxide init zsh)"
 # Initialize Starship
 eval "$(starship init zsh)"
