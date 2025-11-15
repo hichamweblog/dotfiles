@@ -1,4 +1,10 @@
-# .bashrc
+# ============================================================================
+# .bashrc - Bash Configuration File
+# ============================================================================
+
+# ============================================================================
+# System Initialization
+# ============================================================================
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -24,12 +30,69 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-# Aliases
-alias open="xdg-open"
+# ============================================================================
+# Environment Variables
+# ============================================================================
 
+export EDITOR=nvim
+export VISUAL=nvim
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# ============================================================================
+# History Configuration
+# ============================================================================
+
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+export HISTCONTROL=ignoredups:erasedups       # No duplicate entries
+export HISTIGNORE="ls:ll:cd:pwd:exit:clear:c" # Don't save simple commands
+
+# Bash-specific history options
+shopt -s histappend # Append to history, don't overwrite
+shopt -s cmdhist    # Save multi-line commands as one
+
+# ============================================================================
+# Color Configuration
+# ============================================================================
+
+# Enable color support
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+
+# Colorful man pages
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# ============================================================================
+# External Tool Configuration
+# ============================================================================
+
+# NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+# FZF (Fuzzy Finder)
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Zoxide (Smart directory navigation)
+eval "$(zoxide init bash)"
+
+# Starship (Shell prompt)
+eval "$(starship init bash)"
+
+# TheFuck (Command correction)
+eval $(thefuck --alias fix)
+
+# ============================================================================
+# Custom Functions
+# ============================================================================
 
 # Make directory and cd into it
 mkcd() {
@@ -74,47 +137,31 @@ fh() {
   eval $(history | fzf +s --tac | sed 's/^ *[0-9]* *//')
 }
 
-# Better history
-export HISTSIZE=10000
-export HISTFILESIZE=20000
-export HISTCONTROL=ignoredups:erasedups       # No duplicate entries
-export HISTIGNORE="ls:ll:cd:pwd:exit:clear:c" # Don't save simple commands
+# ============================================================================
+# Aliases
+# ============================================================================
 
-# For bash only:
-shopt -s histappend # Append to history, don't overwrite
-shopt -s cmdhist    # Save multi-line commands as one
-
-# Enable color support
-export CLICOLOR=1
-export LSCOLORS=ExFxBxDxCxegedabagacad
-
-# Colorful man pages
-export LESS_TERMCAP_mb=$'\e[1;32m'
-export LESS_TERMCAP_md=$'\e[1;32m'
-export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[01;33m'
-export LESS_TERMCAP_ue=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1;4;31m'
-
-# Key bindings (if fzf is installed)
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash # For bash
-
-# Aliases & PATHs
+# Navigation
 alias c="clear"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+
+# History
 alias h="history"
+
+# File listing (using eza)
 alias ls='eza --color=auto --icons=auto'
-alias lh='eza -lh --icons --git'
-alias lt='eza -lT --icons'
 alias l='eza -1 --icons'
 alias ll='eza -l --icons --git'
 alias la='eza -la --icons --git'
-alias tree='eza --tree --icons'
+alias lh='eza -lh --icons --git'
+alias lt='eza -lT --icons'
 alias lt2='eza -lT --level=2 --icons'
 alias lt3='eza -lT --level=3 --icons'
+alias tree='eza --tree --icons'
+
+# Modern replacements
 alias cat="bat"
 
 # Git shortcuts
@@ -124,23 +171,15 @@ alias gc='git commit'
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
 
-# Quick edit configs
-alias ebash='$EDITOR ~/.bashrc'
-alias sbash='source ~/.bashrc'
-
-
-
-# Better defaults
+# System information
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 alias grep='grep --color=auto'
 
-export EDITOR=nvim
-export VISUAL=nvim
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-eval "$(zoxide init bash)"
-eval "$(starship init bash)"
-# The fuck alias
-eval $(thefuck --alias fix)
+# Configuration management
+alias ebash='$EDITOR ~/.bashrc'
+alias sbash='source ~/.bashrc'
+
+# System utilities
+alias open="xdg-open"

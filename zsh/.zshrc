@@ -1,7 +1,12 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# ============================================================================
+# .zshrc - Zsh Configuration File
+# ============================================================================
 
-# Path to your Oh My Zsh installation.
+# ============================================================================
+# Oh My Zsh Configuration
+# ============================================================================
+
+# Path to your Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -71,9 +76,18 @@ ZSH_THEME=""
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions)
+
+# Load Oh My Zsh
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# ============================================================================
+# Environment Variables
+# ============================================================================
+
+export EDITOR=nvim
+export VISUAL=nvim
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -90,17 +104,19 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# ============================================================================
+# History Configuration
+# ============================================================================
+
+# Zsh-specific history options
+setopt HIST_IGNORE_ALL_DUPS  # Remove older duplicate entries
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY         # Share history between sessions
+
+# ============================================================================
+# Completion Configuration
+# ============================================================================
 
 # Better completion
 autoload -Uz compinit
@@ -113,12 +129,29 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' list-suffixes
 zstyle ':completion:*' expand prefix suffix
 
-# fzf configuration
+# ============================================================================
+# External Tool Configuration
+# ============================================================================
+
+# FZF (Fuzzy Finder)
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
-# Key bindings (if fzf is installed)
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh    # For zsh
+# FZF key bindings
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Zoxide (Smart directory navigation)
+eval "$(zoxide init zsh)"
+
+# Starship (Shell prompt)
+eval "$(starship init zsh)"
+
+# TheFuck (Command correction)
+eval $(thefuck --alias fix)
+
+# ============================================================================
+# Custom Functions
+# ============================================================================
 
 # Make directory and cd into it
 mkcd() {
@@ -165,27 +198,31 @@ fh() {
     print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
 }
 
-# For zsh only:
-setopt HIST_IGNORE_ALL_DUPS  # Remove older duplicate entries
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_REDUCE_BLANKS
-setopt SHARE_HISTORY         # Share history between sessions
+# ============================================================================
+# Aliases
+# ============================================================================
 
-# Aliases & PATHs
+# Navigation
 alias c="clear"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+
+# History
 alias h="history"
+
+# File listing (using eza)
 alias ls='eza --color=auto --icons=auto'
-alias lh='eza -lh --icons --git'
-alias lt='eza -lT --icons'
 alias l='eza -1 --icons'
 alias ll='eza -l --icons --git'
 alias la='eza -la --icons --git'
-alias tree='eza --tree --icons'
+alias lh='eza -lh --icons --git'
+alias lt='eza -lT --icons'
 alias lt2='eza -lT --level=2 --icons'
 alias lt3='eza -lT --level=3 --icons'
+alias tree='eza --tree --icons'
+
+# Modern replacements
 alias cat="bat"
 
 # Git shortcuts
@@ -195,25 +232,24 @@ alias gc='git commit'
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
 
-
-# Better defaults
+# System information
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 alias grep='grep --color=auto'
 
-
-# Quick edit configs
+# Configuration management
 alias ezsh='$EDITOR ~/.zshrc'
 alias szsh='source ~/.zshrc'
 
-export EDITOR=nvim
-export VISUAL=nvim
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-# zoxide
-eval "$(zoxide init zsh)"
-# Initialize Starship
-eval "$(starship init zsh)"
-# The fuck alias
-eval $(thefuck --alias fix)
+# ============================================================================
+# Additional Oh My Zsh Customization Notes
+# ============================================================================
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
