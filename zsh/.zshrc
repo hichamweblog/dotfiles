@@ -202,10 +202,6 @@ alias du='du -h'
 alias free='free -h'
 alias grep='grep --color=auto'
 
-# Safety nets
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
 
 # Quick edit configs
 alias ezsh='$EDITOR ~/.zshrc'

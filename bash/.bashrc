@@ -128,10 +128,7 @@ alias gl='git log --oneline --graph --decorate'
 alias ebash='$EDITOR ~/.bashrc'
 alias sbash='source ~/.bashrc'
 
-# Safety nets
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
+
 
 # Better defaults
 alias df='df -h'
