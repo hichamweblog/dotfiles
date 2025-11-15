@@ -1,0 +1,9 @@
+# Ignore compiled files
+*.zwc
+
+# Ignore history
+*_history
+
+# Ignore cache directories
+cache/
+.cache/

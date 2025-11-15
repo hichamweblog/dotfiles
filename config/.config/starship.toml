@@ -1,0 +1,33 @@
+# ~/.config/starship.toml
+# ❄️ POWER DEV — Nord Bluish Dark Theme
+# Cool, flat, single-line prompt — no block backgrounds, just subtle blues
+
+add_newline = false
+
+format = """
+[](fg:#88c0d0) \
+[ $directory](fg:#81a1c1)\
+$git_branch\
+[❯](fg:#8fbcbb)
+"""
+
+[directory]
+truncation_length = 3
+truncate_to_repo = false
+style = "fg:#81a1c1"
+
+[git_branch]
+symbol = ""
+style = "fg:#5e81ac"
+format = " [$symbol $branch](fg:#5e81ac)"
+
+[character]
+success_symbol = "❯"
+error_symbol = "❯"
+vicmd_symbol = "❮"
+style_success = "fg:#8fbcbb"
+style_error = "fg:#bf616a"
+style_vi = "fg:#88c0d0"
+
+
+
