@@ -215,3 +215,5 @@ export PATH="$HOME/.local/bin:$PATH"
 eval "$(zoxide init zsh)"
 # Initialize Starship
 eval "$(starship init zsh)"
+# The fuck alias
+eval $(thefuck --alias fix)

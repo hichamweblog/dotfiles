@@ -142,3 +142,5 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
+# The fuck alias
+eval $(thefuck --alias fix)
