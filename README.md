@@ -131,13 +131,30 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --all --no-bash --no-fish
 ```
 
-### 9. Install Tmux Plugin Manager (TPM)
+### 9. Install JetBrains Mono Nerd Font
+
+```bash
+# Create fonts directory
+mkdir -p ~/.local/share/fonts
+
+# Download and install JetBrains Mono Nerd Font
+cd ~/.local/share/fonts
+curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
+unzip JetBrainsMono.zip
+rm JetBrainsMono.zip
+
+# Refresh font cache
+fc-cache -fv
+cd ~
+```
+
+### 10. Install Tmux Plugin Manager (TPM)
 
 ```bash
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-### 10. Set Zsh as Default Shell
+### 11. Set Zsh as Default Shell
 
 ```bash
 # Change default shell to zsh
@@ -149,7 +166,7 @@ chsh -s $(which zsh)
 # fi
 ```
 
-### 11. Finalize Setup
+### 12. Finalize Setup
 
 ```bash
 # Source the new zsh config
