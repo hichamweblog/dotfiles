@@ -8,8 +8,8 @@ Managed with GNU Stow for easy deployment across multiple machines.
 - **Prompt:** Starship
 - **Terminal Multiplexer:** Tmux (with TPM plugin manager)
 - **Editor:** Neovim (LazyVim)
-- **Modern CLI Tools:** eza, bat, zoxide, fzf, fd
-- **Package Managers:** Cargo (Rust)
+- **Modern CLI Tools:** eza, bat, zoxide, fzf, fd, thefuck
+- **Package Managers:** Cargo (Rust), pip (Python)
 
 ## Fresh Install on New Server
 
@@ -159,6 +159,14 @@ cargo install fd-find   # Better find alternative
 # Install fzf (fuzzy finder)
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --all --no-bash --no-fish
+
+# Install thefuck (command correction tool)
+# Ubuntu/Debian
+sudo apt install thefuck -y
+
+# Fedora/RHEL (using pip - thefuck not available in dnf repos)
+# sudo dnf install python3-pip -y
+# pip3 install thefuck --user
 ```
 
 ### 10. Install JetBrains Mono Nerd Font
