@@ -24,9 +24,9 @@ sudo apt update && sudo apt install -y \
   stow \
   zsh \
   tmux \
-  neovim \
   build-essential \
-  unzip
+  unzip \
+  wget
 ```
 
 #### Fedora/RHEL/CentOS
@@ -38,11 +38,13 @@ sudo dnf install -y \
   stow \
   zsh \
   tmux \
-  neovim \
   gcc \
   make \
-  unzip
+  unzip \
+  wget
 ```
+
+> **Note:** We'll install Neovim manually in a later step to get version 0.11.5+ (repo versions are often outdated)
 
 ### 2. Clone Dotfiles Repository
 
@@ -107,13 +109,41 @@ stow tmux
 stow config
 ```
 
-### 7. Install Starship Prompt
+### 7. Install Neovim 0.11.5
+
+```bash
+# Create local bin directory
+mkdir -p ~/.local/bin
+cd ~/.local/bin
+
+# Download Neovim 0.11.5
+wget https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.tar.gz
+
+# Extract the tarball
+tar xzvf nvim-linux-x86_64.tar.gz
+
+# Remove the tarball
+rm nvim-linux-x86_64.tar.gz
+
+# Create symbolic link
+ln -sf ~/.local/bin/nvim-linux-x86_64/bin/nvim ~/.local/bin/nvim
+
+# Return to home directory
+cd ~
+
+# Verify installation
+nvim --version
+```
+
+> **Note:** The PATH is already set in both .bashrc and .zshrc to include `~/.local/bin`
+
+### 8. Install Starship Prompt
 
 ```bash
 curl -sS https://starship.rs/install.sh | sh
 ```
 
-### 8. Install Rust and Modern CLI Tools
+### 9. Install Rust and Modern CLI Tools
 
 ```bash
 # Install Rust (needed for cargo)
@@ -131,7 +161,7 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --all --no-bash --no-fish
 ```
 
-### 9. Install JetBrains Mono Nerd Font
+### 10. Install JetBrains Mono Nerd Font
 
 ```bash
 # Create fonts directory
@@ -148,13 +178,13 @@ fc-cache -fv
 cd ~
 ```
 
-### 10. Install Tmux Plugin Manager (TPM)
+### 11. Install Tmux Plugin Manager (TPM)
 
 ```bash
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-### 11. Set Zsh as Default Shell
+### 12. Set Zsh as Default Shell
 
 ```bash
 # Change default shell to zsh
@@ -166,7 +196,7 @@ chsh -s $(which zsh)
 # fi
 ```
 
-### 12. Finalize Setup
+### 13. Finalize Setup
 
 ```bash
 # Source the new zsh config
