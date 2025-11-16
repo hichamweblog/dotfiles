@@ -3,63 +3,13 @@
 
 return {
   -- blink.cmp - Modern completion engine (already included in LazyVim)
-  -- Faster and more feature-rich than nvim-cmp
+  -- Using LazyVim defaults with ghost text enabled
   {
     "saghen/blink.cmp",
     opts = {
-      keymap = {
-        preset = "default", -- 'default' | 'super-tab' | 'enter'
-        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "hide", "fallback" },
-        ["<CR>"] = { "accept", "fallback" },
-        ["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
-        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
-        ["<Up>"] = { "select_prev", "fallback" },
-        ["<Down>"] = { "select_next", "fallback" },
-        ["<C-p>"] = { "select_prev", "fallback" },
-        ["<C-n>"] = { "select_next", "fallback" },
-        ["<C-u>"] = { "scroll_documentation_up", "fallback" },
-        ["<C-d>"] = { "scroll_documentation_down", "fallback" },
-      },
-
-      appearance = {
-        use_nvim_cmp_as_default = false,
-        nerd_font_variant = "mono",
-      },
-
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
-        cmdline = {},
-      },
-
       completion = {
-        accept = {
-          auto_brackets = {
-            enabled = true, -- Auto-insert brackets after functions
-          },
-        },
-        menu = {
-          draw = {
-            treesitter = { "lsp" }, -- Use treesitter for syntax highlighting in completion menu
-            columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
-          },
-        },
-        documentation = {
-          auto_show = true,
-          auto_show_delay_ms = 200,
-          window = {
-            border = "rounded",
-          },
-        },
         ghost_text = {
           enabled = true, -- Show ghost text like GitHub Copilot
-        },
-      },
-
-      signature = {
-        enabled = true, -- Show function signatures while typing
-        window = {
-          border = "rounded",
         },
       },
     },
