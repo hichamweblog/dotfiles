@@ -302,44 +302,25 @@ return {
   --   end,
   -- },
 
-  -- Treesitter-based text objects (enhanced selections)
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "VeryLazy",
-    enabled = true,
-    config = function()
-      -- Ensure this doesn't override LazyVim's default config
-      require("nvim-treesitter.configs").setup({
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true, -- Automatically jump forward to textobj
-            keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
-              ["ic"] = "@class.inner",
-              ["aa"] = "@parameter.outer",
-              ["ia"] = "@parameter.inner",
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true,
-            goto_next_start = {
-              ["]f"] = "@function.outer",
-              ["]c"] = "@class.outer",
-            },
-            goto_previous_start = {
-              ["[f"] = "@function.outer",
-              ["[c"] = "@class.outer",
-            },
-          },
-        },
-      })
-    end,
-  },
+  -- Treesitter-based text objects (already included in LazyVim by default)
+  -- Uncomment below to customize text object keymaps if needed
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-textobjects",
+  --   opts = {
+  --     textobjects = {
+  --       select = {
+  --         enable = true,
+  --         lookahead = true,
+  --         keymaps = {
+  --           ["af"] = "@function.outer",
+  --           ["if"] = "@function.inner",
+  --           ["ac"] = "@class.outer",
+  --           ["ic"] = "@class.inner",
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 
   -- Colorize color codes (like VSCode color decorator)
   {
