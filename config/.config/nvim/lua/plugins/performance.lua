@@ -33,22 +33,7 @@ return {
     },
   },
 
-  -- Faster filetype detection
-  {
-    "nathom/filetype.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      overrides = {
-        extensions = {
-          h = "c",
-          jsx = "javascriptreact",
-          tsx = "typescriptreact",
-        },
-        complex = {
-          ["%.env%..*"] = "sh", -- .env.local, .env.production, etc
-        },
-      },
-    },
-  },
+  -- Note: filetype.nvim is no longer needed
+  -- Neovim 0.8+ has built-in fast Lua-based filetype detection
+  -- LazyVim already optimizes this automatically
 }

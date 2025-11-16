@@ -9,11 +9,44 @@
 
 ## 📁 File Navigation
 
-- `<leader>ff` - Find files (Telescope)
+### Telescope Search
+
+- `<leader><space>` - Find files (quick access)
+- `<leader>ff` - Find files
 - `<leader>fg` - Live grep (search in files)
+- `<leader>fw` - Find word under cursor
 - `<leader>fb` - Find buffers
 - `<leader>fr` - Recent files
+- `<leader>fs` - Document symbols
+- `<leader>fS` - Workspace symbols
+- `<leader>fd` - Diagnostics
+- `<leader>fh` - Help tags
+- `<leader>fk` - Keymaps
+- `<leader>fc` - Commands
+- `<leader>fF` - File browser
+
+### File Explorer (Neo-tree)
+
 - `<leader>e` - Toggle file explorer
+- `<leader>o` - Focus file explorer
+- `<leader>ge` - Git explorer
+- `<leader>be` - Buffer explorer
+
+**Inside Neo-tree:**
+
+- `<CR>` or `l` - Open file/folder
+- `h` - Close folder
+- `a` - Create file/folder
+- `d` - Delete
+- `r` - Rename
+- `y` - Copy
+- `x` - Cut
+- `p` - Paste
+- `R` - Refresh
+- `?` - Show help
+
+### Window Navigation
+
 - `<C-h/j/k/l>` - Navigate windows
 
 ### Harpoon (Quick File Marks)
@@ -24,17 +57,49 @@
 
 ## ✏️ Editing
 
+### Basic Editing
+
 - `gcc` - Toggle comment line
 - `gc` (visual) - Toggle comment selection
 - `<leader>cf` - Format file
 - `<C-s>` - Save file
-- `<leader>bd` - Delete buffer
 
-### Auto-pairs
+### Buffer Management (Bufferline)
+
+- `<S-h>` / `<S-l>` - Previous/Next buffer
+- `[b]` / `]b` - Previous/Next buffer
+- `<leader>bd` - Delete buffer
+- `<leader>bp` - Toggle pin buffer
+- `<leader>bP` - Delete non-pinned buffers
+- `<leader>bo` - Close other buffers
+- `<leader>br` - Close buffers to right
+- `<leader>bl` - Close buffers to left
+
+### Auto-pairs & Auto-tags
 
 - Type `(` → auto-closes to `()`
 - Type `"` → auto-closes to `""`
-- Auto-close HTML/JSX tags
+- Auto-close HTML/JSX tags (React, Vue, Svelte, Astro)
+- Auto-rename paired HTML tags
+
+### Completion & Snippets (blink.cmp + LuaSnip)
+
+**In Insert Mode:**
+
+- `<Tab>` - Next completion / snippet placeholder
+- `<S-Tab>` - Previous completion / snippet placeholder
+- `<CR>` - Accept completion
+- `<C-Space>` - Manually trigger completion
+- `<C-e>` - Close completion menu
+- `<C-n>` / `<C-p>` - Navigate completions
+- `<C-u>` / `<C-d>` - Scroll documentation
+
+**Features:**
+
+- Ghost text preview (inline suggestions)
+- Auto-bracket completion for functions
+- Function signatures while typing
+- VSCode-compatible snippets for all languages
 
 ### Surround (nvim-surround)
 
@@ -59,14 +124,28 @@
 
 ## 🐛 LSP & Diagnostics
 
-- `gd` - Go to definition
+### Navigation & Documentation
+
+- `gd` - Go to definition (LSPSaga)
+- `gp` - Peek definition (floating window)
 - `gr` - Go to references
 - `gi` - Go to implementation
-- `K` - Hover documentation
-- `<leader>ca` - Code actions
-- `<leader>rn` - Rename symbol
-- `]d` - Next diagnostic
-- `[d` - Previous diagnostic
+- `K` - Hover documentation (LSPSaga enhanced)
+- `<leader>cf` - LSP Finder (all references/definitions)
+- `<leader>co` - Symbol outline (document structure)
+
+### Code Actions & Refactoring
+
+- `<leader>ca` - Code actions (enhanced preview)
+- `<leader>ci` - Auto import missing symbol (TS/JS)
+- `<leader>cr` - Rename symbol (incremental with preview)
+- `<leader>rn` - Rename symbol (alternative)
+
+### Diagnostics (Errors/Warnings)
+
+- `]d` - Next diagnostic (LSPSaga)
+- `[d` - Previous diagnostic (LSPSaga)
+- `<leader>cd` - Show line diagnostics (LSPSaga)
 - `<leader>xx` - Open diagnostics (Trouble)
 - `<leader>do` - Show diagnostic float
 
@@ -76,6 +155,15 @@
 - `<leader>cf` - Manual format
 - `:ConformInfo` - Check formatter status
 - `:LspInfo` - Check LSP status
+
+## 🔄 Refactoring (refactoring.nvim)
+
+### Extract & Inline (Visual Mode)
+
+- `<leader>re` - Extract function
+- `<leader>rf` - Extract function to file
+- `<leader>rv` - Extract variable
+- `<leader>ri` - Inline variable (normal or visual)
 
 ## 📦 Git Integration
 
@@ -207,18 +295,22 @@ Content-Type: application/json
 ## 🚨 Troubleshooting
 
 1. **Slow startup?**
+
    - Run `:Lazy profile` to find slow plugins
    - Check `:checkhealth`
 
 2. **LSP not working?**
+
    - Run `:LspInfo`
    - Check `:Mason` for installed servers
 
 3. **Formatter not working?**
+
    - Run `:ConformInfo`
    - Check if `.eslintrc` exists for ESLint
 
 4. **Plugin not loading?**
+
    - Run `:Lazy` and press `X` to clear failed
    - Press `S` to sync
 

@@ -1,7 +1,7 @@
 # 🎯 Complete LazyVim Keybindings Reference
 
-> **Leader Key:** `<Space>` (Space bar)  
-> **Local Leader:** `\` (Backslash)  
+> **Leader Key:** `<Space>` (Space bar)
+> **Local Leader:** `\` (Backslash)
 > **Note:** `<C-x>` = Ctrl+x, `<S-x>` = Shift+x, `<A-x>` = Alt+x
 
 ---
@@ -10,39 +10,53 @@
 
 ### File Finding (Telescope/Snacks Picker)
 
-| Key          | Action             | Description                       |
-| ------------ | ------------------ | --------------------------------- |
-| `<leader>ff` | Find Files         | Search files in current directory |
-| `<leader>fr` | Recent Files       | Recently opened files             |
-| `<leader>fb` | Find Buffers       | List open buffers                 |
-| `<leader>fg` | Live Grep          | Search text in all files          |
-| `<leader>fw` | Grep Word          | Search word under cursor          |
-| `<leader>fW` | Grep Word (root)   | Search in project root            |
-| `<leader>fc` | Find Config        | Search Neovim config files        |
-| `<leader>fn` | New File           | Create new file                   |
-| `<leader>fo` | Recent Files (cwd) | Recent in current directory       |
-| `<leader>fR` | Recent (root)      | Recent in project root            |
-| `<leader>f/` | Live Grep (root)   | Search in project root            |
+| Key               | Action             | Description                       |
+| ----------------- | ------------------ | --------------------------------- |
+| `<leader><space>` | Find Files         | Quick file search                 |
+| `<leader>ff`      | Find Files         | Search files in current directory |
+| `<leader>fr`      | Recent Files       | Recently opened files             |
+| `<leader>fb`      | Find Buffers       | List open buffers                 |
+| `<leader>fg`      | Live Grep          | Search text in all files          |
+| `<leader>fw`      | Grep Word          | Search word under cursor          |
+| `<leader>fW`      | Grep Word (root)   | Search in project root            |
+| `<leader>fc`      | Find Config        | Search Neovim config files        |
+| `<leader>fn`      | New File           | Create new file                   |
+| `<leader>fo`      | Recent Files (cwd) | Recent in current directory       |
+| `<leader>fR`      | Recent (root)      | Recent in project root            |
+| `<leader>f/`      | Live Grep (root)   | Search in project root            |
+| `<leader>fs`      | Document Symbols   | LSP document symbols              |
+| `<leader>fS`      | Workspace Symbols  | LSP workspace symbols             |
+| `<leader>fd`      | Diagnostics        | Search diagnostics                |
+| `<leader>fh`      | Help Tags          | Search help                       |
+| `<leader>fk`      | Keymaps            | Search keybindings                |
+| `<leader>fF`      | File Browser       | Browse file system                |
 
 ### File Explorer (Snacks Explorer)
 
-| Key                  | Action          | Description                  |
-| -------------------- | --------------- | ---------------------------- |
-| `<leader>e`          | Toggle Explorer | Open/close file tree         |
-| `<leader>E`          | Explorer (cwd)  | File tree in current dir     |
-| **Inside Explorer:** |                 |                              |
-| `<CR>`               | Open            | Open file/folder             |
-| `l`                  | Open            | Alternative to Enter         |
-| `h`                  | Close Folder    | Close folder or go to parent |
-| `a`                  | Create          | Create new file/folder       |
-| `d`                  | Delete          | Delete file/folder           |
-| `r`                  | Rename          | Rename file/folder           |
-| `y`                  | Copy            | Copy file                    |
-| `x`                  | Cut             | Cut file                     |
-| `p`                  | Paste           | Paste file                   |
-| `R`                  | Refresh         | Refresh file tree            |
-| `H`                  | Toggle Hidden   | Show/hide hidden files       |
-| `g?`                 | Help            | Show keybindings             |
+| Key                  | Action           | Description                  |
+| -------------------- | ---------------- | ---------------------------- |
+| `<leader>e`          | Toggle Explorer  | Open/close file tree         |
+| `<leader>E`          | Explorer (cwd)   | File tree in current dir     |
+| `<leader>o`          | Focus Explorer   | Focus file tree (Neo-tree)   |
+| `<leader>ge`         | Git Explorer     | Git status explorer          |
+| `<leader>be`         | Buffer Explorer  | Buffer explorer              |
+| **Inside Explorer:** |                  |                              |
+| `<CR>`               | Open             | Open file/folder             |
+| `l`                  | Open             | Alternative to Enter         |
+| `h`                  | Close Folder     | Close folder or go to parent |
+| `a`                  | Create           | Create new file/folder       |
+| `d`                  | Delete           | Delete file/folder           |
+| `r`                  | Rename           | Rename file/folder           |
+| `y`                  | Copy             | Copy file                    |
+| `x`                  | Cut              | Cut file                     |
+| `p`                  | Paste            | Paste file                   |
+| `R`                  | Refresh          | Refresh file tree            |
+| `H`                  | Toggle Hidden    | Show/hide hidden files       |
+| `v`                  | Split Vertical   | Open in vertical split       |
+| `s`                  | Split Horizontal | Open in horizontal split     |
+| `t`                  | Open in Tab      | Open in new tab              |
+| `P`                  | Preview          | Toggle preview               |
+| `g?`                 | Help             | Show keybindings             |
 
 ### Harpoon (Quick File Marks)
 
@@ -95,21 +109,21 @@
 
 ### Buffer Management
 
-| Key          | Action            | Description                |
-| ------------ | ----------------- | -------------------------- |
-| `<S-h>`      | Prev Buffer       | Previous buffer (Shift+h)  |
-| `<S-l>`      | Next Buffer       | Next buffer (Shift+l)      |
-| `[b`         | Prev Buffer       | Alternative previous       |
-| `]b`         | Next Buffer       | Alternative next           |
-| `<leader>bb` | Switch Buffer     | Switch to buffer           |
-| `<leader>bd` | Delete Buffer     | Close buffer (keep window) |
-| `<leader>bD` | Force Delete      | Force close buffer         |
-| `<leader>bo` | Close Others      | Close other buffers        |
-| `<leader>bp` | Pin Buffer        | Pin/unpin buffer           |
-| `<leader>bP` | Delete Non-Pinned | Close unpinned buffers     |
-| `<leader>br` | Delete Right      | Close buffers to right     |
-| `<leader>bl` | Delete Left       | Close buffers to left      |
-| `<leader>\`` | Switch to Other   | Switch to last buffer      |
+| Key          | Action            | Description                   |
+| ------------ | ----------------- | ----------------------------- |
+| `<S-h>`      | Prev Buffer       | Previous buffer (Shift+h)     |
+| `<S-l>`      | Next Buffer       | Next buffer (Shift+l)         |
+| `[b`         | Prev Buffer       | Alternative previous          |
+| `]b`         | Next Buffer       | Alternative next              |
+| `<leader>bb` | Switch Buffer     | Switch to buffer              |
+| `<leader>bd` | Delete Buffer     | Close buffer (keep window)    |
+| `<leader>bD` | Force Delete      | Force close buffer            |
+| `<leader>bo` | Close Others      | Close other buffers           |
+| `<leader>bp` | Pin Buffer        | Pin/unpin buffer (Bufferline) |
+| `<leader>bP` | Delete Non-Pinned | Close unpinned buffers        |
+| `<leader>br` | Delete Right      | Close buffers to right        |
+| `<leader>bl` | Delete Left       | Close buffers to left         |
+| `<leader>\`` | Switch to Other   | Switch to last buffer         |
 
 ---
 
@@ -269,32 +283,45 @@
 
 ### Navigation
 
-| Key     | Action                | Description                 |
-| ------- | --------------------- | --------------------------- |
-| `gd`    | Go to Definition      | Jump to definition          |
-| `gD`    | Go to Declaration     | Jump to declaration         |
-| `gr`    | Go to References      | Show references             |
-| `gI`    | Go to Implementation  | Jump to implementation      |
-| `gy`    | Go to Type Definition | Jump to type definition     |
-| `grt`   | Type Definition       | Alternative type definition |
-| `gri`   | Implementation        | Alternative implementation  |
-| `grr`   | References            | Alternative references      |
-| `K`     | Hover                 | Show documentation          |
-| `gK`    | Signature Help        | Show signature              |
-| `<C-k>` | Signature (insert)    | Signature in insert mode    |
+| Key          | Action                | Description                  |
+| ------------ | --------------------- | ---------------------------- |
+| `gd`         | Go to Definition      | Jump to definition (LSPSaga) |
+| `gD`         | Go to Declaration     | Jump to declaration          |
+| `gp`         | Peek Definition       | Preview in float (LSPSaga)   |
+| `gr`         | Go to References      | Show references              |
+| `gI`         | Go to Implementation  | Jump to implementation       |
+| `gy`         | Go to Type Definition | Jump to type definition      |
+| `grt`        | Type Definition       | Alternative type definition  |
+| `gri`        | Implementation        | Alternative implementation   |
+| `grr`        | References            | Alternative references       |
+| `K`          | Hover                 | Show documentation (LSPSaga) |
+| `gK`         | Signature Help        | Show signature               |
+| `<C-k>`      | Signature (insert)    | Signature in insert mode     |
+| `<leader>cf` | LSP Finder            | Find references/definitions  |
+| `<leader>co` | Symbol Outline        | Document outline (LSPSaga)   |
 
 ### Code Actions
 
-| Key          | Action           | Description             |
-| ------------ | ---------------- | ----------------------- |
-| `<leader>ca` | Code Action      | Show code actions       |
-| `<leader>cA` | Source Action    | Source code actions     |
-| `<leader>cc` | Run Codelens     | Run codelens            |
-| `<leader>cC` | Refresh Codelens | Refresh codelens        |
-| `<leader>cr` | Rename           | Rename symbol           |
-| `<leader>rn` | Rename           | Alternative rename      |
-| `grn`        | Rename           | Alternative rename      |
-| `gra`        | Code Action      | Alternative code action |
+| Key          | Action           | Description                   |
+| ------------ | ---------------- | ----------------------------- |
+| `<leader>ca` | Code Action      | Show code actions (enhanced)  |
+| `<leader>cA` | Source Action    | Source code actions           |
+| `<leader>cc` | Run Codelens     | Run codelens                  |
+| `<leader>cC` | Refresh Codelens | Refresh codelens              |
+| `<leader>cr` | Rename           | Rename symbol (inc-rename)    |
+| `<leader>rn` | Rename           | Alternative rename            |
+| `<leader>ci` | Auto Import      | Import missing symbol (TS/JS) |
+| `grn`        | Rename           | Alternative rename            |
+| `gra`        | Code Action      | Alternative code action       |
+
+### Refactoring (refactoring.nvim)
+
+| Key          | Action           | Description                     |
+| ------------ | ---------------- | ------------------------------- |
+| `<leader>re` | Extract Function | Extract to function (visual)    |
+| `<leader>rf` | Extract to File  | Extract function to file        |
+| `<leader>rv` | Extract Variable | Extract to variable (visual)    |
+| `<leader>ri` | Inline Variable  | Inline variable (normal/visual) |
 
 ### Formatting
 
@@ -305,18 +332,19 @@
 
 ### Diagnostics (Errors/Warnings)
 
-| Key          | Action           | Description            |
-| ------------ | ---------------- | ---------------------- |
-| `]d`         | Next Diagnostic  | Next diagnostic        |
-| `[d`         | Prev Diagnostic  | Previous diagnostic    |
-| `]e`         | Next Error       | Next error             |
-| `[e`         | Prev Error       | Previous error         |
-| `]w`         | Next Warning     | Next warning           |
-| `[w`         | Prev Warning     | Previous warning       |
-| `<leader>do` | Show Diagnostic  | Show diagnostic float  |
-| `<leader>dn` | Next Diagnostic  | Custom next diagnostic |
-| `<leader>dp` | Prev Diagnostic  | Custom prev diagnostic |
-| `<leader>dl` | List Diagnostics | List all diagnostics   |
+| Key          | Action           | Description                     |
+| ------------ | ---------------- | ------------------------------- |
+| `]d`         | Next Diagnostic  | Next diagnostic (LSPSaga)       |
+| `[d`         | Prev Diagnostic  | Previous diagnostic (LSPSaga)   |
+| `]e`         | Next Error       | Next error                      |
+| `[e`         | Prev Error       | Previous error                  |
+| `]w`         | Next Warning     | Next warning                    |
+| `[w`         | Prev Warning     | Previous warning                |
+| `<leader>do` | Show Diagnostic  | Show diagnostic float           |
+| `<leader>cd` | Line Diagnostics | Show line diagnostics (LSPSaga) |
+| `<leader>dn` | Next Diagnostic  | Custom next diagnostic          |
+| `<leader>dp` | Prev Diagnostic  | Custom prev diagnostic          |
+| `<leader>dl` | List Diagnostics | List all diagnostics            |
 
 ### Trouble (Diagnostic UI)
 
@@ -471,12 +499,48 @@ Content-Type: application/json
 
 ## 📋 Session Management
 
-| Key          | Action          | Description                |
-| ------------ | --------------- | -------------------------- |
-| `<leader>qs` | Restore Session | Restore session for cwd    |
-| `<leader>ql` | Restore Last    | Restore last session       |
-| `<leader>qd` | Don't Save      | Don't save current session |
-| `<leader>qq` | Quit All        | Quit all windows           |
+| Key          | Action          | Description          |
+| ------------ | --------------- | -------------------- |
+| `<leader>qs` | Restore Session | Restore last session |
+| `<leader>ql` | Restore Last    | Restore previous     |
+| `<leader>qd` | Don't Save      | Skip saving session  |
+
+---
+
+## 💡 Completion & Snippets
+
+### Completion (blink.cmp)
+
+**In Insert Mode:**
+
+| Key         | Action                 | Description                                |
+| ----------- | ---------------------- | ------------------------------------------ |
+| `<Tab>`     | Next / Snippet Forward | Next completion or snippet placeholder     |
+| `<S-Tab>`   | Prev / Snippet Back    | Previous completion or snippet placeholder |
+| `<CR>`      | Accept                 | Accept completion                          |
+| `<C-Space>` | Show Completion        | Manually trigger completion                |
+| `<C-e>`     | Hide                   | Close completion menu                      |
+| `<C-n>`     | Next                   | Next completion item                       |
+| `<C-p>`     | Previous               | Previous completion item                   |
+| `<Up>`      | Previous               | Navigate up                                |
+| `<Down>`    | Next                   | Navigate down                              |
+| `<C-u>`     | Scroll Docs Up         | Scroll documentation up                    |
+| `<C-d>`     | Scroll Docs Down       | Scroll documentation down                  |
+
+### Features
+
+- **Ghost text** - Inline completion preview (like GitHub Copilot)
+- **Auto-brackets** - Automatically adds `()` after functions
+- **Signatures** - Function parameter hints while typing
+- **Smart completion** - LSP, snippets, buffer, and path sources
+
+### Snippets (LuaSnip)
+
+- Type snippet trigger + `Tab` to expand
+- `Tab` / `Shift+Tab` to navigate placeholders
+- Supports all VSCode snippets for: JS, TS, React, Python, HTML, CSS, etc.
+
+---
 
 ---
 
@@ -1043,5 +1107,5 @@ To add custom keymaps, edit: `~/.config/nvim/lua/config/keymaps.lua`
 
 ---
 
-_Last updated: November 2025_  
+_Last updated: November 2025_
 _LazyVim Configuration by dzgeek_
