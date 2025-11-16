@@ -35,6 +35,11 @@ require("lazy").setup({
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
+  -- Add this to disable luarocks
+  rocks = {
+    enabled = false, -- Disable luarocks completely
+  },
+
   performance = {
     rtp = {
       -- disable some rtp plugins

@@ -38,7 +38,7 @@ opt.signcolumn = "yes" -- Show sign column so that text doesn't shift
 opt.backspace = "indent,eol,start" -- Allow backspace on indent, eol, start
 
 -- Clipboard (use system clipboard)
-opt.clipboard:append("unnamedplus") -- Use system clipboard as default register
+opt.clipboard = "unnamedplus" -- Use system clipboard as default register
 
 -- Split windows
 opt.splitright = true -- Split vertical window to the right
@@ -58,3 +58,12 @@ opt.sidescrolloff = 8 -- Minimum columns to keep left/right of cursor
 
 -- For Python (you can adjust per filetype later)
 vim.g.python3_host_prog = vim.fn.exepath("python3") or vim.fn.exepath("python")
+
+-- Python provider optimization (prevents slow startup)
+vim.g.python3_host_prog = vim.fn.exepath("python3") or vim.fn.exepath("python")
+vim.g.python_host_prog = vim.fn.exepath("python2") or vim.fn.exepath("python")
+
+-- Disable unused providers for faster startup
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0
