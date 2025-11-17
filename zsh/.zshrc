@@ -208,6 +208,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+alias open="xdg-open"
+
 # History
 alias h="history"
 
