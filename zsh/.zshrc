@@ -224,7 +224,7 @@ alias tree='eza --tree --icons'
 
 # Modern replacements
 alias cat="bat"
-
+alias r="ranger"
 # Git shortcuts
 alias gs='git status'
 alias ga='git add'

@@ -43,7 +43,7 @@
   "nvim-bqf": { "branch": "main", "commit": "a77b17e39b1b707b6feee86a36c83703c1534c08" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "81e676d3203c9eb6e4c0ccf1eba1679296ef923f" },
   "nvim-lint": { "branch": "master", "commit": "baf7c91c2b868b12446df511d4cdddc98e9bf66e" },
-  "nvim-lspconfig": { "branch": "master", "commit": "a665b99dcd71b6763e9a8484cf77af7134a7a94f" },
+  "nvim-lspconfig": { "branch": "master", "commit": "f2ce280a6704e36383f7eb9837eac6fd686b7e1a" },
   "nvim-lspimport": { "branch": "main", "commit": "9c1c61a5020faeb1863bb66eb4b2a9107e641876" },
   "nvim-navic": { "branch": "master", "commit": "099b4c8cdc3e9ea026ea6b2a0d315e2d28362242" },
   "nvim-notify": { "branch": "master", "commit": "8701bece920b38ea289b457f902e2ad184131a5d" },
