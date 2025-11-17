@@ -8,6 +8,7 @@ Managed with GNU Stow for easy deployment across multiple machines.
 - **Prompt:** Starship
 - **Terminal Multiplexer:** Tmux (with TPM plugin manager)
 - **Editor:** Neovim (LazyVim)
+- **File Manager:** Ranger
 - **Modern CLI Tools:** eza, bat, zoxide, fzf, fd, thefuck
 - **Package Managers:** Cargo (Rust), pip (Python)
 
@@ -26,7 +27,14 @@ sudo apt update && sudo apt install -y \
   tmux \
   build-essential \
   unzip \
-  wget
+  wget \
+  ranger \
+  w3m \
+  highlight \
+  atool \
+  mediainfo \
+  poppler-utils \
+  transmission-cli
 ```
 
 #### Fedora/RHEL/CentOS
@@ -41,7 +49,14 @@ sudo dnf install -y \
   gcc \
   make \
   unzip \
-  wget
+  wget \
+  ranger \
+  w3m \
+  highlight \
+  atool \
+  mediainfo \
+  poppler-utils \
+  transmission-cli
 ```
 
 > **Note:** We'll install Neovim manually in a later step to get version 0.11.5+ (repo versions are often outdated)
@@ -55,11 +70,13 @@ cd ~/dotfiles
 
 ### 3. Backup and Remove Existing Dotfiles
 
+> **⚠️ IMPORTANT:** You MUST remove or backup existing dotfiles before running `stow`. Stow will fail if target files already exist!
+
 ```bash
 # Create backup directory
 mkdir -p ~/.dotfiles_backup
 
-# Backup existing files (optional)
+# Backup and remove existing files
 [ -f ~/.bashrc ] && mv ~/.bashrc ~/.dotfiles_backup/
 [ -f ~/.bash_profile ] && mv ~/.bash_profile ~/.dotfiles_backup/
 [ -f ~/.bash_logout ] && mv ~/.bash_logout ~/.dotfiles_backup/
@@ -67,11 +84,17 @@ mkdir -p ~/.dotfiles_backup
 [ -f ~/.gitconfig ] && mv ~/.gitconfig ~/.dotfiles_backup/
 [ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.dotfiles_backup/
 
-# Remove config directories
-rm -rf ~/.config/nvim
-rm -f ~/.config/starship.toml
-rm -rf ~/.config/lazygit
-rm -rf ~/.config/tmux
+# Backup and remove config directories
+[ -d ~/.config/nvim ] && mv ~/.config/nvim ~/.dotfiles_backup/
+[ -f ~/.config/starship.toml ] && mv ~/.config/starship.toml ~/.dotfiles_backup/
+[ -d ~/.config/lazygit ] && mv ~/.config/lazygit ~/.dotfiles_backup/
+[ -d ~/.config/tmux ] && mv ~/.config/tmux ~/.dotfiles_backup/
+[ -d ~/.config/ranger ] && mv ~/.config/ranger ~/.dotfiles_backup/
+
+# Verify files are removed
+echo "Checking for conflicts..."
+ls -la ~ | grep -E "\.bashrc|\.zshrc|\.gitconfig|\.tmux\.conf"
+ls -la ~/.config/ | grep -E "nvim|starship|lazygit|tmux|ranger"
 ```
 
 ### 4. Install Oh-My-Zsh
@@ -98,6 +121,8 @@ git clone https://github.com/zsh-users/zsh-completions \
 
 ### 6. Deploy Dotfiles with Stow
 
+> **Note:** Make sure you completed step 3 (backup and removal) before running stow!
+
 ```bash
 cd ~/dotfiles
 
@@ -107,6 +132,10 @@ stow zsh
 stow git
 stow tmux
 stow config
+
+# Verify symlinks were created
+ls -la ~ | grep -E "\.bashrc|\.zshrc|\.gitconfig|\.tmux\.conf"
+ls -la ~/.config/ | grep -E "nvim|starship|ranger"
 ```
 
 ### 7. Install Neovim 0.11.5
@@ -137,13 +166,38 @@ nvim --version
 
 > **Note:** The PATH is already set in both .bashrc and .zshrc to include `~/.local/bin`
 
-### 8. Install Starship Prompt
+### 9. Install Starship Prompt
 
 ```bash
 curl -sS https://starship.rs/install.sh | sh
 ```
 
-### 9. Install Rust and Modern CLI Tools
+### 10. Install Ranger Dependencies
+
+```bash
+# Install additional preview tools for Ranger
+
+# Ubuntu/Debian
+sudo apt install -y \
+  jq \
+  exiftool \
+  odt2txt \
+  python3-pip
+
+# Install bat if not already installed via cargo
+# (bat provides better syntax highlighting in ranger)
+
+# Fedora/RHEL
+sudo dnf install -y \
+  jq \
+  perl-Image-ExifTool \
+  python3-pip
+
+# Optional: Install additional tools for better previews
+pip3 install --user Pillow  # For image processing
+```
+
+### 11. Install Rust and Modern CLI Tools
 
 ```bash
 # Install Rust (needed for cargo)
@@ -169,7 +223,7 @@ sudo apt install thefuck -y
 # pip3 install thefuck --user
 ```
 
-### 10. Install JetBrains Mono Nerd Font
+### 12. Install JetBrains Mono Nerd Font
 
 ```bash
 # Create fonts directory
@@ -186,13 +240,13 @@ fc-cache -fv
 cd ~
 ```
 
-### 11. Install Tmux Plugin Manager (TPM)
+### 13. Install Tmux Plugin Manager (TPM)
 
 ```bash
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-### 12. Set Zsh as Default Shell
+### 14. Set Zsh as Default Shell
 
 ```bash
 # Change default shell to zsh
@@ -204,7 +258,7 @@ chsh -s $(which zsh)
 # fi
 ```
 
-### 13. Finalize Setup
+### 15. Finalize Setup
 
 ```bash
 # Source the new zsh config
