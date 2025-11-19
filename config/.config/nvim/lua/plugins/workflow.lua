@@ -166,6 +166,14 @@ return {
           },
           view = "mini",
         },
+        -- ADDED: Filter out vim.notify overwrite warning
+        {
+          filter = {
+            event = "notify",
+            find = "vim.notify has been overwritten",
+          },
+          opts = { skip = true },
+        },
       },
       presets = {
         bottom_search = true,

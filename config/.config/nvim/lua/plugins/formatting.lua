@@ -91,8 +91,8 @@ return {
         typescriptreact = { "eslint_d" },
         astro = { "eslint_d" },
 
-        -- Python
-        python = { "pylint" },
+        -- Python - REMOVED pylint for now
+        python = {}, -- Rely on LSP diagnostics instead
 
         -- Markdown
         markdown = { "markdownlint" },
@@ -121,11 +121,6 @@ return {
               { path = ctx.filename, upward = true }
             )[1]
           end,
-        },
-        pylint = {
-          args = {
-            "--disable=C0111,C0103,C0301", -- Disable some noisy checks
-          },
         },
       },
     },

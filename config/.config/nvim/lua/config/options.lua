@@ -67,3 +67,13 @@ vim.g.python_host_prog = vim.fn.exepath("python2") or vim.fn.exepath("python")
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
+
+-- Suppress vim.notify overwrite warnings
+vim.notify = (function(original_notify)
+  return function(msg, level, opts)
+    if type(msg) == "string" and msg:match("vim.notify has been overwritten") then
+      return
+    end
+    return original_notify(msg, level, opts)
+  end
+end)(vim.notify)
