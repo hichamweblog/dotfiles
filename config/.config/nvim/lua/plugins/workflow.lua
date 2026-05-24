@@ -258,4 +258,17 @@ return {
       { "<leader>ut", "<cmd>Twilight<cr>", desc = "Toggle Twilight" },
     },
   },
+
+  -- Configure snacks.nvim to disable notice which has Treesitter query issues
+  {
+    "folke/snacks.nvim",
+    opts = {
+      notifier = {
+        enabled = false,
+      },
+      notify = {
+        enabled = false,
+      },
+    },
+  },
 }

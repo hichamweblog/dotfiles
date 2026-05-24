@@ -216,7 +216,8 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
-      local icons = require("lazyvim.config").icons
+      local icons = require("lazyvim.config").icons or {}
+      local diagnostics = icons.diagnostics or {}
 
       return {
         options = {
@@ -232,10 +233,10 @@ return {
             {
               "diagnostics",
               symbols = {
-                error = icons.diagnostics.Error,
-                warn = icons.diagnostics.Warn,
-                info = icons.diagnostics.Info,
-                hint = icons.diagnostics.Hint,
+                error = diagnostics.Error or "E",
+                warn = diagnostics.Warn or "W",
+                info = diagnostics.Info or "I",
+                hint = diagnostics.Hint or "H",
               },
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
