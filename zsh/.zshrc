@@ -1,7 +1,7 @@
+
 # ============================================================================
 # .zshrc - Zsh Configuration File
 # ============================================================================
-
 # ============================================================================
 # Oh My Zsh Configuration
 # ============================================================================
@@ -88,7 +88,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-
+export PATH="/home/dzgeek/.nvm/versions/node/v25.2.1/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -270,3 +270,26 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# bun completions
+[ -s "/home/dzgeek/.bun/_bun" ] && source "/home/dzgeek/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/dzgeek/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+export PATH=$PATH:$(go env GOPATH)/bin
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/dzgeek/.local/bin:$PATH"
