@@ -2,7 +2,7 @@
 	name = Hicham
 	email = hichamdevpro@gmail.com
 [core]
-	editor = nvim
+	editor = code --wait
 [alias]
 	st = status
 	co = checkout
@@ -12,9 +12,9 @@
 	unstage = reset HEAD --
 	lg = log --graph --oneline --decorate --all
 [pull]
-    rebase = true
+	rebase = true
 [init]
-    defaultBranch = main
+	defaultBranch = main
 [color]
     ui = auto
 [diff]

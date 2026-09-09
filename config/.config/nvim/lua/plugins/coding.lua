@@ -3,16 +3,76 @@
 
 return {
   -- blink.cmp - Modern completion engine (already included in LazyVim)
-  -- Using LazyVim defaults with ghost text enabled
+  -- Ghost text disabled here since Copilot handles inline suggestions
   {
     "saghen/blink.cmp",
     opts = {
       completion = {
         ghost_text = {
-          enabled = true, -- Show ghost text like GitHub Copilot
+          enabled = false, -- Copilot handles ghost text / inline suggestions
+        },
+      },
+      sources = {
+        -- Add copilot as a completion source in the popup menu
+        default = { "lsp", "path", "snippets", "buffer", "copilot" },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-cmp-copilot",
+            score_offset = 100, -- Pin Copilot suggestions to the top
+            async = true,
+          },
         },
       },
     },
+  },
+
+  -- GitHub Copilot — AI pair programmer
+  -- After install: run :Copilot auth  to sign in
+  {
+    "github/copilot.vim",
+    -- Managed by lazyvim.plugins.extras.ai.copilot extra
+    -- Custom keybindings below override the defaults
+    config = function()
+      -- Disable default <Tab> mapping (blink.cmp owns Tab)
+      vim.g.copilot_no_tab_map = true
+
+      -- Accept suggestion with Ctrl+J (won't conflict with anything)
+      vim.keymap.set("i", "<C-j>", 'copilot#Accept("")', {
+        expr = true,
+        replace_keycodes = false,
+        desc = "Copilot: Accept suggestion",
+      })
+
+      -- Cycle through alternative suggestions
+      vim.keymap.set("i", "<M-]>", "<Plug>(copilot-next)", { desc = "Copilot: Next suggestion" })
+      vim.keymap.set("i", "<M-[>", "<Plug>(copilot-previous)", { desc = "Copilot: Previous suggestion" })
+
+      -- Dismiss current suggestion
+      vim.keymap.set("i", "<M-\\>", "<Plug>(copilot-dismiss)", { desc = "Copilot: Dismiss" })
+
+      -- Accept only the next word (not the whole line)
+      vim.keymap.set("i", "<C-Right>", "<Plug>(copilot-accept-word)", { desc = "Copilot: Accept word" })
+
+      -- Accept only the next line
+      vim.keymap.set("i", "<C-Down>", "<Plug>(copilot-accept-line)", { desc = "Copilot: Accept line" })
+
+      -- Filetypes where Copilot should be disabled
+      vim.g.copilot_filetypes = {
+        ["*"] = true,        -- enabled for all by default
+        TelescopePrompt = false,
+        ["neo-tree"] = false,
+        help = false,
+        gitcommit = true,    -- useful for commit messages
+        markdown = true,
+      }
+    end,
+  },
+
+  -- blink.cmp Copilot source (required for popup menu integration)
+  {
+    "giuxtaposition/blink-cmp-copilot",
+    dependencies = { "github/copilot.vim", "saghen/blink.cmp" },
   },
 
   -- Snippet engine and collection (VSCode-like snippets)

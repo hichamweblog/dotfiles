@@ -1,75 +1,60 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
 
 local opt = vim.opt
 
 -- Line numbers
-opt.relativenumber = true -- Relative line numbers
-opt.number = true -- Shows absolute line number on cursor line
+opt.relativenumber = true
+opt.number = true
 
--- Tabs & indentation (important for multi-language work)
-opt.tabstop = 2 -- 2 spaces for tabs (common in JS/React)
-opt.shiftwidth = 2 -- 2 spaces for indent width
-opt.expandtab = true -- Expand tab to spaces
-opt.autoindent = true -- Copy indent from current line when starting new one
-opt.smartindent = true -- Smart indenting
+-- Tabs & indentation
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.expandtab = true
+opt.autoindent = true
+opt.smartindent = true
 
 -- Line wrapping
-opt.wrap = false -- Disable line wrapping
+opt.wrap = false
 
 -- Search settings
-opt.ignorecase = true -- Ignore case when searching
-opt.smartcase = true -- If you include mixed case, assumes case-sensitive
+opt.ignorecase = true
+opt.smartcase = true
 
 -- Cursor line
-opt.cursorline = true -- Highlight the current cursor line
+opt.cursorline = true
 
 -- Appearance
 opt.termguicolors = true
-opt.background = "dark" -- Dark mode
-opt.signcolumn = "yes" -- Show sign column so that text doesn't shift
+opt.background = "dark"
+opt.signcolumn = "yes"
 
 -- Backspace
-opt.backspace = "indent,eol,start" -- Allow backspace on indent, eol, start
+opt.backspace = "indent,eol,start"
 
--- Clipboard (use system clipboard)
-opt.clipboard = "unnamedplus" -- Use system clipboard as default register
+-- Clipboard
+opt.clipboard = "unnamedplus"
 
 -- Split windows
-opt.splitright = true -- Split vertical window to the right
-opt.splitbelow = true -- Split horizontal window to the bottom
+opt.splitright = true
+opt.splitbelow = true
 
 -- Performance
-opt.updatetime = 250 -- Faster completion (4000ms default)
-opt.timeoutlen = 300 -- Time to wait for mapped sequence to complete
+opt.updatetime = 250
+opt.timeoutlen = 300
 
 -- Undo & backup
-opt.undofile = true -- Save undo history
-opt.swapfile = false -- Disable swap file
+opt.undofile = true
+opt.swapfile = false
 
 -- Scroll
-opt.scrolloff = 8 -- Minimum lines to keep above/below cursor
-opt.sidescrolloff = 8 -- Minimum columns to keep left/right of cursor
+opt.scrolloff = 8
+opt.sidescrolloff = 8
 
--- For Python (you can adjust per filetype later)
+-- Python provider (single assignment, no python2)
 vim.g.python3_host_prog = vim.fn.exepath("python3") or vim.fn.exepath("python")
-
--- Python provider optimization (prevents slow startup)
-vim.g.python3_host_prog = vim.fn.exepath("python3") or vim.fn.exepath("python")
-vim.g.python_host_prog = vim.fn.exepath("python2") or vim.fn.exepath("python")
 
 -- Disable unused providers for faster startup
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
-
--- Suppress vim.notify overwrite warnings
-vim.notify = (function(original_notify)
-  return function(msg, level, opts)
-    if type(msg) == "string" and msg:match("vim.notify has been overwritten") then
-      return
-    end
-    return original_notify(msg, level, opts)
-  end
-end)(vim.notify)

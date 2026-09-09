@@ -32,7 +32,7 @@ return {
         changedelete = { text = "▎" },
         untracked = { text = "▎" },
       },
-      current_line_blame = false, -- Toggle with <leader>gb
+      current_line_blame = false, -- Toggle with <leader>gB
       current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = "eol",
@@ -83,7 +83,7 @@ return {
         map("n", "<leader>hb", function()
           gs.blame_line({ full = true })
         end, "Blame line")
-        map("n", "<leader>gb", gs.toggle_current_line_blame, "Toggle line blame")
+        map("n", "<leader>gB", gs.toggle_current_line_blame, "Toggle line blame")
         map("n", "<leader>hd", gs.diffthis, "Diff this")
         map("n", "<leader>hD", function()
           gs.diffthis("~")

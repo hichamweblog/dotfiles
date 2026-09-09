@@ -259,16 +259,16 @@ return {
     },
   },
 
-  -- Configure snacks.nvim to disable notice which has Treesitter query issues
+  -- Disable snacks notifier to avoid conflict with noice.nvim
   {
     "folke/snacks.nvim",
     opts = {
-      notifier = {
-        enabled = false,
-      },
-      notify = {
-        enabled = false,
-      },
+      notifier = { enabled = false },
+      notify = { enabled = false },
+      -- Keep these snacks features
+      bigfile = { enabled = true },
+      quickfile = { enabled = true },
+      statuscolumn = { enabled = false }, -- Let lualine handle it
     },
   },
 }

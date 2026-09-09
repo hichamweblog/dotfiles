@@ -51,17 +51,19 @@ return {
     opts = {},
   },
 
-  -- Autopairs for brackets, quotes, etc.
-  -- Note: This is already configured in LazyVim by default (mini.pairs)
-  -- We're keeping nvim-autopairs as an alternative
+  -- Disable LazyVim's mini.pairs to avoid conflict with nvim-autopairs
+  { "nvim-mini/mini.pairs", enabled = false },
+
+  -- Autopairs with treesitter support (better for JSX/TSX)
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {
-      check_ts = true, -- Enable treesitter
+      check_ts = true,
       ts_config = {
         lua = { "string" },
         javascript = { "template_string" },
+        typescript = { "template_string" },
       },
     },
   },
@@ -83,6 +85,9 @@ return {
       },
     },
   },
+
+  -- Disable LazyVim's mini.comment to avoid conflict
+  { "nvim-mini/mini.comment", enabled = false },
 
   -- Better commenting with context awareness
   {
