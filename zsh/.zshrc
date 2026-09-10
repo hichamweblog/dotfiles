@@ -293,3 +293,6 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 # Added by Antigravity CLI installer
 export PATH="/home/dzgeek/.local/bin:$PATH"
+
+# opencode
+export PATH=/home/dzgeek/.opencode/bin:$PATH

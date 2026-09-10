@@ -1,326 +1,559 @@
-# LazyVim Full-Stack DevOps Cheatsheet
+# Neovim Developer Cheat Sheet
 
-## 🚀 Quick Start
+> **Config**: LazyVim · **Leader**: `<Space>` · **Stack**: TS / React / Next / Astro / Python / FastAPI / RN / Docker
 
-- Leader key: `<Space>`
-- Check health: `:checkhealth`
-- Update plugins: `:Lazy sync`
-- Update Mason tools: `:Mason`
+---
 
-## 📁 File Navigation
+## 🧭 Vim Motions — Core Navigation
 
-### Telescope Search
+> These work everywhere. Master these first.
 
-- `<leader><space>` - Find files (quick access)
-- `<leader>ff` - Find files
-- `<leader>fg` - Live grep (search in files)
-- `<leader>fw` - Find word under cursor
-- `<leader>fb` - Find buffers
-- `<leader>fr` - Recent files
-- `<leader>fs` - Document symbols
-- `<leader>fS` - Workspace symbols
-- `<leader>fd` - Diagnostics
-- `<leader>fh` - Help tags
-- `<leader>fk` - Keymaps
-- `<leader>fc` - Commands
-- `<leader>fF` - File browser
+### Moving the Cursor
 
-### File Explorer (Neo-tree)
+| Key               | Action                                             |
+| ----------------- | -------------------------------------------------- |
+| `h` `j` `k` `l`   | ← ↓ ↑ →                                            |
+| `w` / `W`         | Next word start (w=word, W=WORD incl. punctuation) |
+| `b` / `B`         | Previous word start                                |
+| `e` / `E`         | Next word end                                      |
+| `0`               | Start of line (column 0)                           |
+| `^`               | First non-blank character of line                  |
+| `$`               | End of line                                        |
+| `gg`              | Top of file                                        |
+| `G`               | Bottom of file                                     |
+| `{` / `}`         | Jump paragraph up / down                           |
+| `%`               | Jump to matching bracket `()` `{}` `[]`            |
+| `H` / `M` / `L`   | Screen top / middle / bottom                       |
+| `<C-d>` / `<C-u>` | Scroll down / up half screen (centered)            |
+| `<C-f>` / `<C-b>` | Scroll down / up full screen                       |
+| `zz`              | Center cursor on screen                            |
+| `zt` / `zb`       | Cursor to top / bottom of screen                   |
 
-- `<leader>e` - Toggle file explorer
-- `<leader>o` - Focus file explorer
-- `<leader>ge` - Git explorer
-- `<leader>be` - Buffer explorer
+### Jumping (Fast Navigation)
 
-**Inside Neo-tree:**
+| Key               | Action                                      |
+| ----------------- | ------------------------------------------- |
+| `f{char}`         | Jump to next `{char}` on line               |
+| `F{char}`         | Jump to prev `{char}` on line               |
+| `t{char}`         | Jump before next `{char}`                   |
+| `T{char}`         | Jump before prev `{char}`                   |
+| `;` / `,`         | Repeat f/F/t/T forward / backward           |
+| `*` / `#`         | Search word under cursor forward / backward |
+| `n` / `N`         | Next / prev search match (centered)         |
+| `s{2chars}`       | **Flash.nvim** — jump anywhere in file      |
+| `S`               | **Flash** treesitter-aware selection jump   |
+| `<C-o>` / `<C-i>` | Jump list: go back / go forward             |
+| `g;` / `g,`       | Change list: go back / go forward           |
+| `''` or ` `` `    | Jump to last cursor position                |
+| `m{a-z}`          | Set mark (e.g. `ma`)                        |
+| `'{a-z}`          | Jump to mark                                |
 
-- `<CR>` or `l` - Open file/folder
-- `h` - Close folder
-- `a` - Create file/folder
-- `d` - Delete
-- `r` - Rename
-- `y` - Copy
-- `x` - Cut
-- `p` - Paste
-- `R` - Refresh
-- `?` - Show help
+---
 
-### Window Navigation
+## ✂️ Operators + Text Objects (The Vim Grammar)
 
-- `<C-h/j/k/l>` - Navigate windows
+> Pattern: **Operator + Motion or Text Object**
+> Example: `d2w` = delete 2 words, `ci"` = change inside quotes
 
-### Harpoon (Quick File Marks)
+### Operators
 
-- `<leader>ha` - Add file to harpoon
-- `<leader>hh` - Toggle harpoon menu
-- `<leader>h1-4` - Jump to marked file 1-4
+| Key         | Action                              |
+| ----------- | ----------------------------------- |
+| `d`         | Delete (cut)                        |
+| `c`         | Change (delete + enter insert mode) |
+| `y`         | Yank (copy)                         |
+| `v`         | Visual select                       |
+| `>` / `<`   | Indent right / left                 |
+| `=`         | Auto-indent                         |
+| `gu` / `gU` | Lowercase / Uppercase               |
+| `g~`        | Toggle case                         |
 
-## ✏️ Editing
+### Text Objects
 
-### Basic Editing
+| Key         | Selects...                            |
+| ----------- | ------------------------------------- |
+| `iw` / `aw` | inner word / a word (with space)      |
+| `is` / `as` | inner sentence / a sentence           |
+| `ip` / `ap` | inner paragraph / a paragraph         |
+| `i"` / `a"` | inside / around double quotes         |
+| `i'` / `a'` | inside / around single quotes         |
+| `i(` / `a(` | inside / around parentheses `()`      |
+| `i{` / `a{` | inside / around braces `{}`           |
+| `i[` / `a[` | inside / around brackets `[]`         |
+| `i<` / `a<` | inside / around angle brackets `<>`   |
+| `it` / `at` | inside / around HTML/JSX tag          |
+| `if` / `af` | inside / around function (treesitter) |
+| `ic` / `ac` | inside / around class (treesitter)    |
 
-- `gcc` - Toggle comment line
-- `gc` (visual) - Toggle comment selection
-- `<leader>cf` - Format file
-- `<C-s>` - Save file
+### Real-World Examples
 
-### Buffer Management (Bufferline)
+```
+diw     → delete word under cursor
+ciw     → change word under cursor (great for renaming)
+ci"     → change content inside "quotes"
+ca{     → change everything including { braces }
+yi(     → copy content inside parentheses
+vat     → visually select entire JSX tag including tag
+=ap     → auto-indent current paragraph
+gUiw    → UPPERCASE current word
+```
 
-- `<S-h>` / `<S-l>` - Previous/Next buffer
-- `[b]` / `]b` - Previous/Next buffer
-- `<leader>bd` - Delete buffer
-- `<leader>bp` - Toggle pin buffer
-- `<leader>bP` - Delete non-pinned buffers
-- `<leader>bo` - Close other buffers
-- `<leader>br` - Close buffers to right
-- `<leader>bl` - Close buffers to left
+---
 
-### Auto-pairs & Auto-tags
+## ✏️ Insert Mode
 
-- Type `(` → auto-closes to `()`
-- Type `"` → auto-closes to `""`
-- Auto-close HTML/JSX tags (React, Vue, Svelte, Astro)
-- Auto-rename paired HTML tags
+| Key               | Action                                  |
+| ----------------- | --------------------------------------- |
+| `i`               | Insert before cursor                    |
+| `I`               | Insert at beginning of line             |
+| `a`               | Append after cursor                     |
+| `A`               | Append at end of line                   |
+| `o`               | New line below + insert                 |
+| `O`               | New line above + insert                 |
+| `s`               | Delete char + insert                    |
+| `S`               | Delete line + insert                    |
+| `C`               | Change from cursor to end of line       |
+| `r{char}`         | Replace single char (stays normal mode) |
+| `R`               | Replace mode (overtype)                 |
+| `<Esc>` / `<C-[>` | Back to Normal mode                     |
+| `<C-s>`           | Save file (works in Insert mode too)    |
 
-### Completion & Snippets (blink.cmp + LuaSnip)
+---
 
-**In Insert Mode:**
+## 📋 Copy / Paste / Delete
 
-- `<Tab>` - Next completion / snippet placeholder
-- `<S-Tab>` - Previous completion / snippet placeholder
-- `<CR>` - Accept completion
-- `<C-Space>` - Manually trigger completion
-- `<C-e>` - Close completion menu
-- `<C-n>` / `<C-p>` - Navigate completions
-- `<C-u>` / `<C-d>` - Scroll documentation
+| Key         | Action                                       |
+| ----------- | -------------------------------------------- |
+| `yy`        | Yank (copy) entire line                      |
+| `Y`         | Yank to end of line                          |
+| `dd`        | Delete (cut) line                            |
+| `D`         | Delete to end of line                        |
+| `p`         | Paste after cursor                           |
+| `P`         | Paste before cursor                          |
+| `<leader>p` | Paste in visual without overwriting register |
+| `"+y`       | Copy to system clipboard explicitly          |
+| `"+p`       | Paste from system clipboard                  |
+| `u`         | Undo                                         |
+| `<C-r>`     | Redo                                         |
+| `x`         | Delete char under cursor                     |
+| `xp`        | Swap two chars (delete + paste after)        |
 
-**Features:**
-
-- Ghost text preview (inline suggestions)
-- Auto-bracket completion for functions
-- Function signatures while typing
-- VSCode-compatible snippets for all languages
-
-### Surround (nvim-surround)
-
-- `ys{motion}{char}` - Add surround (e.g., `ysiw"` surrounds word with quotes)
-- `ds{char}` - Delete surround (e.g., `ds"` removes quotes)
-- `cs{old}{new}` - Change surround (e.g., `cs"'` changes " to ')
+---
 
 ## 🔍 Search & Replace
 
-- `/` - Search forward
-- `?` - Search backward
-- `n/N` - Next/previous match
-- `<leader>nh` - Clear highlights
-- `<leader>sr` - Global search & replace (Spectre)
-- `<leader>sw` - Replace word under cursor
-- `<leader>sf` - Replace in current file
+| Key              | Action                                          |
+| ---------------- | ----------------------------------------------- |
+| `/pattern`       | Search forward                                  |
+| `?pattern`       | Search backward                                 |
+| `n` / `N`        | Next / prev match (centered)                    |
+| `*` / `#`        | Search word under cursor                        |
+| `<leader>nh`     | Clear search highlight                          |
+| `:%s/old/new/g`  | Replace all in file                             |
+| `:%s/old/new/gc` | Replace all with confirmation                   |
+| `:s/old/new/g`   | Replace in current line                         |
+| `<leader>sr`     | **Spectre** — project-wide search & replace     |
+| `<leader>sw`     | **Spectre** — replace current word project-wide |
+| `<leader>sf`     | **Spectre** — replace in current file           |
 
-### Flash (Fast Navigation)
+---
 
-- `s` - Jump to any visible text
-- `S` - Jump using treesitter
+## 🪟 Windows / Splits
 
-## 🐛 LSP & Diagnostics
+| Key                    | Action                            |
+| ---------------------- | --------------------------------- |
+| `<leader>wv`           | Split vertical                    |
+| `<leader>ws`           | Split horizontal                  |
+| `<leader>we`           | Make splits equal size            |
+| `<leader>wx`           | Close current split               |
+| `<C-h/j/k/l>`          | Move between splits               |
+| `<leader>wh/j/k/l`     | Move between splits (alternative) |
+| `:resize +5`           | Increase split height             |
+| `:vertical resize +10` | Increase split width              |
 
-### Navigation & Documentation
+---
 
-- `gd` - Go to definition (LSPSaga)
-- `gp` - Peek definition (floating window)
-- `gr` - Go to references
-- `gi` - Go to implementation
-- `K` - Hover documentation (LSPSaga enhanced)
-- `<leader>cf` - LSP Finder (all references/definitions)
-- `<leader>co` - Symbol outline (document structure)
+## 📁 File & Buffer Management
 
-### Code Actions & Refactoring
+| Key               | Action                      |
+| ----------------- | --------------------------- |
+| `<Shift-l>`       | Next buffer                 |
+| `<Shift-h>`       | Previous buffer             |
+| `<leader>bd`      | Delete buffer (keep layout) |
+| `<leader>bD`      | Force delete buffer         |
+| `<leader>e`       | File explorer (Neo-tree)    |
+| `<leader>fe`      | File explorer (focus)       |
+| `<leader><space>` | Find files (Telescope)      |
+| `<C-a>`           | Select all                  |
+| `<C-s>`           | Save                        |
+| `:wa`             | Save all                    |
+| `:qa!`            | Force quit all              |
 
-- `<leader>ca` - Code actions (enhanced preview)
-- `<leader>ci` - Auto import missing symbol (TS/JS)
-- `<leader>cr` - Rename symbol (incremental with preview)
-- `<leader>rn` - Rename symbol (alternative)
+---
 
-### Diagnostics (Errors/Warnings)
+## 🔭 Telescope — Fuzzy Finder
 
-- `]d` - Next diagnostic (LSPSaga)
-- `[d` - Previous diagnostic (LSPSaga)
-- `<leader>cd` - Show line diagnostics (LSPSaga)
-- `<leader>xx` - Open diagnostics (Trouble)
-- `<leader>do` - Show diagnostic float
+> Think: **VSCode Ctrl+P** but much more powerful
 
-## 🔧 Formatting & Linting
+| Key               | Action                          |
+| ----------------- | ------------------------------- |
+| `<leader><space>` | Find files                      |
+| `<leader>ff`      | Find files (explicit)           |
+| `<leader>fg`      | Live grep (search in all files) |
+| `<leader>fw`      | Find word under cursor          |
+| `<leader>fb`      | Find open buffers               |
+| `<leader>fs`      | Document symbols                |
+| `<leader>fS`      | Workspace symbols               |
+| `<leader>fd`      | Diagnostics                     |
+| `<leader>fh`      | Help tags                       |
+| `<leader>fk`      | Keymaps                         |
+| `<leader>fc`      | Commands                        |
+| `<leader>fF`      | File browser                    |
+| `<leader>f:`      | Command history                 |
+| `<leader>f/`      | Search history                  |
 
-- Auto-formats on save
-- `<leader>cf` - Manual format
-- `:ConformInfo` - Check formatter status
-- `:LspInfo` - Check LSP status
+**Inside Telescope:**
 
-## 🔄 Refactoring (refactoring.nvim)
+| Key               | Action                   |
+| ----------------- | ------------------------ |
+| `<C-j>` / `<C-k>` | Move up/down             |
+| `<CR>`            | Open file                |
+| `<C-v>`           | Open in vertical split   |
+| `<C-x>`           | Open in horizontal split |
+| `<C-t>`           | Open in new tab          |
+| `<C-q>`           | Send all to quickfix     |
+| `<Tab>`           | Multi-select             |
+| `<Esc>` / `q`     | Close                    |
 
-### Extract & Inline (Visual Mode)
+---
 
-- `<leader>re` - Extract function
-- `<leader>rf` - Extract function to file
-- `<leader>rv` - Extract variable
-- `<leader>ri` - Inline variable (normal or visual)
+## 🤖 LSP — Language Server (IDE Features)
 
-## 📦 Git Integration
+> Works for TS, TSX, React, Next, Astro, Python, FastAPI, Prisma, React Native...
 
-### LazyGit
+| Key                   | Action                               |
+| --------------------- | ------------------------------------ |
+| `K`                   | Hover documentation                  |
+| `gd`                  | Go to definition                     |
+| `gD`                  | Go to declaration                    |
+| `gr`                  | Find all references                  |
+| `gi`                  | Go to implementation                 |
+| `gp`                  | **Peek** definition (inline preview) |
+| `<leader>cf`          | LSP Finder (all occurrences)         |
+| `<leader>co`          | Symbol outline                       |
+| `<leader>ca`          | Code actions (with preview)          |
+| `<leader>cr`          | **Rename** symbol (live rename)      |
+| `<F2>`                | Rename symbol (VSCode style)         |
+| `<F12>`               | Go to definition (VSCode style)      |
+| `<Alt-F12>`           | Peek definition                      |
+| `<Shift-F12>`         | Find references                      |
+| `[d` / `]d`           | Prev / next diagnostic               |
+| `<F8>` / `<Shift-F8>` | Next / prev diagnostic               |
+| `<leader>cd`          | Show line diagnostics                |
+| `<leader>do`          | Open diagnostic float                |
+| `<leader>dl`          | List all diagnostics                 |
+| `<leader>ci`          | Import missing symbol (TS/JS)        |
+| `<Shift-Alt-f>`       | Format document                      |
 
-- `<leader>gg` - Open LazyGit
-- `<leader>gf` - LazyGit current file
-- `<leader>gc` - View commits
+---
 
-### Gitsigns
+## 🔧 Code Actions & Refactoring
 
-- `]h` / `[h` - Next/prev hunk
-- `<leader>hs` - Stage hunk
-- `<leader>hr` - Reset hunk
-- `<leader>hp` - Preview hunk
-- `<leader>hb` - Blame line
-- `<leader>gb` - Toggle inline blame
-- `<leader>hd` - Diff this file
+| Key          | Action                            |
+| ------------ | --------------------------------- |
+| `<leader>ca` | Code actions menu                 |
+| `<leader>cr` | Rename symbol                     |
+| `<leader>re` | Extract function (visual mode)    |
+| `<leader>rf` | Extract function to file (visual) |
+| `<leader>rv` | Extract variable (visual)         |
+| `<leader>ri` | Inline variable                   |
 
-### DiffView
+---
 
-- `<leader>gd` - Open diff view
-- `<leader>gh` - File history
-- `<leader>gH` - Repo history
+## 💬 Comments
 
-### Git Conflicts
+| Key            | Action                                                |
+| -------------- | ----------------------------------------------------- |
+| `gcc`          | Toggle line comment                                   |
+| `gbc`          | Toggle block comment                                  |
+| `gc` + motion  | Comment with motion (e.g. `gcip` = comment paragraph) |
+| `gc` in visual | Comment selected lines                                |
 
-- `co` - Choose ours
-- `ct` - Choose theirs
-- `cb` - Choose both
-- `]x` / `[x` - Navigate conflicts
+> Context-aware: uses `{/* */}` inside JSX, `//` in JS/TS
 
-## 🗄️ Database (vim-dadbod-ui)
+---
 
-- `<leader>db` - Toggle database UI
-- Navigate and query databases directly in Neovim
+## 🔤 Surround (`nvim-surround`)
 
-## 🌐 HTTP/REST API Testing (kulala)
+| Key         | Action                             |
+| ----------- | ---------------------------------- |
+| `ysiw"`     | Surround word with `"`             |
+| `ysiw(`     | Surround word with `( )`           |
+| `ysip<div>` | Surround paragraph with `<div>`    |
+| `cs"'`      | Change surrounding `"` to `'`      |
+| `cs({`      | Change surrounding `(` to `{`      |
+| `dst`       | Delete surrounding HTML/JSX tag    |
+| `ds"`       | Delete surrounding `"`             |
+| `S"`        | Surround visual selection with `"` |
 
-Create `.http` files with requests:
+---
 
-```http
-### Test API
-GET https://api.example.com/users
-Content-Type: application/json
+## 🗂️ Harpoon — Bookmark Files
 
-{
-  "name": "test"
-}
+> Your most-used files, instantly accessible. Essential for Next.js projects.
+
+| Key          | Action                      |
+| ------------ | --------------------------- |
+| `<leader>ha` | Add current file to Harpoon |
+| `<leader>hh` | Toggle Harpoon menu         |
+| `<leader>h1` | Jump to Harpoon file 1      |
+| `<leader>h2` | Jump to Harpoon file 2      |
+| `<leader>h3` | Jump to Harpoon file 3      |
+| `<leader>h4` | Jump to Harpoon file 4      |
+
+> **Workflow tip**: Harpoon `page.tsx` → `api/route.ts` → `schema.prisma` → `.env`
+
+---
+
+## 🌿 Git
+
+### Gitsigns (inline diff)
+
+| Key          | Action                   |
+| ------------ | ------------------------ |
+| `]h` / `[h`  | Next / prev hunk         |
+| `<leader>hs` | Stage hunk               |
+| `<leader>hr` | Reset hunk               |
+| `<leader>hS` | Stage entire file        |
+| `<leader>hu` | Undo stage hunk          |
+| `<leader>hp` | Preview hunk diff        |
+| `<leader>hb` | Full blame for line      |
+| `<leader>gB` | Toggle inline blame      |
+| `<leader>hd` | Diff this file           |
+| `ih`         | Text object: select hunk |
+
+### Lazygit (full TUI)
+
+| Key          | Action        |
+| ------------ | ------------- |
+| `<leader>gg` | Open Lazygit  |
+| `<leader>gG` | Lazygit (cwd) |
+| `<leader>gl` | Lazygit log   |
+
+### Telescope Git
+
+| Key          | Action         |
+| ------------ | -------------- |
+| `<leader>gc` | Browse commits |
+| `<leader>gs` | Git status     |
+| `<leader>gb` | Git branches   |
+
+### Diffview
+
+| Key          | Action         |
+| ------------ | -------------- |
+| `<leader>gd` | Open diff view |
+| `<leader>gh` | File history   |
+| `<leader>gH` | Repo history   |
+
+### Git Conflict Resolution
+
+| Key         | Action               |
+| ----------- | -------------------- |
+| `co`        | Accept ours          |
+| `ct`        | Accept theirs        |
+| `cb`        | Accept both          |
+| `c0`        | Accept none          |
+| `]x` / `[x` | Next / prev conflict |
+
+---
+
+## 📟 Terminal
+
+| Key          | Action                       |
+| ------------ | ---------------------------- |
+| `<C-\>`      | Toggle terminal (horizontal) |
+| `<leader>tf` | Float terminal               |
+| `<leader>th` | Horizontal terminal          |
+| `<leader>tv` | Vertical terminal            |
+
+---
+
+## 🔴 Diagnostics & Trouble
+
+| Key          | Action                        |
+| ------------ | ----------------------------- |
+| `<leader>xx` | Project diagnostics (Trouble) |
+| `<leader>xX` | Buffer diagnostics (Trouble)  |
+| `<leader>cs` | Document symbols (Trouble)    |
+| `<leader>xQ` | Quickfix list (Trouble)       |
+| `<leader>ft` | Find TODO/FIXME comments      |
+
+---
+
+## 💾 Sessions & Focus
+
+| Key          | Action                              |
+| ------------ | ----------------------------------- |
+| `<leader>qs` | Restore session for current dir     |
+| `<leader>ql` | Restore last session                |
+| `<leader>z`  | Zen mode (distraction-free)         |
+| `<leader>ut` | Toggle Twilight (dim inactive code) |
+
+---
+
+## 🔁 Code Folding
+
+| Key         | Action                   |
+| ----------- | ------------------------ |
+| `zR`        | Open ALL folds           |
+| `zM`        | Close ALL folds          |
+| `za`        | Toggle fold under cursor |
+| `zo` / `zc` | Open / close fold        |
+
+---
+
+## 📊 Line Operations
+
+| Key                | Action                   |
+| ------------------ | ------------------------ |
+| `<Alt-Down>`       | Move line/selection down |
+| `<Alt-Up>`         | Move line/selection up   |
+| `<Alt-Shift-Down>` | Duplicate line down      |
+| `<Alt-Shift-Up>`   | Duplicate line up        |
+| `J`                | Join line below          |
+| `>>` / `<<`        | Indent / unindent line   |
+
+---
+
+## 🌐 HTTP / API Testing (Kulala)
+
+> Works with `.http` files — great for FastAPI testing
+
+| Key                         | Action               |
+| --------------------------- | -------------------- |
+| `<leader>rs`                | Send HTTP request    |
+| `<leader>rt`                | Toggle response view |
+| `<leader>rp` / `<leader>rn` | Prev / next request  |
+| `<leader>rc`                | Copy as cURL         |
+
+---
+
+## 🔧 Mason / LSP Management
+
+| Command         | Action                  |
+| --------------- | ----------------------- |
+| `:Mason`        | Open Mason installer UI |
+| `:LspInfo`      | Show active LSP servers |
+| `:LspRestart`   | Restart LSP             |
+| `:checkhealth`  | Full health check       |
+| `:Lazy`         | Plugin manager          |
+| `:Lazy sync`    | Update all plugins      |
+| `:Lazy profile` | Show startup time       |
+
+---
+
+## ⚡ Real-World Power Combos
+
+### Rename a component/variable across project
+
+```
+cursor on name → <leader>cr  (or <F2>)
 ```
 
-- `<leader>rs` - Send request
-- `<leader>rt` - Toggle response view
-- `<leader>rn` - Next request
-- `<leader>rp` - Previous request
+### Find all usages of a hook / function
 
-## 💻 Terminal
+```
+gr              → telescope with all references
+<Shift-F12>     → same
+```
 
-- `<C-\>` - Toggle terminal
-- `<leader>tf` - Float terminal
-- `<leader>th` - Horizontal terminal
-- `<leader>tv` - Vertical terminal
+### Fix a missing TS import
 
-## 🎯 Session Management
+```
+<leader>ci      → auto-import missing symbol
+<leader>ca      → code actions → add import
+```
 
-- `<leader>qs` - Restore session
-- `<leader>ql` - Restore last session
-- `<leader>qd` - Don't save current session
+### Project-wide search & replace
 
-## 📋 Folding
+```
+<leader>fw      → grep current word
+<leader>sr      → Spectre for replace
+```
 
-- `za` - Toggle fold under cursor
-- `zR` - Open all folds
-- `zM` - Close all folds
-- `zo` - Open fold
-- `zc` - Close fold
+### Work on 4 files simultaneously (Next.js)
 
-## 🎨 UI & Focus
+```
+<leader>ha each file → <leader>h1-4 to jump between them
+```
 
-- `<leader>z` - Zen mode (distraction-free)
-- `<leader>ut` - Toggle twilight (dim inactive code)
-- `<leader>sn` - Show notification history
-- `<leader>sd` - Dismiss all notifications
+> E.g.: `page.tsx` → `route.ts` → `schema.prisma` → `.env`
 
-## 🔍 TODO Comments
+### Stage only some changes (not entire file)
 
-- `<leader>ft` - Find todos
-- Highlights: TODO, FIXME, HACK, WARN, PERF, NOTE
+```
+]h / [h         → navigate hunks
+<leader>hs      → stage just that hunk
+<leader>gg      → lazygit to commit
+```
 
-## 📊 Performance
+### Collapse all to see file structure
 
-- `:Lazy profile` - View plugin load times
-- `:checkhealth lazy` - Check lazy.nvim health
-- `:LspInfo` - Check LSP status
-- `:Mason` - Check installed tools
+```
+zM              → close all folds
+<leader>co      → LSP symbol outline
+```
 
-## 🎨 Languages Configured
+### Change JSX prop value
 
-- JavaScript/TypeScript (vtsls)
-- React/Next.js/Astro
-- Python (pyright)
-- HTML/CSS/SCSS
-- TailwindCSS
-- JSON/YAML (with schemas)
-- SQL
-- Docker
-- Bash/Shell
-- Prisma
-- Markdown
-- Lua
+```
+cursor on "value" → ci"  → type new value
+```
 
-## 🛠️ Formatters Installed
+### Wrap JSX element in a div
 
-- Prettier (JS/TS/CSS/HTML/JSON)
-- Black (Python)
-- stylua (Lua)
-- shfmt (Shell)
-- sql-formatter (SQL)
+```
+cursor inside → ysit → type div → Enter
+```
 
-## 🔍 Linters Installed
+### Extract repeated JSX into component
 
-- eslint_d (JS/TS)
-- pylint (Python)
-- markdownlint (Markdown)
-- hadolint (Docker)
-- shellcheck (Shell)
-- sqlfluff (SQL)
+```
+visually select → <leader>re  → Extract Function
+```
 
-## 🚨 Troubleshooting
+---
 
-1. **Slow startup?**
+## 🎨 UI Toggles
 
-   - Run `:Lazy profile` to find slow plugins
-   - Check `:checkhealth`
+| Key          | Action                     |
+| ------------ | -------------------------- |
+| `<leader>uh` | Toggle inlay hints         |
+| `<leader>ud` | Toggle diagnostics         |
+| `<leader>ul` | Toggle line numbers        |
+| `<leader>uw` | Toggle word wrap           |
+| `<leader>us` | Toggle spell check         |
+| `<leader>uf` | Toggle auto-format on save |
+| `<leader>sd` | Dismiss notifications      |
 
-2. **LSP not working?**
+---
 
-   - Run `:LspInfo`
-   - Check `:Mason` for installed servers
+## 📝 Handy `:` Commands
 
-3. **Formatter not working?**
+```vim
+:nohl               " clear search highlight
+:retab              " convert tabs to spaces
+:%s/old/new/gc      " replace all with confirmation
+:sort               " sort selected lines
+:g/pattern/d        " delete all lines matching pattern
+:v/pattern/d        " delete all lines NOT matching
+:norm A;            " append ; to end of each selected line
+```
 
-   - Run `:ConformInfo`
-   - Check if `.eslintrc` exists for ESLint
+---
 
-4. **Plugin not loading?**
-
-   - Run `:Lazy` and press `X` to clear failed
-   - Press `S` to sync
-
-5. **Python slow?**
-   - Already configured in options.lua
-   - Check `which python3`
-
-## 📚 Learn More
-
-- LazyVim docs: https://www.lazyvim.org
-- Press `<leader>` and wait to see available commands
-- Press `?` in `:Lazy` for help
-- Use `:help <topic>` for Neovim help
+_Config: LazyVim | Location: `~/.config/nvim` → `~/dotfiles/config/.config/nvim`_
+_LSPs: vtsls (TS/JS/RN), pyright (Python), tailwindcss, astro, prismals, dockerls, html, cssls, jsonls, yamlls_
+_Formatters: prettier (JS/TS/CSS/HTML), black (Python), stylua (Lua), shfmt (Shell)_
+_Linters: eslint_d (JS/TS), markdownlint, hadolint (Docker), shellcheck, yamllint_
