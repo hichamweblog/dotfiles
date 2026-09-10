@@ -269,6 +269,19 @@ return {
       bigfile = { enabled = true },
       quickfile = { enabled = true },
       statuscolumn = { enabled = false }, -- Let lualine handle it
+      picker = {
+        sources = {
+          explorer = {
+            layout = {
+              layout = {
+                position = "right",
+                width = 25,
+                min_width = 25,
+              },
+            },
+          },
+        },
+      },
     },
   },
 }

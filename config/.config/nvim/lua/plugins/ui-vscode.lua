@@ -80,8 +80,8 @@ return {
       },
 
       window = {
-        position = "left",
-        width = 35,
+        position = "right",
+        width = 25,
         mappings = {
           ["<space>"] = "none",
           ["<cr>"] = "open",
