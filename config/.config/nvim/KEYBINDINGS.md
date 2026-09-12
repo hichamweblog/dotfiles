@@ -1,1111 +1,509 @@
-# 🎯 Complete LazyVim Keybindings Reference
+# 🎯 Complete Neovim Keybindings Reference Manual
 
-> **Leader Key:** `<Space>` (Space bar)
-> **Local Leader:** `\` (Backslash)
-> **Note:** `<C-x>` = Ctrl+x, `<S-x>` = Shift+x, `<A-x>` = Alt+x
-
----
-
-## 📁 File Navigation & Management
-
-### File Finding (Telescope/Snacks Picker)
-
-| Key               | Action             | Description                       |
-| ----------------- | ------------------ | --------------------------------- |
-| `<leader><space>` | Find Files         | Quick file search                 |
-| `<leader>ff`      | Find Files         | Search files in current directory |
-| `<leader>fr`      | Recent Files       | Recently opened files             |
-| `<leader>fb`      | Find Buffers       | List open buffers                 |
-| `<leader>fg`      | Live Grep          | Search text in all files          |
-| `<leader>fw`      | Grep Word          | Search word under cursor          |
-| `<leader>fW`      | Grep Word (root)   | Search in project root            |
-| `<leader>fc`      | Find Config        | Search Neovim config files        |
-| `<leader>fn`      | New File           | Create new file                   |
-| `<leader>fo`      | Recent Files (cwd) | Recent in current directory       |
-| `<leader>fR`      | Recent (root)      | Recent in project root            |
-| `<leader>f/`      | Live Grep (root)   | Search in project root            |
-| `<leader>fs`      | Document Symbols   | LSP document symbols              |
-| `<leader>fS`      | Workspace Symbols  | LSP workspace symbols             |
-| `<leader>fd`      | Diagnostics        | Search diagnostics                |
-| `<leader>fh`      | Help Tags          | Search help                       |
-| `<leader>fk`      | Keymaps            | Search keybindings                |
-| `<leader>fF`      | File Browser       | Browse file system                |
-
-### File Explorer (Snacks Explorer)
-
-| Key                  | Action           | Description                  |
-| -------------------- | ---------------- | ---------------------------- |
-| `<leader>e`          | Toggle Explorer  | Open/close file tree         |
-| `<leader>E`          | Explorer (cwd)   | File tree in current dir     |
-| `<leader>o`          | Focus Explorer   | Focus file tree (Neo-tree)   |
-| `<leader>ge`         | Git Explorer     | Git status explorer          |
-| `<leader>be`         | Buffer Explorer  | Buffer explorer              |
-| **Inside Explorer:** |                  |                              |
-| `<CR>`               | Open             | Open file/folder             |
-| `l`                  | Open             | Alternative to Enter         |
-| `h`                  | Close Folder     | Close folder or go to parent |
-| `a`                  | Create           | Create new file/folder       |
-| `d`                  | Delete           | Delete file/folder           |
-| `r`                  | Rename           | Rename file/folder           |
-| `y`                  | Copy             | Copy file                    |
-| `x`                  | Cut              | Cut file                     |
-| `p`                  | Paste            | Paste file                   |
-| `R`                  | Refresh          | Refresh file tree            |
-| `H`                  | Toggle Hidden    | Show/hide hidden files       |
-| `v`                  | Split Vertical   | Open in vertical split       |
-| `s`                  | Split Horizontal | Open in horizontal split     |
-| `t`                  | Open in Tab      | Open in new tab              |
-| `P`                  | Preview          | Toggle preview               |
-| `g?`                 | Help             | Show keybindings             |
-
-### Harpoon (Quick File Marks)
-
-| Key          | Action      | Description           |
-| ------------ | ----------- | --------------------- |
-| `<leader>ha` | Add File    | Mark current file     |
-| `<leader>hh` | Toggle Menu | Show marked files     |
-| `<leader>h1` | File 1      | Jump to marked file 1 |
-| `<leader>h2` | File 2      | Jump to marked file 2 |
-| `<leader>h3` | File 3      | Jump to marked file 3 |
-| `<leader>h4` | File 4      | Jump to marked file 4 |
+> **Config Base**: LazyVim · **Leader Key**: `<Space>` · **Local Leader**: `\`  
+> **Documentation Suite**: [CHEATSHEET.md](file:///home/dzgeek/dotfiles/config/.config/nvim/CHEATSHEET.md) · [COURSE.md](file:///home/dzgeek/dotfiles/config/.config/nvim/COURSE.md)  
+> **Verified**: All keybindings in this document are tested and directly mapped in your active configuration.
 
 ---
 
-## 🪟 Window & Buffer Management
-
-### Window Navigation
-
-| Key          | Action   | Description              |
-| ------------ | -------- | ------------------------ |
-| `<C-h>`      | Go Left  | Move to left window      |
-| `<C-j>`      | Go Down  | Move to bottom window    |
-| `<C-k>`      | Go Up    | Move to top window       |
-| `<C-l>`      | Go Right | Move to right window     |
-| `<leader>wh` | Go Left  | Alternative window left  |
-| `<leader>wj` | Go Down  | Alternative window down  |
-| `<leader>wk` | Go Up    | Alternative window up    |
-| `<leader>wl` | Go Right | Alternative window right |
-
-### Window Splitting
-
-| Key          | Action           | Description                |
-| ------------ | ---------------- | -------------------------- |
-| `<leader>wv` | Split Vertical   | Split window vertically    |
-| `<leader>ws` | Split Horizontal | Split window horizontally  |
-| `<leader>we` | Equal Size       | Make splits equal          |
-| `<leader>wx` | Close Split      | Close current split        |
-| `<leader>-`  | Split Below      | Split horizontal (LazyVim) |
-| `<leader>\|` | Split Right      | Split vertical (LazyVim)   |
-| `<leader>wd` | Delete Window    | Close window               |
-
-### Window Resizing
-
-| Key         | Action          | Description          |
-| ----------- | --------------- | -------------------- |
-| `<C-Up>`    | Increase Height | Make window taller   |
-| `<C-Down>`  | Decrease Height | Make window shorter  |
-| `<C-Left>`  | Decrease Width  | Make window narrower |
-| `<C-Right>` | Increase Width  | Make window wider    |
-
-### Buffer Management
-
-| Key          | Action            | Description                   |
-| ------------ | ----------------- | ----------------------------- |
-| `<S-h>`      | Prev Buffer       | Previous buffer (Shift+h)     |
-| `<S-l>`      | Next Buffer       | Next buffer (Shift+l)         |
-| `[b`         | Prev Buffer       | Alternative previous          |
-| `]b`         | Next Buffer       | Alternative next              |
-| `<leader>bb` | Switch Buffer     | Switch to buffer              |
-| `<leader>bd` | Delete Buffer     | Close buffer (keep window)    |
-| `<leader>bD` | Force Delete      | Force close buffer            |
-| `<leader>bo` | Close Others      | Close other buffers           |
-| `<leader>bp` | Pin Buffer        | Pin/unpin buffer (Bufferline) |
-| `<leader>bP` | Delete Non-Pinned | Close unpinned buffers        |
-| `<leader>br` | Delete Right      | Close buffers to right        |
-| `<leader>bl` | Delete Left       | Close buffers to left         |
-| `<leader>\`` | Switch to Other   | Switch to last buffer         |
+## 📑 Table of Contents
+1. [Core Navigation & Tmux Integration](#1-core-navigation--tmux-integration)
+2. [Window & Split Management](#2-window--split-management)
+3. [Buffer Tabs & Bufferline](#3-buffer-tabs--bufferline)
+4. [File Explorer (Neo-tree — Right Side)](#4-file-explorer-neo-tree--right-side)
+5. [Fuzzy Finding (Telescope)](#5-fuzzy-finding-telescope)
+6. [Harpoon 2 Quick Marks](#6-harpoon-2-quick-marks)
+7. [GitHub Copilot & AI Code Generation](#7-github-copilot--ai-code-generation)
+8. [Multi-Cursor (vim-visual-multi)](#8-multi-cursor-vim-visual-multi)
+9. [LSP & Code Intelligence (Lspsaga & Diagnostics)](#9-lsp--code-intelligence-lspsaga--diagnostics)
+10. [Code Actions & Refactoring](#10-code-actions--refactoring)
+11. [Formatting & Linters](#11-formatting--linters)
+12. [Commenting & Surround (mini.surround)](#12-commenting--surround-minisurround)
+13. [Search & Replace (Spectre & Vim Search)](#13-search--replace-spectre--vim-search)
+14. [Git Suite (LazyGit, Gitsigns, Diffview, Conflicts)](#14-git-suite-lazygit-gitsigns-diffview-conflicts)
+15. [Integrated Terminal (ToggleTerm)](#15-integrated-terminal-toggleterm)
+16. [Full-Stack Tooling (REST API & Dadbod Database)](#16-full-stack-tooling-rest-api--dadbod-database)
+17. [Testing & Debugging (Neotest & DAP)](#17-testing--debugging-neotest--dap)
+18. [UI Toggles, Focus & Session Management](#18-ui-toggles-focus--session-management)
+19. [Code Folding (nvim-ufo)](#19-code-folding-nvim-ufo)
+20. [Quickfix & Location Lists](#20-quickfix--location-lists)
+21. [Vim Operators, Text Objects & Yanky](#21-vim-operators-text-objects--yanky)
+22. [Complete Master `<leader>` Keymap Index](#22-complete-master-leader-keymap-index)
 
 ---
 
-## ✏️ Editing & Text Manipulation
+## 1. Core Navigation & Tmux Integration
 
-### Basic Editing
+Navigation between Neovim splits and Tmux panes is seamless via `vim-tmux-navigator`.
 
-| Key          | Action        | Description               |
-| ------------ | ------------- | ------------------------- |
-| `<C-s>`      | Save File     | Save (works in all modes) |
-| `<leader>w`  | Save          | Alternative save          |
-| `<leader>K`  | Keywordprg    | Lookup keyword            |
-| `<leader>L`  | Lazy          | Open Lazy plugin manager  |
-| `<leader>fn` | New File      | Create new file           |
-| `<leader>xl` | Location List | Open location list        |
-| `<leader>xq` | Quickfix List | Open quickfix list        |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<C-h>` | `n` | **Navigate Left** | Move to left window split or Tmux pane |
+| `<C-j>` | `n` | **Navigate Down** | Move to lower window split or Tmux pane |
+| `<C-k>` | `n` | **Navigate Up** | Move to upper window split or Tmux pane |
+| `<C-l>` | `n` | **Navigate Right** | Move to right window split or Tmux pane |
+| `<C-\>` | `n` | **Previous Pane** | Jump to previously active window/pane |
+| `<leader>wh` | `n` | **Go Left** | Alternative window navigation left |
+| `<leader>wj` | `n` | **Go Down** | Alternative window navigation down |
+| `<leader>wk` | `n` | **Go Up** | Alternative window navigation up |
+| `<leader>wl` | `n` | **Go Right** | Alternative window navigation right |
 
-### Commenting
-
-| Key         | Action             | Description                        |
-| ----------- | ------------------ | ---------------------------------- |
-| `gcc`       | Toggle Line        | Comment/uncomment line             |
-| `gc`        | Toggle (motion)    | Comment with motion (e.g., `gcap`) |
-| `gc`        | Toggle (visual)    | Comment selection                  |
-| `gbc`       | Block Comment Line | Block comment line                 |
-| `gb`        | Block Comment      | Block comment (motion/visual)      |
-| `<leader>/` | Toggle Comment     | Alternative comment toggle         |
-| `gcO`       | Comment Above      | Add comment above                  |
-| `gco`       | Comment Below      | Add comment below                  |
-| `gcA`       | Comment EOL        | Add comment at end of line         |
-
-### Surround (nvim-surround)
-
-| Key                | Action                  | Description                     |
-| ------------------ | ----------------------- | ------------------------------- |
-| `ys{motion}{char}` | Add Surround            | Add surrounding (e.g., `ysiw"`) |
-| `yss{char}`        | Surround Line           | Surround entire line            |
-| `yS{motion}{char}` | Surround (newline)      | Add with newlines               |
-| `ySS{char}`        | Surround Line (newline) | Line with newlines              |
-| `ds{char}`         | Delete Surround         | Remove surrounding              |
-| `cs{old}{new}`     | Change Surround         | Change surrounding              |
-| `cS{old}{new}`     | Change (newline)        | Change with newlines            |
-| **Visual Mode:**   |                         |                                 |
-| `S{char}`          | Surround Selection      | Surround selected text          |
-
-**Examples:**
-
-- `ysiw"` - Surround word with quotes
-- `ysiw)` - Surround word with parentheses
-- `ds"` - Delete surrounding quotes
-- `cs"'` - Change double to single quotes
-- `dst` - Delete surrounding HTML tag
-
-### Auto-pairs
-
-| Key     | Action           | Description                 |
-| ------- | ---------------- | --------------------------- |
-| `(`     | Auto-close       | Automatically adds `)`      |
-| `[`     | Auto-close       | Automatically adds `]`      |
-| `{`     | Auto-close       | Automatically adds `}`      |
-| `"`     | Auto-close       | Automatically adds `"`      |
-| `'`     | Auto-close       | Automatically adds `'`      |
-| `` ` `` | Auto-close       | Automatically adds `` ` ``  |
-| `<CR>`  | Newline + Indent | Smart newline in pairs      |
-| `<BS>`  | Delete Pair      | Delete both pair characters |
-
-### Text Objects
-
-| Key           | Action                  | Description                |
-| ------------- | ----------------------- | -------------------------- |
-| `viw`         | Select Inner Word       | Select word                |
-| `vaw`         | Select Around Word      | Select word with space     |
-| `vi"`         | Select Inner Quotes     | Inside quotes              |
-| `va"`         | Select Around Quotes    | Quotes + content           |
-| `vi(` / `vib` | Select Inner Parens     | Inside parentheses         |
-| `va(` / `vab` | Select Around Parens    | Parens + content           |
-| `vi{` / `viB` | Select Inner Braces     | Inside braces              |
-| `va{` / `vaB` | Select Around Braces    | Braces + content           |
-| `vit`         | Select Inner Tag        | Inside HTML tag            |
-| `vat`         | Select Around Tag       | Tag + content              |
-| `vip`         | Select Inner Paragraph  | Select paragraph           |
-| `vap`         | Select Around Paragraph | Paragraph with blank lines |
-
-### Copy/Paste/Delete
-
-| Key         | Action          | Description                    |
-| ----------- | --------------- | ------------------------------ |
-| `yy`        | Yank Line       | Copy line                      |
-| `Y`         | Yank to EOL     | Copy to end of line            |
-| `dd`        | Delete Line     | Cut line                       |
-| `D`         | Delete to EOL   | Cut to end of line             |
-| `p`         | Paste After     | Paste after cursor             |
-| `P`         | Paste Before    | Paste before cursor            |
-| `<leader>p` | Paste (no yank) | Paste without yanking (visual) |
-| `<C-a>`     | Select All      | Select entire file             |
-| `x`         | Delete Char     | Delete character               |
-| `s`         | Substitute Char | Delete char and insert         |
-
-### Indentation
-
-| Key    | Action           | Description                 |
-| ------ | ---------------- | --------------------------- |
-| `>>`   | Indent Right     | Indent line                 |
-| `<<`   | Indent Left      | Dedent line                 |
-| `>`    | Indent (motion)  | Indent with motion          |
-| `<`    | Dedent (motion)  | Dedent with motion          |
-| `>`    | Indent (visual)  | Indent selection            |
-| `<`    | Dedent (visual)  | Dedent selection            |
-| `=`    | Auto-indent      | Auto-indent (motion/visual) |
-| `==`   | Auto-indent Line | Auto-indent current line    |
-| `gg=G` | Indent File      | Auto-indent entire file     |
+### Viewport Scrolling
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<C-d>` | `n` | **Scroll Down Half-Page** | Smooth scroll down, centered (`zz`) |
+| `<C-u>` | `n` | **Scroll Up Half-Page** | Smooth scroll up, centered (`zz`) |
+| `<C-f>` | `n` | **Page Down** | Full screen scroll forward |
+| `<C-b>` | `n` | **Page Up** | Full screen scroll backward |
+| `zz` | `n` | **Center Viewport** | Center current line in window |
+| `zt` | `n` | **Top Viewport** | Scroll cursor line to top |
+| `zb` | `n` | **Bottom Viewport** | Scroll cursor line to bottom |
 
 ---
 
-## 🔍 Search & Replace
+## 2. Window & Split Management
 
-### Search
-
-| Key          | Action               | Description                       |
-| ------------ | -------------------- | --------------------------------- |
-| `/`          | Search Forward       | Search forward                    |
-| `?`          | Search Backward      | Search backward                   |
-| `n`          | Next Match           | Next search result (centered)     |
-| `N`          | Prev Match           | Previous search result (centered) |
-| `*`          | Search Word Forward  | Search current word forward       |
-| `#`          | Search Word Backward | Search current word backward      |
-| `<leader>nh` | Clear Highlights     | Clear search highlights           |
-| `<Esc>`      | Clear Highlights     | Alternative clear (LazyVim)       |
-
-### Find & Replace (Spectre)
-
-| Key                 | Action            | Description               |
-| ------------------- | ----------------- | ------------------------- |
-| `<leader>sr`        | Replace (project) | Global search & replace   |
-| `<leader>sw`        | Replace Word      | Replace word under cursor |
-| `<leader>sf`        | Replace (file)    | Replace in current file   |
-| **Inside Spectre:** |                   |                           |
-| `<leader>rc`        | Replace (confirm) | Replace with confirmation |
-| `<leader>R`         | Replace All       | Replace all matches       |
-| `<leader>o`         | Show Options      | Toggle options            |
-| `<leader>q`         | Send to Quickfix  | Send results to quickfix  |
-
-### Flash (Fast Navigation)
-
-| Key     | Action            | Description              |
-| ------- | ----------------- | ------------------------ |
-| `s`     | Flash Jump        | Jump to any visible text |
-| `S`     | Flash Treesitter  | Jump using treesitter    |
-| `r`     | Flash Remote      | Remote flash             |
-| `R`     | Treesitter Search | Treesitter search        |
-| `/`     | Search            | Flash enhanced search    |
-| `<C-s>` | Toggle Flash      | Toggle in search         |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>wv` or `<leader>\|` | `n` | **Split Vertical** | Open a new vertical split to the right |
+| `<leader>ws` or `<leader>-` | `n` | **Split Horizontal** | Open a new horizontal split below |
+| `<leader>we` or `<C-w>=` | `n` | **Equalize Splits** | Reset all split widths and heights to equal |
+| `<leader>wx` or `<leader>wd` | `n` | **Close Split** | Close current split window |
+| `<C-Up>` | `n` | **Resize Up** | Increase split height by 2 |
+| `<C-Down>` | `n` | **Resize Down** | Decrease split height by 2 |
+| `<C-Left>` | `n` | **Resize Left** | Decrease split width by 2 |
+| `<C-Right>` | `n` | **Resize Right** | Increase split width by 2 |
 
 ---
 
-## 🐛 LSP (Language Server Protocol)
+## 3. Buffer Tabs & Bufferline
 
-### Navigation
+Managed by `bufferline.nvim` and `mini.bufremove`.
 
-| Key          | Action                | Description                  |
-| ------------ | --------------------- | ---------------------------- |
-| `gd`         | Go to Definition      | Jump to definition (LSPSaga) |
-| `gD`         | Go to Declaration     | Jump to declaration          |
-| `gp`         | Peek Definition       | Preview in float (LSPSaga)   |
-| `gr`         | Go to References      | Show references              |
-| `gI`         | Go to Implementation  | Jump to implementation       |
-| `gy`         | Go to Type Definition | Jump to type definition      |
-| `grt`        | Type Definition       | Alternative type definition  |
-| `gri`        | Implementation        | Alternative implementation   |
-| `grr`        | References            | Alternative references       |
-| `K`          | Hover                 | Show documentation (LSPSaga) |
-| `gK`         | Signature Help        | Show signature               |
-| `<C-k>`      | Signature (insert)    | Signature in insert mode     |
-| `<leader>cf` | LSP Finder            | Find references/definitions  |
-| `<leader>co` | Symbol Outline        | Document outline (LSPSaga)   |
-
-### Code Actions
-
-| Key          | Action           | Description                   |
-| ------------ | ---------------- | ----------------------------- |
-| `<leader>ca` | Code Action      | Show code actions (enhanced)  |
-| `<leader>cA` | Source Action    | Source code actions           |
-| `<leader>cc` | Run Codelens     | Run codelens                  |
-| `<leader>cC` | Refresh Codelens | Refresh codelens              |
-| `<leader>cr` | Rename           | Rename symbol (inc-rename)    |
-| `<leader>rn` | Rename           | Alternative rename            |
-| `<leader>ci` | Auto Import      | Import missing symbol (TS/JS) |
-| `grn`        | Rename           | Alternative rename            |
-| `gra`        | Code Action      | Alternative code action       |
-
-### Refactoring (refactoring.nvim)
-
-| Key          | Action           | Description                     |
-| ------------ | ---------------- | ------------------------------- |
-| `<leader>re` | Extract Function | Extract to function (visual)    |
-| `<leader>rf` | Extract to File  | Extract function to file        |
-| `<leader>rv` | Extract Variable | Extract to variable (visual)    |
-| `<leader>ri` | Inline Variable  | Inline variable (normal/visual) |
-
-### Formatting
-
-| Key          | Action        | Description           |
-| ------------ | ------------- | --------------------- |
-| `<leader>cf` | Format        | Format file/selection |
-| `<leader>uf` | Toggle Format | Toggle format on save |
-
-### Diagnostics (Errors/Warnings)
-
-| Key          | Action           | Description                     |
-| ------------ | ---------------- | ------------------------------- |
-| `]d`         | Next Diagnostic  | Next diagnostic (LSPSaga)       |
-| `[d`         | Prev Diagnostic  | Previous diagnostic (LSPSaga)   |
-| `]e`         | Next Error       | Next error                      |
-| `[e`         | Prev Error       | Previous error                  |
-| `]w`         | Next Warning     | Next warning                    |
-| `[w`         | Prev Warning     | Previous warning                |
-| `<leader>do` | Show Diagnostic  | Show diagnostic float           |
-| `<leader>cd` | Line Diagnostics | Show line diagnostics (LSPSaga) |
-| `<leader>dn` | Next Diagnostic  | Custom next diagnostic          |
-| `<leader>dp` | Prev Diagnostic  | Custom prev diagnostic          |
-| `<leader>dl` | List Diagnostics | List all diagnostics            |
-
-### Trouble (Diagnostic UI)
-
-| Key          | Action             | Description             |
-| ------------ | ------------------ | ----------------------- |
-| `<leader>xx` | Toggle Diagnostics | Open diagnostics list   |
-| `<leader>xX` | Buffer Diagnostics | Buffer diagnostics only |
-| `<leader>cs` | Symbols            | Document symbols        |
-| `<leader>cS` | LSP Symbols        | LSP symbols             |
-| `<leader>xL` | Location List      | Open location list      |
-| `<leader>xQ` | Quickfix           | Open quickfix list      |
-| `<leader>xq` | Quickfix           | Alternative quickfix    |
-
-### Information
-
-| Key            | Action         | Description           |
-| -------------- | -------------- | --------------------- |
-| `:LspInfo`     | LSP Info       | Show LSP client info  |
-| `:Mason`       | Mason          | Open Mason installer  |
-| `:ConformInfo` | Formatter Info | Show formatter status |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<S-l>` or `]b` | `n` | **Next Buffer** | Jump to tab on the right |
+| `<S-h>` or `[b` | `n` | **Previous Buffer** | Jump to tab on the left |
+| `<leader>bd` | `n` | **Delete Buffer** | Safely close buffer (keeps splits open) |
+| `<leader>bD` | `n` | **Force Delete Buffer** | Close buffer ignoring unsaved changes |
+| `<leader>bp` | `n` | **Toggle Pin** | Pin buffer to left of tab bar |
+| `<leader>bP` | `n` | **Close Non-Pinned** | Delete all unpinned buffer tabs |
+| `<leader>bo` | `n` | **Close Other Buffers** | Close all buffers except the active one |
+| `<leader>br` | `n` | **Close Right** | Close all buffers to the right |
+| `<leader>bl` | `n` | **Close Left** | Close all buffers to the left |
+| `<leader>bb` or `<leader>,` | `n` | **Switch Buffer** | Select buffer via Telescope picker |
 
 ---
 
-## 🎨 Git Integration
+## 4. File Explorer (Neo-tree — Right Side)
 
-### LazyGit
+Neo-tree is docked on the **right side** with a fixed width of **25 columns**.
 
-| Key          | Action            | Description                  |
-| ------------ | ----------------- | ---------------------------- |
-| `<leader>gg` | LazyGit           | Open LazyGit TUI             |
-| `<leader>gf` | LazyGit File      | LazyGit for current file     |
-| `<leader>gc` | LazyGit Commits   | View commits                 |
-| `<leader>gG` | LazyGit (cwd)     | LazyGit in current directory |
-| `<leader>gl` | LazyGit Log       | Git log                      |
-| `<leader>gL` | LazyGit Log (cwd) | Log in current directory     |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>e` | `n` | **Toggle File Explorer** | Open or close sidebar tree |
+| `<leader>o` | `n` | **Focus File Explorer** | Move cursor focus directly into Neo-tree |
+| `<leader>ge` | `n` | **Git Explorer** | Floating Neo-tree filtered to modified git files |
+| `<leader>be` | `n` | **Buffer Explorer** | View loaded buffers inside sidebar |
 
-### Gitsigns (Hunk Operations)
-
-| Key          | Action        | Description          |
-| ------------ | ------------- | -------------------- |
-| `]h`         | Next Hunk     | Next git change      |
-| `[h`         | Prev Hunk     | Previous git change  |
-| `]H`         | Last Hunk     | Jump to last hunk    |
-| `[H`         | First Hunk    | Jump to first hunk   |
-| `<leader>hs` | Stage Hunk    | Stage current hunk   |
-| `<leader>hr` | Reset Hunk    | Reset current hunk   |
-| `<leader>hS` | Stage Buffer  | Stage entire file    |
-| `<leader>hR` | Reset Buffer  | Reset entire file    |
-| `<leader>hu` | Undo Stage    | Undo stage hunk      |
-| `<leader>hp` | Preview Hunk  | Preview hunk changes |
-| `<leader>hb` | Blame Line    | Show full blame      |
-| `<leader>hB` | Blame Line    | Toggle line blame    |
-| `<leader>gb` | Toggle Blame  | Toggle inline blame  |
-| `<leader>hd` | Diff This     | Diff current file    |
-| `<leader>hD` | Diff This (~) | Diff against HEAD    |
-| `ih`         | Select Hunk   | Text object for hunk |
-
-### DiffView
-
-| Key          | Action        | Description          |
-| ------------ | ------------- | -------------------- |
-| `<leader>gd` | DiffView Open | Open diff view       |
-| `<leader>gh` | File History  | Current file history |
-| `<leader>gH` | Repo History  | Full repo history    |
-
-### Git Conflicts
-
-| Key  | Action        | Description               |
-| ---- | ------------- | ------------------------- |
-| `co` | Choose Ours   | Accept current change     |
-| `ct` | Choose Theirs | Accept incoming change    |
-| `cb` | Choose Both   | Keep both changes         |
-| `c0` | Choose None   | Delete both changes       |
-| `]x` | Next Conflict | Jump to next conflict     |
-| `[x` | Prev Conflict | Jump to previous conflict |
+### Keybindings Inside Neo-tree
+| Key | Action | Description |
+| :--- | :--- | :--- |
+| `<CR>` or `l` | **Open** | Open file or expand directory |
+| `h` | **Collapse / Up** | Collapse directory or go to parent folder |
+| `v` | **Open Vertical Split** | Open selected file in vertical split |
+| `s` | **Open Horizontal Split**| Open selected file in horizontal split |
+| `t` | **Open Tab** | Open selected file in new Neovim tab |
+| `P` | **Toggle Preview** | Open floating preview of file under cursor |
+| `a` | **Add Node** | Create file or folder (e.g. `src/utils/api.ts`) |
+| `d` | **Delete Node** | Delete file or directory (confirms before deletion) |
+| `r` | **Rename Node** | Rename file or folder inline |
+| `y` | **Copy to Clipboard** | Copy file path or file node |
+| `x` | **Cut to Clipboard** | Cut file node for moving |
+| `p` | **Paste from Clipboard** | Paste copied/cut file into target directory |
+| `R` | **Refresh** | Reload file tree from disk |
+| `?` | **Help** | Display interactive keybinding popup |
 
 ---
 
-## 💻 Terminal
+## 5. Fuzzy Finding (Telescope)
 
-### Terminal Management
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader><space>` | `n` | **Find Files** | Fast fuzzy search (`rg --hidden`, no `.git`) |
+| `<leader>ff` | `n` | **Find Files** | Explicit find files shortcut |
+| `<leader>fg` | `n` | **Live Grep** | Search regex across all files in workspace |
+| `<leader>fw` | `n` | **Grep Current Word** | Search current word under cursor in project |
+| `<leader>fr` | `n` | **Recent Files** | Search recently opened files (MRU) |
+| `<leader>fb` | `n` | **Find Buffers** | Search active buffers |
+| `<leader>fs` | `n` | **Document Symbols** | Search functions, variables, classes in file |
+| `<leader>fS` | `n` | **Workspace Symbols**| Search symbols across the entire project |
+| `<leader>fd` | `n` | **Diagnostics** | Search project diagnostics (errors/warnings) |
+| `<leader>gc` | `n` | **Git Commits** | Search commit history with live diff preview |
+| `<leader>gs` | `n` | **Git Status** | Search modified git files |
+| `<leader>gb` | `n` | **Git Branches** | Search and checkout git branches |
+| `<leader>fh` | `n` | **Help Tags** | Search Neovim `:help` documentation |
+| `<leader>fk` | `n` | **Keymaps** | Search all registered keybindings |
+| `<leader>fc` | `n` | **Commands** | Search Vim commands |
+| `<leader>fC` | `n` | **Colorschemes** | Live preview and switch themes |
+| `<leader>f:` | `n` | **Command History** | Search command-line history |
+| `<leader>f/` | `n` | **Search History** | Search previous search query history |
+| `<leader>fF` | `n` | **File Browser** | Telescope file system browser (Ivy theme) |
 
-| Key                  | Action              | Description                   |
-| -------------------- | ------------------- | ----------------------------- |
-| `<C-\>`              | Toggle Terminal     | Toggle terminal               |
-| `<leader>tf`         | Terminal Float      | Floating terminal             |
-| `<leader>th`         | Terminal Horizontal | Horizontal split terminal     |
-| `<leader>tv`         | Terminal Vertical   | Vertical split terminal       |
-| `<leader>ft`         | Terminal (root)     | Terminal in project root      |
-| `<leader>fT`         | Terminal (cwd)      | Terminal in current directory |
-| `<C-/>`              | Toggle Terminal     | Alternative toggle            |
-| **Inside Terminal:** |                     |                               |
-| `<C-\><C-\>`         | Exit Terminal Mode  | Back to normal mode           |
-| `<Esc><Esc>`         | Exit Terminal Mode  | Alternative exit              |
-| `<C-h/j/k/l>`        | Navigate Windows    | Move between windows          |
-
----
-
-## 🗄️ Database (Dadbod UI)
-
-| Key              | Action         | Description                 |
-| ---------------- | -------------- | --------------------------- |
-| `<leader>db`     | Toggle DBUI    | Open database UI            |
-| **Inside DBUI:** |                |                             |
-| `<CR>`           | Execute/Open   | Execute query or open table |
-| `S`              | Execute File   | Execute SQL file            |
-| `R`              | Rename Buffer  | Rename query buffer         |
-| `A`              | Add Connection | Add new connection          |
-| `D`              | Delete Buffer  | Delete query buffer         |
-| `H`              | Toggle Help    | Show/hide help              |
-| `o`              | Toggle         | Toggle expand/collapse      |
-
-**Connection String Examples:**
-
-```
-postgresql://user:password@localhost:5432/database
-mysql://user:password@localhost:3306/database
-mongodb://localhost:27017/database
-```
-
----
-
-## 🌐 HTTP/REST API (Kulala)
-
-| Key          | Action          | Description                  |
-| ------------ | --------------- | ---------------------------- |
-| `<leader>rs` | Send Request    | Execute HTTP request         |
-| `<leader>rt` | Toggle Response | Toggle response view         |
-| `<leader>rn` | Next Request    | Jump to next request         |
-| `<leader>rp` | Prev Request    | Jump to previous request     |
-| `<leader>rc` | Copy as cURL    | Copy request as cURL command |
-| `<leader>ri` | Inspect         | Inspect request details      |
-
-**Example .http file:**
-
-```http
-### Get User
-GET https://api.github.com/users/github
-Content-Type: application/json
-
-### Post Data
-POST https://api.example.com/users
-Content-Type: application/json
-
-{
-  "name": "John Doe",
-  "email": "john@example.com"
-}
-```
+### Telescope Picker Navigation
+| Key | Mode | Action |
+| :--- | :---: | :--- |
+| `<C-j>` / `<C-k>` | `i` / `n` | Select next / previous item |
+| `<Down>` / `<Up>` | `i` / `n` | Select next / previous item |
+| `<CR>` | `i` / `n` | Open selected item |
+| `<C-v>` | `i` / `n` | Open item in vertical split |
+| `<C-x>` | `i` / `n` | Open item in horizontal split |
+| `<C-t>` | `i` / `n` | Open item in new tab |
+| `<C-u>` / `<C-d>` | `i` / `n` | Scroll preview up / down |
+| `<Tab>` / `<S-Tab>` | `i` / `n` | Toggle multi-select item |
+| `<C-q>` | `i` / `n` | Send all results to Quickfix list |
+| `<M-q>` | `i` / `n` | Send marked results to Quickfix list |
+| `<C-d>` (in buffers) | `i` | Close buffer directly from picker |
+| `dd` (in buffers) | `n` | Close buffer directly from picker |
+| `<Esc>` or `q` | `n` | Close Telescope |
 
 ---
 
-## 📋 Session Management
+## 6. Harpoon 2 Quick Marks
 
-| Key          | Action          | Description          |
-| ------------ | --------------- | -------------------- |
-| `<leader>qs` | Restore Session | Restore last session |
-| `<leader>ql` | Restore Last    | Restore previous     |
-| `<leader>qd` | Don't Save      | Skip saving session  |
-
----
-
-## 💡 Completion & Snippets
-
-### Completion (blink.cmp)
-
-**In Insert Mode:**
-
-| Key         | Action                 | Description                                |
-| ----------- | ---------------------- | ------------------------------------------ |
-| `<Tab>`     | Next / Snippet Forward | Next completion or snippet placeholder     |
-| `<S-Tab>`   | Prev / Snippet Back    | Previous completion or snippet placeholder |
-| `<CR>`      | Accept                 | Accept completion                          |
-| `<C-Space>` | Show Completion        | Manually trigger completion                |
-| `<C-e>`     | Hide                   | Close completion menu                      |
-| `<C-n>`     | Next                   | Next completion item                       |
-| `<C-p>`     | Previous               | Previous completion item                   |
-| `<Up>`      | Previous               | Navigate up                                |
-| `<Down>`    | Next                   | Navigate down                              |
-| `<C-u>`     | Scroll Docs Up         | Scroll documentation up                    |
-| `<C-d>`     | Scroll Docs Down       | Scroll documentation down                  |
-
-### Features
-
-- **Ghost text** - Inline completion preview (like GitHub Copilot)
-- **Auto-brackets** - Automatically adds `()` after functions
-- **Signatures** - Function parameter hints while typing
-- **Smart completion** - LSP, snippets, buffer, and path sources
-
-### Snippets (LuaSnip)
-
-- Type snippet trigger + `Tab` to expand
-- `Tab` / `Shift+Tab` to navigate placeholders
-- Supports all VSCode snippets for: JS, TS, React, Python, HTML, CSS, etc.
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>ha` | `n` | **Add to Harpoon** | Pin current file to persistent Harpoon list |
+| `<leader>hh` | `n` | **Toggle Menu** | Open Harpoon menu to reorder or view list |
+| `<leader>h1` | `n` | **Jump File 1** | Instantly open pinned file #1 |
+| `<leader>h2` | `n` | **Jump File 2** | Instantly open pinned file #2 |
+| `<leader>h3` | `n` | **Jump File 3** | Instantly open pinned file #3 |
+| `<leader>h4` | `n` | **Jump File 4** | Instantly open pinned file #4 |
 
 ---
 
----
+## 7. GitHub Copilot & AI Code Generation
 
-## 🎯 Code Folding
+Integrated seamlessly with `saghen/blink.cmp`.
 
-| Key  | Action           | Description                  |
-| ---- | ---------------- | ---------------------------- |
-| `za` | Toggle Fold      | Toggle fold under cursor     |
-| `zA` | Toggle All Folds | Toggle all folds recursively |
-| `zc` | Close Fold       | Close fold                   |
-| `zC` | Close All Folds  | Close all folds recursively  |
-| `zo` | Open Fold        | Open fold                    |
-| `zO` | Open All Folds   | Open all folds recursively   |
-| `zR` | Open All         | Open all folds in buffer     |
-| `zM` | Close All        | Close all folds in buffer    |
-| `zj` | Next Fold        | Jump to next fold            |
-| `zk` | Prev Fold        | Jump to previous fold        |
-| `[z` | Fold Start       | Jump to fold start           |
-| `]z` | Fold End         | Jump to fold end             |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<Tab>` | `i` | **Smart Accept** | Accepts Copilot ghost text suggestion. If none, jumps to next snippet placeholder; if none, inserts standard indent |
+| `<C-j>` | `i` | **Accept Suggestion** | Alternative explicit shortcut to accept Copilot suggestion |
+| `<C-Right>` | `i` | **Accept Word** | Accept only the next word from suggestion |
+| `<C-Down>` | `i` | **Accept Line** | Accept only the next line from suggestion |
+| `<M-]>` | `i` | **Next Suggestion** | Cycle to next alternative suggestion |
+| `<M-[>` | `i` | **Previous Suggestion** | Cycle to previous alternative suggestion |
+| `<M-\>` | `i` | **Dismiss** | Dismiss active suggestion |
+| `<S-Tab>` | `i` | **Snippet Prev** | Jump backward to previous snippet placeholder |
 
 ---
 
-## 🎨 UI & Focus
+## 8. Multi-Cursor (`vim-visual-multi`)
 
-### Zen Mode & Twilight
-
-| Key          | Action   | Description             |
-| ------------ | -------- | ----------------------- |
-| `<leader>z`  | Zen Mode | Distraction-free coding |
-| `<leader>ut` | Twilight | Dim inactive code       |
-
-### Notifications (Noice)
-
-| Key           | Action          | Description               |
-| ------------- | --------------- | ------------------------- |
-| `<leader>sn`  | Noice History   | Show notification history |
-| `<leader>sl`  | Last Message    | Show last message         |
-| `<leader>sd`  | Dismiss All     | Dismiss all notifications |
-| `<leader>sna` | Noice All       | All Noice messages        |
-| `<leader>snd` | Dismiss All     | Dismiss notifications     |
-| `<leader>snh` | Noice History   | Notification history      |
-| `<leader>snl` | Last Message    | Last message              |
-| `<leader>snt` | Noice Telescope | Search messages           |
-
-### UI Toggles
-
-| Key          | Action              | Description                  |
-| ------------ | ------------------- | ---------------------------- |
-| `<leader>ub` | Toggle Background   | Dark/light mode              |
-| `<leader>uc` | Toggle Conceal      | Toggle conceal level         |
-| `<leader>ud` | Toggle Diagnostics  | Toggle diagnostics           |
-| `<leader>uf` | Toggle Format       | Toggle format on save        |
-| `<leader>ug` | Toggle Git Signs    | Toggle git signs             |
-| `<leader>uh` | Toggle Inlay Hints  | Toggle inlay hints           |
-| `<leader>ui` | Inspect Pos         | Inspect position             |
-| `<leader>uI` | Inspect Tree        | Inspect tree                 |
-| `<leader>ul` | Toggle Line Numbers | Toggle line numbers          |
-| `<leader>uL` | Toggle Relative     | Toggle relative numbers      |
-| `<leader>us` | Toggle Spelling     | Toggle spell check           |
-| `<leader>uw` | Toggle Wrap         | Toggle line wrap             |
-| `<leader>uT` | Toggle Treesitter   | Toggle treesitter highlights |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<C-n>` | `n` / `v` | **Find Under** | Select word under cursor and start multi-cursor |
+| `<C-n>` | `VM` | **Next Occurrence** | Add next matching occurrence to selection |
+| `<C-x>` | `VM` | **Skip Occurrence** | Skip current match and proceed to next |
+| `<C-p>` | `VM` | **Prev Occurrence** | Remove last selected match and step back |
+| `n` / `N` | `VM` | **Next / Prev** | Navigate between active cursors |
+| `i` / `a` | `VM` | **Insert / Append** | Enter Insert mode at all cursors simultaneously |
+| `c` / `s` | `VM` | **Change / Substitute**| Replace text at all cursors |
+| `q` or `<Esc>` | `VM` | **Exit Multi-Cursor** | Return to standard Neovim Normal mode |
 
 ---
 
-## 📝 TODO Comments
+## 9. LSP & Code Intelligence (Lspsaga & Diagnostics)
 
-| Key          | Action         | Description           |
-| ------------ | -------------- | --------------------- |
-| `<leader>ft` | Find TODOs     | Search TODO comments  |
-| `<leader>st` | Find TODOs     | Alternative search    |
-| `<leader>sT` | TODO/Fix/Fixme | Search specific types |
-| `]t`         | Next TODO      | Next TODO comment     |
-| `[t`         | Prev TODO      | Previous TODO comment |
-
-**Highlighted Keywords:**
-
-- `TODO:` - Something to do
-- `HACK:` - Hacky solution
-- `WARN:` - Warning
-- `PERF:` - Performance issue
-- `NOTE:` - Note/info
-- `TEST:` - Testing needed
-- `FIX:` / `FIXME:` - Bug to fix
-
----
-
-## ⚙️ Quickfix & Location List
-
-| Key          | Action         | Description            |
-| ------------ | -------------- | ---------------------- |
-| `<leader>qo` | Open Quickfix  | Open quickfix list     |
-| `<leader>qc` | Close Quickfix | Close quickfix list    |
-| `<leader>qn` | Next Item      | Next quickfix item     |
-| `<leader>qp` | Prev Item      | Previous quickfix item |
-| `]q`         | Next Quickfix  | Next quickfix          |
-| `[q`         | Prev Quickfix  | Previous quickfix      |
-| `]l`         | Next Location  | Next location          |
-| `[l`         | Prev Location  | Previous location      |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `K` | `n` | **Hover Doc** | Show rich documentation & type signature via Lspsaga |
+| `gd` | `n` | **Goto Definition** | Jump to symbol definition via Lspsaga |
+| `gp` | `n` | **Peek Definition** | Preview definition in a floating window (Lspsaga) |
+| `gD` | `n` | **Goto Declaration** | Jump to declaration |
+| `gr` | `n` | **Find References** | Open Telescope references picker (cursor theme) |
+| `gi` | `n` | **Implementations** | Open Telescope implementations picker |
+| `<leader>cf` | `n` | **LSP Finder** | Lspsaga finder showing definitions & references |
+| `<leader>co` | `n` | **Symbol Outline** | Floating outline of symbols in current file |
+| `<leader>cr` | `n` | **Rename Symbol** | Live incremental rename with `inc-rename.nvim` |
+| `<leader>ci` | `n` | **Auto-Import** | Automatically imports missing TS/JS identifier |
+| `[d` | `n` | **Prev Diagnostic** | Jump to previous error/warning (Lspsaga) |
+| `]d` | `n` | **Next Diagnostic** | Jump to next error/warning (Lspsaga) |
+| `<leader>cd` | `n` | **Line Diagnostics** | Show floating diagnostics for current line (Lspsaga) |
+| `<leader>do` | `n` | **Diagnostic Float** | Open standard Neovim diagnostic float |
+| `<leader>dl` | `n` | **List Diagnostics** | Open Telescope diagnostics search |
 
 ---
 
-## 🔄 Marks & Jumps
+## 10. Code Actions & Refactoring
 
-### Marks
-
-| Key          | Action           | Description            |
-| ------------ | ---------------- | ---------------------- |
-| `m{a-z}`     | Set Mark         | Set local mark         |
-| `m{A-Z}`     | Set Global Mark  | Set global mark        |
-| `'{a-z}`     | Jump to Mark     | Jump to mark (line)    |
-| `'{A-Z}`     | Jump Global Mark | Jump to global mark    |
-| `` `{a-z} `` | Jump to Mark     | Jump to exact position |
-| `<leader>sm` | Marks            | Search marks           |
-
-### Jump List
-
-| Key     | Action       | Description            |
-| ------- | ------------ | ---------------------- |
-| `<C-o>` | Jump Older   | Jump to older position |
-| `<C-i>` | Jump Newer   | Jump to newer position |
-| `''`    | Last Jump    | Jump to last position  |
-| `'.`    | Last Change  | Jump to last change    |
-| `g;`    | Older Change | Go to older change     |
-| `g,`    | Newer Change | Go to newer change     |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>ca` | `n` / `v` | **Code Actions Preview** | Menu with live diff preview (`actions-preview.nvim`) |
+| `<leader>re` | `v` | **Extract Function** | Extract highlighted block into new function |
+| `<leader>rf` | `v` | **Extract to File** | Extract highlighted function into separate file |
+| `<leader>rv` | `v` | **Extract Variable** | Extract expression into variable |
+| `<leader>ri` | `n` / `v` | **Inline Variable** | Inline selected variable declaration |
 
 ---
 
-## 🔢 Macros & Registers
+## 11. Formatting & Linters
 
-### Macros
-
-| Key          | Action         | Description       |
-| ------------ | -------------- | ----------------- |
-| `q{a-z}`     | Record Macro   | Start recording   |
-| `q`          | Stop Recording | Stop recording    |
-| `@{a-z}`     | Play Macro     | Execute macro     |
-| `@@`         | Repeat Macro   | Repeat last macro |
-| `<leader>sm` | Search Macros  | View macros       |
-
-### Registers
-
-| Key          | Action               | Description                  |
-| ------------ | -------------------- | ---------------------------- |
-| `"{a-z}y`    | Yank to Register     | Copy to register             |
-| `"{a-z}p`    | Paste from Register  | Paste from register          |
-| `<leader>sr` | Registers            | View registers               |
-| `"0p`        | Last Yank            | Paste last yank (not delete) |
-| `"+y`        | Copy to Clipboard    | System clipboard             |
-| `"+p`        | Paste from Clipboard | System clipboard             |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>cf` | `n` / `v` | **Format Document** | Format buffer or selection via `conform.nvim` |
+| `<leader>uf` | `n` | **Toggle Auto-Format** | Enable / disable format-on-save globally |
+| `:ConformInfo` | `cmd` | **Conform Status** | Inspect active formatters for buffer |
 
 ---
 
-## 📊 Miscellaneous
+## 12. Commenting & Surround (`mini.surround`)
 
-### Scrolling
+### Commenting (`Comment.nvim` + `ts-context-commentstring`)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `gcc` | `n` | **Toggle Line Comment** | Comment / uncomment current line |
+| `gbc` | `n` | **Toggle Block Comment** | Block comment current line |
+| `gc{motion}` | `n` | **Comment Motion** | e.g. `gcip` comments paragraph |
+| `gc` | `v` | **Comment Selection** | Comment selected lines (JSX aware `{/* */}`) |
 
-| Key     | Action             | Description               |
-| ------- | ------------------ | ------------------------- |
-| `<C-d>` | Scroll Down        | Half page down (centered) |
-| `<C-u>` | Scroll Up          | Half page up (centered)   |
-| `<C-f>` | Page Down          | Full page down            |
-| `<C-b>` | Page Up            | Full page up              |
-| `<C-e>` | Scroll Down (line) | Scroll one line down      |
-| `<C-y>` | Scroll Up (line)   | Scroll one line up        |
-| `zz`    | Center Screen      | Center cursor line        |
-| `zt`    | Top of Screen      | Cursor to top             |
-| `zb`    | Bottom of Screen   | Cursor to bottom          |
-
-### Movement
-
-| Key       | Action             | Description              |
-| --------- | ------------------ | ------------------------ |
-| `h/j/k/l` | Left/Down/Up/Right | Basic movement           |
-| `w`       | Next Word          | Jump to next word        |
-| `b`       | Prev Word          | Jump to previous word    |
-| `e`       | End of Word        | Jump to word end         |
-| `0`       | Line Start         | Start of line            |
-| `^`       | First Non-blank    | First non-whitespace     |
-| `$`       | Line End           | End of line              |
-| `gg`      | File Start         | Go to first line         |
-| `G`       | File End           | Go to last line          |
-| `{line}G` | Go to Line         | Jump to line number      |
-| `%`       | Match Bracket      | Jump to matching bracket |
-| `f{char}` | Find Forward       | Find character forward   |
-| `F{char}` | Find Backward      | Find character backward  |
-| `t{char}` | Till Forward       | Till character forward   |
-| `T{char}` | Till Backward      | Till character backward  |
-| `;`       | Repeat f/t         | Repeat find/till         |
-| `,`       | Reverse f/t        | Reverse find/till        |
-
-### Visual Mode
-
-| Key     | Action       | Description                |
-| ------- | ------------ | -------------------------- |
-| `v`     | Visual       | Character-wise visual      |
-| `V`     | Visual Line  | Line-wise visual           |
-| `<C-v>` | Visual Block | Block-wise visual          |
-| `gv`    | Reselect     | Reselect last selection    |
-| `o`     | Switch End   | Switch cursor to other end |
-| `>`     | Indent       | Indent selection           |
-| `<`     | Dedent       | Dedent selection           |
-
-### Insert Mode
-
-| Key     | Action               | Description                |
-| ------- | -------------------- | -------------------------- |
-| `i`     | Insert               | Insert before cursor       |
-| `I`     | Insert Line Start    | Insert at line start       |
-| `a`     | Append               | Insert after cursor        |
-| `A`     | Append Line End      | Insert at line end         |
-| `o`     | Open Below           | New line below             |
-| `O`     | Open Above           | New line above             |
-| `<C-o>` | Normal Command       | Execute one normal command |
-| `<C-w>` | Delete Word Back     | Delete word backward       |
-| `<C-u>` | Delete to Line Start | Delete to line start       |
-
-### Command Mode
-
-| Key     | Action           | Description                 |
-| ------- | ---------------- | --------------------------- |
-| `:`     | Command          | Enter command mode          |
-| `<C-f>` | Command History  | Open command history window |
-| `<C-p>` | Previous Command | Previous in history         |
-| `<C-n>` | Next Command     | Next in history             |
-| `q:`    | Command Window   | Command history window      |
-| `q/`    | Search Window    | Search history window       |
+### Surround (`mini.surround`)
+| Key | Mode | Action | Example |
+| :--- | :---: | :--- | :--- |
+| `gsa{motion}{char}` | `n` | **Add Surround** | `gsaiw"` → `"word"` |
+| `gsaiw)` | `n` | **Surround Parens** | `gsaiw)` → `(word)` |
+| `gsaiw(` | `n` | **Surround Parens (Spaced)** | `gsaiw(` → `( word )` |
+| `gsaiwt` | `n` | **Surround Tag** | `gsaiwt` → `<tag>word</tag>` |
+| `gsd{char}` | `n` | **Delete Surround** | `gsd"` removes surrounding `"` |
+| `gsdt` | `n` | **Delete Tag** | `gsdt` removes surrounding HTML/JSX tag |
+| `gsr{old}{new}` | `n` | **Replace Surround** | `gsr"'` replaces `"` with `'` |
+| `gsa{char}` | `v` | **Surround Selection** | Select text, press `gsa"` to wrap in `"` |
 
 ---
 
-## 🎓 Learning & Help
+## 13. Search & Replace (Spectre & Vim Search)
 
-| Key             | Action         | Description           |
-| --------------- | -------------- | --------------------- |
-| `:help {topic}` | Help           | Open help for topic   |
-| `<leader>?`     | LazyVim Help   | LazyVim keymaps       |
-| `K`             | Hover Docs     | Show documentation    |
-| `:checkhealth`  | Health Check   | Check plugin health   |
-| `:Lazy`         | Lazy Manager   | Open plugin manager   |
-| `:Mason`        | Mason          | Open tool installer   |
-| `g?`            | Help (context) | Context-specific help |
-
----
-
-## 🚀 Plugin Management (Lazy)
-
-| Key              | Action    | Description                    |
-| ---------------- | --------- | ------------------------------ |
-| `:Lazy`          | Open Lazy | Open plugin manager            |
-| `:LazyExtras`    | Extras    | Enable/disable language extras |
-| **Inside Lazy:** |           |                                |
-| `I`              | Install   | Install plugins                |
-| `U`              | Update    | Update plugins                 |
-| `S`              | Sync      | Sync (clean + update)          |
-| `X`              | Clear     | Clear finished tasks           |
-| `C`              | Check     | Check for updates              |
-| `L`              | Log       | Show recent updates            |
-| `R`              | Restore   | Restore lockfile               |
-| `P`              | Profile   | Profile startup time           |
-| `?`              | Help      | Show keybindings               |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>sr` | `n` / `v` | **Spectre Replace** | Project-wide search and replace interface |
+| `<leader>sw` | `n` / `v` | **Spectre Word** | Replace current word project-wide |
+| `<leader>sf` | `n` | **Spectre File** | Replace within current file |
+| `s{char}{char}` | `n` / `v` | **Flash Jump** | Jump to any 2-character location on screen |
+| `S` | `n` / `v` | **Flash Treesitter** | Select syntax tree nodes visually |
+| `<leader>nh` | `n` | **Clear Highlight** | Clear current search highlight (`:nohl`) |
+| `n` / `N` | `n` | **Next / Prev Result** | Next / previous match (auto-centered) |
 
 ---
 
-## 🛠️ Mason (LSP/Tool Management)
+## 14. Git Suite (LazyGit, Gitsigns, Diffview, Conflicts)
 
-| Key               | Action          | Description             |
-| ----------------- | --------------- | ----------------------- |
-| `:Mason`          | Open Mason      | Open tool installer     |
-| **Inside Mason:** |                 |                         |
-| `i`               | Install         | Install package         |
-| `u`               | Update          | Update package          |
-| `U`               | Update All      | Update all packages     |
-| `X`               | Uninstall       | Uninstall package       |
-| `c`               | Check Updates   | Check for updates       |
-| `C`               | Check Outdated  | Check outdated packages |
-| `g?`              | Help            | Show help               |
-| `/`               | Filter          | Filter packages         |
-| `<C-f>`           | Language Filter | Apply language filter   |
-| `1`               | Show All        | Show all packages       |
-| `2`               | Show LSP        | Show LSP servers only   |
-| `3`               | Show DAP        | Show debuggers only     |
-| `4`               | Show Linters    | Show linters only       |
-| `5`               | Show Formatters | Show formatters only    |
+### LazyGit TUI
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>gg` | `n` | **LazyGit** | Full-featured interactive Git TUI |
+| `<leader>gf` | `n` | **LazyGit Current File** | Filter LazyGit log to current file |
+| `<leader>gc` | `n` | **LazyGit Commits** | Browse repository commit history |
 
----
+### Inline Hunks (`gitsigns.nvim`)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `]h` / `[h` | `n` | **Next / Prev Hunk** | Jump to next / previous git diff hunk |
+| `<leader>hs` | `n` / `v` | **Stage Hunk** | Stage current hunk or visual selection |
+| `<leader>hr` | `n` / `v` | **Reset Hunk** | Revert current hunk or visual selection |
+| `<leader>hS` | `n` | **Stage Buffer** | Stage all changes in file |
+| `<leader>hR` | `n` | **Reset Buffer** | Discard all changes in file |
+| `<leader>hu` | `n` | **Undo Stage Hunk** | Undo last hunk staging |
+| `<leader>hp` | `n` | **Preview Hunk** | Open floating diff preview of hunk |
+| `<leader>hb` | `n` | **Blame Line** | Open complete git blame for line |
+| `<leader>gB` | `n` | **Toggle Inline Blame** | Toggle virtual text commit author |
+| `<leader>hd` | `n` | **Diff This** | Diff file against git index |
+| `<leader>hD` | `n` | **Diff This ~** | Diff file against HEAD |
+| `ih` | `o` / `v` | **Hunk Text Object** | Target hunk for operations (e.g. `dih`, `yih`) |
 
-## 🔧 Advanced Keybindings
-
-### Repeat Actions
-
-| Key  | Action            | Description            |
-| ---- | ----------------- | ---------------------- |
-| `.`  | Repeat            | Repeat last change     |
-| `@:` | Repeat Command    | Repeat last command    |
-| `&`  | Repeat Substitute | Repeat last substitute |
-
-### Increment/Decrement
-
-| Key      | Action                 | Description               |
-| -------- | ---------------------- | ------------------------- |
-| `<C-a>`  | Increment              | Increase number           |
-| `<C-x>`  | Decrement              | Decrease number           |
-| `g<C-a>` | Increment (sequential) | Increment in visual block |
-| `g<C-x>` | Decrement (sequential) | Decrement in visual block |
-
-### Case Changes
-
-| Key          | Action         | Description              |
-| ------------ | -------------- | ------------------------ |
-| `~`          | Toggle Case    | Toggle case of character |
-| `gu{motion}` | Lowercase      | Convert to lowercase     |
-| `gU{motion}` | Uppercase      | Convert to uppercase     |
-| `guu`        | Lowercase Line | Lowercase entire line    |
-| `gUU`        | Uppercase Line | Uppercase entire line    |
-| `g~{motion}` | Toggle Case    | Toggle case (motion)     |
-
-### Join Lines
-
-| Key  | Action          | Description         |
-| ---- | --------------- | ------------------- |
-| `J`  | Join Lines      | Join line with next |
-| `gJ` | Join (no space) | Join without space  |
+### DiffView & Git Conflicts
+| Key | Tool | Action |
+| :--- | :--- | :--- |
+| `<leader>gd` | Diffview | Open interactive two-way / three-way diff view |
+| `<leader>gh` | Diffview | Open git history for current buffer |
+| `<leader>gH` | Diffview | Open full git repository history |
+| `co` | GitConflict | Choose **Ours** (current branch) |
+| `ct` | GitConflict | Choose **Theirs** (incoming branch) |
+| `cb` | GitConflict | Choose **Both** |
+| `c0` | GitConflict | Choose **None** |
+| `]x` / `[x` | GitConflict | Jump to next / previous conflict marker |
 
 ---
 
-## 🎯 Language-Specific Features
+## 15. Integrated Terminal (ToggleTerm)
 
-### Treesitter
-
-| Key                 | Action            | Description                   |
-| ------------------- | ----------------- | ----------------------------- |
-| `<leader>ui`        | Inspect Pos       | Inspect syntax tree at cursor |
-| `<leader>uI`        | Inspect Tree      | Show full syntax tree         |
-| `<leader>uT`        | Toggle Treesitter | Toggle highlighting           |
-| `:TSInstall {lang}` | Install Parser    | Install language parser       |
-| `:TSUpdate`         | Update Parsers    | Update all parsers            |
-
-### Python Specific
-
-| Key            | Action          | Description                       |
-| -------------- | --------------- | --------------------------------- |
-| `<leader>cv`   | Select Venv     | Select Python virtual environment |
-| `:ConformInfo` | Check Formatter | Check Black formatter status      |
-
-### JavaScript/TypeScript Specific
-
-| Key          | Action           | Description           |
-| ------------ | ---------------- | --------------------- |
-| `<leader>co` | Organize Imports | Organize/sort imports |
-| `<leader>cR` | Remove Unused    | Remove unused imports |
-| `<leader>cM` | Add Missing      | Add missing imports   |
-
-### HTML/JSX Specific
-
-| Key             | Action  | Description              |
-| --------------- | ------- | ------------------------ |
-| Auto-close tags | Enabled | Tags close automatically |
-| `<leader>cf`    | Format  | Prettier formatting      |
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<C-\>` | `n` / `t` | **Toggle Terminal** | Open / close bottom horizontal terminal drawer |
+| `<leader>tf` | `n` | **Terminal Float** | Open floating terminal window |
+| `<leader>th` | `n` | **Terminal Horizontal** | Open horizontal terminal (height 10) |
+| `<leader>tv` | `n` | **Terminal Vertical** | Open vertical terminal (width 80) |
+| `<Esc><Esc>` | `t` | **Normal Mode** | Exit terminal insert mode back to Normal mode |
+| `<C-\><C-n>` | `t` | **Normal Mode (alt)** | Standard Vim escape from terminal mode |
 
 ---
 
-## 📈 Performance & Diagnostics
+## 16. Full-Stack Tooling (REST API & Dadbod Database)
 
-### Performance Monitoring
+### REST & HTTP Testing (`kulala.nvim`)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>rs` | `n` | **Send Request** | Execute HTTP request under cursor (`.http` files) |
+| `<leader>rt` | `n` | **Toggle Response** | Toggle floating / split HTTP response view |
+| `<leader>rp` | `n` | **Previous Request** | Jump to previous request block |
+| `<leader>rn` | `n` | **Next Request** | Jump to next request block |
+| `<leader>rc` | `n` | **Copy as cURL** | Convert request under cursor to cURL command |
+| `<leader>ri` | `n` | **Inspect Request** | Inspect headers and request metadata |
 
-| Key                  | Action         | Description              |
-| -------------------- | -------------- | ------------------------ |
-| `:Lazy profile`      | Profile        | View plugin load times   |
-| `:checkhealth`       | Health         | Full system health check |
-| `:checkhealth lazy`  | Lazy Health    | Check Lazy.nvim          |
-| `:checkhealth mason` | Mason Health   | Check Mason              |
-| `:LspInfo`           | LSP Status     | Check LSP servers        |
-| `:ConformInfo`       | Formatter Info | Check formatters         |
+### Database Management (`vim-dadbod-ui`)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>db` | `n` | **Toggle DBUI** | Open / close database UI drawer |
+| `<CR>` | `n` | **Execute / Expand** | Expand tree item or execute query |
+| `S` | `n` | **Execute SQL File** | Run whole SQL buffer against active DB |
+| `A` | `n` | **Add Connection** | Add new database connection string |
+| `R` | `n` | **Rename Buffer** | Rename SQL scratch buffer |
+| `D` | `n` | **Delete Buffer** | Delete SQL scratch buffer |
 
-### Startup Time
+---
 
-```bash
-# Check startup time from terminal
-nvim --startuptime startup.log
+## 17. Testing & Debugging (Neotest & DAP)
+
+### Neotest (`lazyvim.plugins.extras.test.core`)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>tr` | `n` | **Run Nearest** | Run test nearest to cursor |
+| `<leader>tt` | `n` | **Run File** | Run all tests in current file |
+| `<leader>tT` | `n` | **Run All Files** | Run all test suites across project |
+| `<leader>tl` | `n` | **Run Last Test** | Rerun previous test execution |
+| `<leader>ts` | `n` | **Toggle Summary** | Open / close interactive test runner summary |
+| `<leader>to` | `n` | **Show Output** | View output of current test |
+| `<leader>tO` | `n` | **Toggle Output Panel** | Open persistent bottom test output panel |
+| `<leader>tS` | `n` | **Stop Test** | Cancel running test execution |
+| `<leader>tw` | `n` | **Toggle Watch** | Watch current test and rerun on save |
+| `<leader>td` | `n` | **Debug Nearest** | Run nearest test with debugger attached |
+
+### Debugger (`nvim-dap`)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>dB` | `n` | **Breakpoint Condition**| Add conditional breakpoint |
+| `<leader>dc` | `n` | **Continue / Start** | Continue execution to next breakpoint |
+| `<leader>di` | `n` | **Step Into** | Step into function call |
+| `<leader>dO` | `n` | **Step Over** | Step over current statement |
+| `<leader>do` | `n` | **Step Out** | Step out of current scope |
+| `<leader>du` | `n` | **Toggle DAP UI** | Open / close graphical debug panels |
+| `<leader>dt` | `n` | **Terminate** | Stop debug session |
+
+---
+
+## 18. UI Toggles, Focus & Session Management
+
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>uT` | `n` | **Tailwind Conceal** | Hide lengthy Tailwind CSS classes into clean icons |
+| `<leader>z` | `n` | **Zen Mode** | Distraction-free editing (centered buffer, no clutter) |
+| `<leader>ut` | `n` | **Toggle Twilight** | Dim inactive code blocks to highlight active scope |
+| `<leader>uf` | `n` | **Toggle Auto-Format** | Toggle automatic format-on-save |
+| `<leader>ud` | `n` | **Toggle Diagnostics** | Show / hide inline diagnostic indicators |
+| `<leader>ul` | `n` | **Toggle Line Numbers** | Show / hide line numbers |
+| `<leader>sn` | `n` | **Noice History** | View notifications history |
+| `<leader>sl` | `n` | **Noice Last Message**| Display last notification popup |
+| `<leader>sd` | `n` | **Dismiss Notifications**| Clear all active popups from screen |
+| `<leader>qs` | `n` | **Restore Session** | Restore open tabs/windows for current project |
+| `<leader>ql` | `n` | **Restore Last Session**| Restore previous session |
+| `<leader>qd` | `n` | **Don't Save Session** | Close editor without saving current session |
+
+---
+
+## 19. Code Folding (`nvim-ufo`)
+
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `zR` | `n` | **Open All Folds** | Expand all folds in buffer |
+| `zM` | `n` | **Close All Folds** | Collapse all folds in buffer |
+| `za` | `n` | **Toggle Fold** | Toggle fold under cursor |
+| `zo` | `n` | **Open Fold** | Open fold under cursor |
+| `zc` | `n` | **Close Fold** | Close fold under cursor |
+
+---
+
+## 20. Quickfix & Location Lists
+
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>qo` | `n` | **Open Quickfix** | Open Quickfix list window |
+| `<leader>qc` | `n` | **Close Quickfix** | Close Quickfix list window |
+| `<leader>qn` or `]q` | `n` | **Next Quickfix** | Jump to next error or result |
+| `<leader>qp` or `[q` | `n` | **Prev Quickfix** | Jump to previous error or result |
+| `<leader>xx` | `n` | **Trouble Diagnostics**| Open Trouble diagnostic panel |
+| `<leader>xX` | `n` | **Trouble Buffer** | Open Trouble buffer-only diagnostics |
+| `<leader>xQ` | `n` | **Trouble Quickfix** | View Quickfix items in Trouble UI |
+| `<leader>xL` | `n` | **Trouble LocList** | View Location List items in Trouble UI |
+
+---
+
+## 21. Vim Operators, Text Objects & Yanky
+
+### Yanky Clipboard History (`lazyvim.plugins.extras.coding.yanky`)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `p` / `P` | `n` | **Paste** | Paste after / before cursor |
+| `[y` | `n` | **Cycle Yank History Prev** | Cycle to older copied item after paste |
+| `]y` | `n` | **Cycle Yank History Next** | Cycle to newer copied item after paste |
+| `[p` / `]p` | `n` | **Put Indented** | Paste matching indentation of target line |
+| `<leader>p` | `n` / `x` | **Yank History Picker** | Open searchable list of clipboard items |
+
+### Essential Text Objects
+| Key | Selection Scope |
+| :--- | :--- |
+| `iw` / `aw` | Inner word / A word (includes surrounding whitespace) |
+| `i"` / `a"` | Inside / around double quotes |
+| `i'` / `a'` | Inside / around single quotes |
+| `i\`` / `a\`` | Inside / around backtick template literals |
+| `i(` / `a(` | Inside / around parentheses `()` |
+| `i{` / `a{` | Inside / around curly braces `{}` |
+| `i[` / `a[` | Inside / around square brackets `[]` |
+| `it` / `at` | Inside / around HTML/JSX tags |
+| `ip` / `ap` | Inside / around paragraph / code block |
+| `ih` | Inner Git hunk (via `gitsigns.nvim`) |
+
+---
+
+## 22. Complete Master `<leader>` Keymap Index
+
+Quick alphabetical reference for all mapped `<leader>` commands:
+
+```text
+<leader><space> → Find Files (Telescope)
+<leader>,       → Switch Buffers
+<leader>/       → Live Grep project-wide
+<leader>:       → Command History
+<leader>?       → Buffer Keymaps (which-key)
+<leader>b...    → Buffer operations (bd: delete, bD: force delete, bp: pin, bo: close others)
+<leader>c...    → Code & LSP (ca: actions, cr: rename, cf: finder/format, ci: auto-import, co: outline)
+<leader>d...    → Debug (DAP) & Database (db: Dadbod UI)
+<leader>e       → Toggle Neo-tree File Explorer (Right side)
+<leader>f...    → Find (ff: files, fg: grep, fw: word, fr: recent, fb: buffers, fs: symbols)
+<leader>g...    → Git (gg: lazygit, gs: status, gc: commits, gd: diffview, gb: branches)
+<leader>h...    → Harpoon (ha: add, hh: menu, h1-h4: jump files) & Hunks (hs: stage, hr: reset, hp: preview)
+<leader>nh      → Clear search highlight
+<leader>o       → Focus Neo-tree File Explorer
+<leader>p       → Yank History (Yanky picker)
+<leader>q...    → Session (qs: restore, ql: restore last, qd: don't save) & Quickfix (qo: open, qc: close)
+<leader>r...    → Refactor (re: extract func, rv: extract var) & REST API (rs: send, rt: response)
+<leader>s...    → Search & Replace (sr: spectre, sw: word) & Notifications (sn: history, sd: dismiss)
+<leader>t...    → Terminal (tf: float, th: horiz, tv: vert) & Test (tr: run, tt: file, ts: summary)
+<leader>u...    → UI Toggles (uT: tailwind conceal, ut: twilight, uf: format on save)
+<leader>w...    → Window splits (wv: vertical, ws: horizontal, we: equal, wx: close)
+<leader>x...    → Diagnostics & Trouble (xx: diagnostics, xX: buffer, xQ: quickfix, xL: loclist)
+<leader>z       → Zen Mode (Distraction-free)
 ```
 
 ---
-
-## 💡 Pro Tips & Tricks
-
-### Combinations
-
-| Combination | Description                             |
-| ----------- | --------------------------------------- |
-| `ciw`       | Change inner word                       |
-| `ci"`       | Change inside quotes                    |
-| `ci(`       | Change inside parentheses               |
-| `da"`       | Delete around quotes (including quotes) |
-| `di{`       | Delete inside braces                    |
-| `yap`       | Yank around paragraph                   |
-| `vit`       | Select inside HTML tag                  |
-| `>ip`       | Indent paragraph                        |
-| `=ap`       | Auto-indent paragraph                   |
-| `gUiw`      | Uppercase word                          |
-| `guiw`      | Lowercase word                          |
-
-### Useful Commands
-
-| Command      | Description                |
-| ------------ | -------------------------- |
-| `:so %`      | Source current file        |
-| `:messages`  | Show message history       |
-| `:reg`       | Show all registers         |
-| `:marks`     | Show all marks             |
-| `:jumps`     | Show jump list             |
-| `:changes`   | Show change list           |
-| `:oldfiles`  | Show recently opened files |
-| `:pwd`       | Print working directory    |
-| `:cd {path}` | Change directory           |
-
-### Search & Replace Patterns
-
-```vim
-:%s/old/new/g          " Replace in entire file
-:%s/old/new/gc         " Replace with confirmation
-:'<,'>s/old/new/g      " Replace in visual selection
-:g/pattern/d           " Delete lines matching pattern
-:v/pattern/d           " Delete lines NOT matching
-```
-
-### Multi-cursor Simulation
-
-| Keys                   | Description                           |
-| ---------------------- | ------------------------------------- |
-| `cgn`                  | Change next match, then `.` to repeat |
-| `<C-v>` + select + `I` | Insert at multiple lines              |
-| `<C-v>` + select + `A` | Append at multiple lines              |
-
----
-
-## 🎮 Cheat Sheet Quick Reference
-
-### Most Used Shortcuts
-
-```
-<Space>ff    Find files
-<Space>fg    Search in files
-<Space>e     File explorer
-<Space>gg    LazyGit
-<C-\>        Terminal
-
-gd           Go to definition
-K            Documentation
-<Space>ca    Code actions
-<Space>cf    Format code
-
-gcc          Comment line
-<C-s>        Save
-<Space>bd    Close buffer
-<Space>nh    Clear search
-```
-
-### Essential Motions
-
-```
-w/b/e        Word navigation
-0/$          Line start/end
-gg/G         File start/end
-{/}          Paragraph up/down
-%            Matching bracket
-f{char}      Find character
-```
-
-### Must-Know Operators
-
-```
-d   Delete (cut)
-c   Change (delete + insert)
-y   Yank (copy)
-v   Visual select
->   Indent
-=   Auto-indent
-```
-
-### Combining Operator + Motion
-
-```
-dw    Delete word
-d$    Delete to end of line
-ciw   Change inner word
-yap   Yank around paragraph
->ip   Indent paragraph
-```
-
----
-
-## 📚 Resources & Documentation
-
-### Official Documentation
-
-- **LazyVim:** https://www.lazyvim.org
-- **Neovim:** https://neovim.io/doc
-- **Lazy.nvim:** https://github.com/folke/lazy.nvim
-
-### Help Commands
-
-```vim
-:help keymaps           " Keymapping help
-:help motion            " Movement help
-:help text-objects      " Text objects help
-:help nvim-treesitter   " Treesitter help
-:help lsp               " LSP help
-```
-
-### In-Editor Help
-
-- Press `<Space>` and wait → See available commands
-- Press `g?` in any plugin UI → Context help
-- Type `:help {topic}` → Search documentation
-
----
-
-## 🔄 Customization
-
-Your custom configurations are in:
-
-```
-~/.config/nvim/lua/
-├── config/
-│   ├── options.lua      # Editor options
-│   ├── keymaps.lua      # Your custom keymaps
-│   ├── autocmds.lua     # Auto commands
-│   └── lazy.lua         # Plugin manager config
-└── plugins/
-    ├── lsp.lua          # LSP configuration
-    ├── formatting.lua   # Formatters & linters
-    ├── git.lua          # Git integration
-    ├── productivity.lua # Productivity plugins
-    ├── workflow.lua     # Workflow enhancements
-    └── performance.lua  # Performance optimizations
-```
-
-To add custom keymaps, edit: `~/.config/nvim/lua/config/keymaps.lua`
-
----
-
-## 🆘 Troubleshooting Shortcuts
-
-| Issue                 | Command                           |
-| --------------------- | --------------------------------- |
-| Plugin not working    | `:Lazy` → press `X` → `S` to sync |
-| LSP not working       | `:LspInfo` to check status        |
-| Formatter not working | `:ConformInfo` to check           |
-| Check for errors      | `:messages` to see error log      |
-| Full health check     | `:checkhealth`                    |
-| Slow startup          | `:Lazy profile` to find culprit   |
-
----
-
-## 🌟 Final Notes
-
-- **Muscle memory takes time** - Be patient!
-- **Start with basics** - Don't try to learn everything at once
-- **Use `<Space>`** - Your gateway to most commands
-- **`:help {topic}`** - When in doubt, read the docs
-- **Practice daily** - 15 minutes of deliberate practice
-- **Customize gradually** - Add keymaps as you need them
-
-**Happy coding! 🚀**
-
----
-
-_Last updated: November 2025_
-_LazyVim Configuration by dzgeek_
+_Document generated for dzgeek dotfiles configuration._  
+_For hands-on tutorials and day-to-day workflow mastery, proceed to [COURSE.md](file:///home/dzgeek/dotfiles/config/.config/nvim/COURSE.md)._

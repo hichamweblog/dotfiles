@@ -1,3 +1,10 @@
+-- Filetype detection for GitHub Actions workflows
+vim.filetype.add({
+  pattern = {
+    [".*/%.github/workflows/.*%.ya?ml"] = "yaml.ghaction",
+  },
+})
+
 return {
   -- Configure conform.nvim for formatting
   {
@@ -45,11 +52,7 @@ return {
         dockerfile = { "prettier" },
       },
 
-      -- Format on save configuration
-      format_on_save = {
-        timeout_ms = 3000,
-        lsp_format = "fallback", -- Use LSP if formatter not available
-      },
+      -- Note: Format-on-save is handled automatically by LazyVim with toggle (<leader>uf)
 
       -- Customize formatters
       formatters = {
@@ -97,8 +100,9 @@ return {
         -- Markdown
         markdown = { "markdownlint" },
 
-        -- YAML
+        -- YAML & GitHub Actions CI/CD
         yaml = { "yamllint" },
+        ["yaml.ghaction"] = { "actionlint" },
 
         -- Docker
         dockerfile = { "hadolint" },
@@ -129,7 +133,7 @@ return {
   -- Auto-install formatters and linters with Mason
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    dependencies = { "mason-org/mason.nvim" }, -- FIXED: Updated to mason-org
+    dependencies = { "mason-org/mason.nvim" },
     opts = {
       ensure_installed = {
         -- Formatters
@@ -140,6 +144,7 @@ return {
         "sql-formatter", -- SQL
 
         -- Linters
+        "actionlint", -- GitHub Actions workflows
         "eslint_d", -- JS/TS (faster than eslint)
         "pylint", -- Python
         "markdownlint", -- Markdown

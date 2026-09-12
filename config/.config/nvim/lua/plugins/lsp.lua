@@ -173,6 +173,16 @@ return {
             },
           },
         },
+
+        -- Pytest language server: disable so Pyright and Ruff handle Python without symbol conflicts
+        pytest_language_server = {
+          enabled = false,
+        },
+
+        -- PHP: only enable if php binary exists on system
+        phpactor = {
+          enabled = vim.fn.executable("php") == 1,
+        },
       },
     },
   },

@@ -106,16 +106,6 @@ return {
     end,
   },
 
-  -- Surround text objects (like VS Code's bracket pair colorizer)
-  {
-    "kylechui/nvim-surround",
-    version = "*",
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({})
-    end,
-  },
-
   -- Better quickfix/location list
   {
     "folke/trouble.nvim",
@@ -234,6 +224,9 @@ return {
       default_view = "body",
       default_env = "dev",
       debug = false,
+      kulala_core = {
+        path = vim.fn.expand("~/.local/bin/kulala-core"),
+      },
     },
   },
 }

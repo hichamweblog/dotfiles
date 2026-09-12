@@ -34,14 +34,44 @@ return {
     -- Managed by lazyvim.plugins.extras.ai.copilot extra
     -- Custom keybindings below override the defaults
     config = function()
-      -- Disable default <Tab> mapping (blink.cmp owns Tab)
+      -- Disable default <Tab> mapping so we can manage it with smart priority
       vim.g.copilot_no_tab_map = true
 
-      -- Accept suggestion with Ctrl+J (won't conflict with anything)
+      -- Smart <Tab>: Copilot ghost text -> snippet placeholder -> normal Tab/indent
+      vim.keymap.set("i", "<Tab>", function()
+        -- 1. If Copilot has a suggestion visible, accept it
+        if vim.fn.exists("*copilot#GetDisplayedSuggestion") == 1 and vim.fn["copilot#GetDisplayedSuggestion"]().text ~= "" then
+          return vim.fn["copilot#Accept"]()
+        end
+
+        -- 2. If inside an active snippet, jump forward to next placeholder
+        if vim.snippet and vim.snippet.active({ direction = 1 }) then
+          vim.schedule(function()
+            vim.snippet.jump(1)
+          end)
+          return ""
+        end
+
+        local luasnip = package.loaded["luasnip"]
+        if luasnip and luasnip.locally_jumpable(1) then
+          luasnip.jump(1)
+          return ""
+        end
+
+        -- 3. Otherwise, insert a regular tab / indent
+        return "\t"
+      end, {
+        expr = true,
+        silent = true,
+        replace_keycodes = false,
+        desc = "Copilot: Smart Tab accept",
+      })
+
+      -- Also keep Ctrl+J as an alternative accept shortcut
       vim.keymap.set("i", "<C-j>", 'copilot#Accept("")', {
         expr = true,
         replace_keycodes = false,
-        desc = "Copilot: Accept suggestion",
+        desc = "Copilot: Accept suggestion (alternative)",
       })
 
       -- Cycle through alternative suggestions
@@ -115,6 +145,29 @@ return {
         mode = { "i", "s" },
       },
     },
+  },
+
+  -- Configure mini.snippets (active snippet engine in LazyVim)
+  {
+    "nvim-mini/mini.snippets",
+    opts = function(_, opts)
+      local mini_snippets = require("mini.snippets")
+      local config_path = vim.fn.stdpath("config")
+      opts.snippets = {
+        mini_snippets.gen_loader.from_file(config_path .. "/snippets/global.json"),
+        mini_snippets.gen_loader.from_lang({
+          lang_patterns = {
+            tsx = { "**/react*.json", "**/typescript.json", "**/typescriptreact.json", "**/tsx.json" },
+            typescriptreact = { "**/react*.json", "**/typescript.json", "**/typescriptreact.json", "**/tsx.json" },
+            jsx = { "**/react*.json", "**/javascript.json", "**/javascriptreact.json", "**/jsx.json" },
+            javascriptreact = { "**/react*.json", "**/javascript.json", "**/javascriptreact.json", "**/jsx.json" },
+            javascript = { "**/react*.json", "**/javascript.json", "**/javascriptreact.json", "**/jsx.json" },
+            typescript = { "**/typescript.json", "**/typescriptreact.json", "**/tsx.json" },
+            astro = { "**/astro.json", "**/typescript.json", "**/javascript.json" },
+          },
+        }),
+      }
+    end,
   },
 
   -- Incremental LSP renaming (like F2 in VSCode)
@@ -208,8 +261,8 @@ return {
       },
       lightbulb = {
         enable = true,
-        sign = true,
-        virtual_text = false,
+        sign = false,
+        virtual_text = true,
       },
       symbol_in_winbar = {
         enable = true, -- Show current symbol in winbar (like VSCode breadcrumbs)
@@ -332,15 +385,15 @@ return {
   --   },
   -- },
 
-  -- Colorize color codes (like VSCode color decorator)
+  -- Colorize color codes (like VSCode color decorator - shows #fff as white background)
   {
     "NvChad/nvim-colorizer.lua",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
       filetypes = { "*" },
       user_default_options = {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
+        RGB = true, -- #RGB hex codes (e.g. #fff)
+        RRGGBB = true, -- #RRGGBB hex codes (e.g. #ffffff)
         names = false, -- "Name" codes like Blue or red
         RRGGBBAA = true, -- #RRGGBBAA hex codes
         AARRGGBB = true, -- 0xAARRGGBB hex codes
@@ -348,12 +401,59 @@ return {
         hsl_fn = true, -- CSS hsl() and hsla() functions
         css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
         css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-        mode = "background", -- Set the display mode: foreground, background, virtualtext
+        mode = "background", -- Display color as background of the text so #fff shows white
         tailwind = true, -- Enable tailwind colors
         sass = { enable = true, parsers = { "css" } },
         virtualtext = "■",
       },
       buftypes = {},
+    },
+    config = function(_, opts)
+      require("colorizer").setup(opts)
+      vim.schedule(function()
+        pcall(require("colorizer").attach_to_buffer, 0)
+      end)
+    end,
+  },
+
+  -- Multi-cursor support (like VSCode Ctrl+D / multi-cursor)
+  {
+    "mg979/vim-visual-multi",
+    event = { "BufReadPost", "BufNewFile" },
+    init = function()
+      vim.g.VM_default_mappings = 1
+      vim.g.VM_maps = {
+        ["Find Under"] = "<C-n>",
+        ["Find Subword Under"] = "<C-n>",
+      }
+    end,
+  },
+
+  -- Tailwind CSS tools (class concealing, color preview)
+  {
+    "luckasRanarison/tailwind-tools.nvim",
+    name = "tailwind-tools",
+    build = ":UpdateRemotePlugins",
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      document_color = {
+        enabled = true,
+        kind = "inline",
+        inline_symbol = "󰝤 ",
+      },
+      conceal = {
+        enabled = true,
+        symbol = "󱏿",
+        highlight = {
+          fg = "#38bdf8",
+        },
+      },
+    },
+    keys = {
+      { "<leader>uT", "<cmd>TailwindConcealToggle<cr>", desc = "Toggle Tailwind Class Conceal" },
     },
   },
 

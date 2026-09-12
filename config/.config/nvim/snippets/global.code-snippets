@@ -1,0 +1,349 @@
+{
+	// ==================== JavaScript / TypeScript ====================
+	"Console Log": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "cl",
+		"body": "console.log('$1:', $1);$0",
+		"description": "Console log with label"
+	},
+	"Arrow Function": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "af",
+		"body": "const ${1:name} = (${2:params}) => {\n\t$0\n};",
+		"description": "Arrow function"
+	},
+	"Try Catch": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "tc",
+		"body": [
+			"try {",
+			"\t$0",
+			"} catch (error) {",
+			"\tconsole.error(error);",
+			"}"
+		],
+		"description": "Try-catch block"
+	},
+	"Async Function": {
+		"scope": "javascript,typescript,javascriptreact,typescriptreact",
+		"prefix": "afn",
+		"body": "const ${1:name} = async (${2:params}) => {\n\t$0\n};",
+		"description": "Async arrow function"
+	},
+	"TypeScript Interface": {
+		"scope": "typescript,typescriptreact",
+		"prefix": "intf",
+		"body": [
+			"interface ${1:Name} {",
+			"\t${2:key}: ${3:string};$0",
+			"}"
+		],
+		"description": "TypeScript interface"
+	},
+	"TypeScript Type": {
+		"scope": "typescript,typescriptreact",
+		"prefix": "tp",
+		"body": "type ${1:Name} = ${2:string};$0",
+		"description": "TypeScript type alias"
+	},
+	// ==================== React ====================
+	"React Functional Component": {
+		"scope": "typescriptreact,javascriptreact",
+		"prefix": "rfc",
+		"body": [
+			"export default function ${1:${TM_FILENAME_BASE}}(${2:}) {",
+			"\treturn (",
+			"\t\t<div>",
+			"\t\t\t$0",
+			"\t\t</div>",
+			"\t);",
+			"}"
+		],
+		"description": "React functional component"
+	},
+	"useState": {
+		"scope": "typescriptreact,javascriptreact",
+		"prefix": "us",
+		"body": "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState<${2:string}>(${3:''});$0",
+		"description": "useState hook"
+	},
+	"useEffect": {
+		"scope": "typescriptreact,javascriptreact",
+		"prefix": "ue",
+		"body": [
+			"useEffect(() => {",
+			"\t$0",
+			"}, [${1}]);"
+		],
+		"description": "useEffect hook"
+	},
+	"useRef": {
+		"scope": "typescriptreact,javascriptreact",
+		"prefix": "ur",
+		"body": "const ${1:ref} = useRef<${2:HTMLDivElement}>(null);$0",
+		"description": "useRef hook"
+	},
+	"useMemo": {
+		"scope": "typescriptreact,javascriptreact",
+		"prefix": "um",
+		"body": [
+			"const ${1:value} = useMemo(() => {",
+			"\t$0",
+			"}, [${2}]);"
+		],
+		"description": "useMemo hook"
+	},
+	"useCallback": {
+		"scope": "typescriptreact,javascriptreact",
+		"prefix": "ucb",
+		"body": [
+			"const ${1:handler} = useCallback((${2}) => {",
+			"\t$0",
+			"}, [${3}]);"
+		],
+		"description": "useCallback hook"
+	},
+	// ==================== Next.js ====================
+	"Next.js Page": {
+		"scope": "typescriptreact,javascriptreact",
+		"prefix": "npage",
+		"body": [
+			"export default function ${1:Page}() {",
+			"\treturn (",
+			"\t\t<main>",
+			"\t\t\t$0",
+			"\t\t</main>",
+			"\t);",
+			"}"
+		],
+		"description": "Next.js page component"
+	},
+	"Next.js Server Action": {
+		"scope": "typescriptreact,typescript",
+		"prefix": "nsa",
+		"body": [
+			"'use server';",
+			"",
+			"export async function ${1:action}(${2:formData: FormData}) {",
+			"\t$0",
+			"}"
+		],
+		"description": "Next.js server action"
+	},
+	"Next.js API Route (App Router)": {
+		"scope": "typescript",
+		"prefix": "napi",
+		"body": [
+			"import { NextRequest, NextResponse } from 'next/server';",
+			"",
+			"export async function ${1|GET,POST,PUT,DELETE,PATCH|}(request: NextRequest) {",
+			"\t$0",
+			"\treturn NextResponse.json({ });",
+			"}"
+		],
+		"description": "Next.js route handler"
+	},
+	"Next.js Metadata": {
+		"scope": "typescriptreact,typescript",
+		"prefix": "nmeta",
+		"body": [
+			"export const metadata: Metadata = {",
+			"\ttitle: '${1:Title}',",
+			"\tdescription: '${2:Description}',",
+			"};"
+		],
+		"description": "Next.js metadata export"
+	},
+	// ==================== Astro ====================
+	"Astro Component": {
+		"scope": "astro",
+		"prefix": "astro",
+		"body": [
+			"---",
+			"${1:// props}",
+			"---",
+			"",
+			"<${2:div}>",
+			"\t$0",
+			"</${2:div}>"
+		],
+		"description": "Astro component"
+	},
+	"Astro Props": {
+		"scope": "astro",
+		"prefix": "aprops",
+		"body": [
+			"interface Props {",
+			"\t${1:title}: ${2:string};",
+			"}",
+			"",
+			"const { ${1:title} } = Astro.props;"
+		],
+		"description": "Astro typed props"
+	},
+	// ==================== Zustand ====================
+	"Zustand Store": {
+		"scope": "typescript,typescriptreact",
+		"prefix": "zstore",
+		"body": [
+			"import { create } from 'zustand';",
+			"",
+			"interface ${1:Store}State {",
+			"\t${2:count}: ${3:number};",
+			"\t${4:increment}: () => void;",
+			"}",
+			"",
+			"export const use${1:Store} = create<${1:Store}State>((set) => ({",
+			"\t${2:count}: ${5:0},",
+			"\t${4:increment}: () => set((state) => ({ ${2:count}: state.${2:count} + 1 })),",
+			"}));"
+		],
+		"description": "Zustand store"
+	},
+	// ==================== Zod ====================
+	"Zod Schema": {
+		"scope": "typescript,typescriptreact",
+		"prefix": "zod",
+		"body": [
+			"const ${1:schema} = z.object({",
+			"\t${2:field}: z.${3:string}(),",
+			"});",
+			"",
+			"type ${4:Type} = z.infer<typeof ${1:schema}>;"
+		],
+		"description": "Zod schema with inferred type"
+	},
+	// ==================== TanStack Query ====================
+	"useQuery": {
+		"scope": "typescript,typescriptreact",
+		"prefix": "uq",
+		"body": [
+			"const { data, isLoading, error } = useQuery({",
+			"\tqueryKey: ['${1:key}'],",
+			"\tqueryFn: async () => {",
+			"\t\tconst res = await fetch('${2:/api/endpoint}');",
+			"\t\treturn res.json();",
+			"\t},",
+			"});"
+		],
+		"description": "TanStack useQuery"
+	},
+	"useMutation": {
+		"scope": "typescript,typescriptreact",
+		"prefix": "umt",
+		"body": [
+			"const ${1:mutation} = useMutation({",
+			"\tmutationFn: async (${2:data}: ${3:unknown}) => {",
+			"\t\t$0",
+			"\t},",
+			"\tonSuccess: () => {",
+			"\t\tqueryClient.invalidateQueries({ queryKey: ['${4:key}'] });",
+			"\t},",
+			"});"
+		],
+		"description": "TanStack useMutation"
+	},
+	// ==================== TanStack Router ====================
+	"TanStack Route": {
+		"scope": "typescript,typescriptreact",
+		"prefix": "troute",
+		"body": [
+			"import { createFileRoute } from '@tanstack/react-router';",
+			"",
+			"export const Route = createFileRoute('${1:/path}')({",
+			"\tcomponent: ${2:RouteComponent},",
+			"});",
+			"",
+			"function ${2:RouteComponent}() {",
+			"\treturn <div>$0</div>;",
+			"}"
+		],
+		"description": "TanStack Router file route"
+	},
+	"TanStack Route Loader": {
+		"scope": "typescript,typescriptreact",
+		"prefix": "tloader",
+		"body": [
+			"export const Route = createFileRoute('${1:/path}')({",
+			"\tloader: async () => {",
+			"\t\t$0",
+			"\t},",
+			"\tcomponent: ${2:RouteComponent},",
+			"});"
+		],
+		"description": "TanStack Router route with loader"
+	},
+	// ==================== Node / Express ====================
+	"Express Router": {
+		"scope": "javascript,typescript",
+		"prefix": "exrouter",
+		"body": [
+			"import { Router } from 'express';",
+			"",
+			"const router = Router();",
+			"",
+			"router.${1|get,post,put,delete|}('${2:/}', async (req, res) => {",
+			"\t$0",
+			"});",
+			"",
+			"export default router;"
+		],
+		"description": "Express router"
+	},
+	"Express Middleware": {
+		"scope": "javascript,typescript",
+		"prefix": "exmid",
+		"body": [
+			"export const ${1:middleware} = (req, res, next) => {",
+			"\t$0",
+			"\tnext();",
+			"};"
+		],
+		"description": "Express middleware"
+	},
+	// ==================== Hono ====================
+	"Hono App": {
+		"scope": "typescript",
+		"prefix": "hono",
+		"body": [
+			"import { Hono } from 'hono';",
+			"",
+			"const app = new Hono();",
+			"",
+			"app.${1|get,post,put,delete|}('${2:/}', (c) => {",
+			"\t$0",
+			"\treturn c.json({ });",
+			"});",
+			"",
+			"export default app;"
+		],
+		"description": "Hono app"
+	},
+	"Hono Route": {
+		"scope": "typescript",
+		"prefix": "hroute",
+		"body": [
+			"app.${1|get,post,put,delete|}('${2:/}', async (c) => {",
+			"\t$0",
+			"\treturn c.json({ });",
+			"});"
+		],
+		"description": "Hono route handler"
+	},
+	// ==================== Bun ====================
+	"Bun Server": {
+		"scope": "typescript",
+		"prefix": "bserve",
+		"body": [
+			"Bun.serve({",
+			"\tport: ${1:3000},",
+			"\tfetch(req) {",
+			"\t\tconst url = new URL(req.url);",
+			"\t\t$0",
+			"\t\treturn new Response('Hello');",
+			"\t},",
+			"});"
+		],
+		"description": "Bun.serve"
+	}
+}
