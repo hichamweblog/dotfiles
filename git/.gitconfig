@@ -2,7 +2,8 @@
 	name = Hicham
 	email = hichamdevpro@gmail.com
 [core]
-	editor = code --wait
+	editor = nvim
+	excludesfile = ~/.gitignore_global
 [alias]
 	st = status
 	co = checkout

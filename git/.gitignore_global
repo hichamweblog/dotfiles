@@ -1,0 +1,68 @@
+# ==============================================================================
+# Global Git Ignore
+# Applied across all repositories on this machine via core.excludesfile
+# ==============================================================================
+
+# --- Operating System Files ---
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# --- Editors & IDEs ---
+# Vim / Neovim
+*.swp
+*.swo
+*.swn
+*.swm
+*.swk
+*.netrwhist
+[Ss]ession.vim
+Sessionx.vim
+
+# JetBrains IDEs (IntelliJ, WebStorm, PyCharm, etc.)
+.idea/
+
+# VS Code (ignore user workspace state, preserve project settings if present)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project.local
+
+# --- Secrets & Local Environments ---
+.env.local
+.env.*.local
+*.local.env
+
+# --- Package Manager & Runtime Logs ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Cache & Build Artifacts ---
+.turbo/
+.cache/
+.sass-cache/
