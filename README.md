@@ -15,6 +15,26 @@ Managed with GNU Stow for easy deployment across multiple machines.
 
 ## Fresh Install on New Server
 
+### 🚀 Quick Start (Automated Bootstrap)
+
+Clone the repository and run the automated installer. It automatically detects your operating system, installs prerequisites, safely backs up any conflicting configs, stows all dotfile packages, and sets up Oh-My-Zsh, Neovim 0.11+, TPM, and Starship:
+
+```bash
+git clone https://github.com/hichamweblog/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./install.sh
+```
+
+**Installer Options:**
+* `./install.sh -y` — Non-interactive installation (assumes yes to all prompts).
+* `./install.sh --stow-only` — Skip system packages & tools; only backup and stow dotfiles.
+* `./install.sh --skip-packages` — Skip `sudo apt/dnf/pacman/brew`, but configure user tools & stow.
+* `./install.sh --dry-run` — Preview actions without modifying filesystem.
+
+---
+
+### 📖 Manual Step-by-Step Installation (Alternative)
+
 ### 1. Install System Dependencies
 
 #### Ubuntu/Debian
