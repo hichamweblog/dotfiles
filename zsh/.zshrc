@@ -85,11 +85,13 @@ source $ZSH/oh-my-zsh.sh
 # ============================================================================
 
 export EDITOR=nvim
-export VISUAL=nvim
-export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="/home/dzgeek/.nvm/versions/node/v25.2.1/bin:$PATH"
-# export MANPATH="/usr/local/man:$MANPATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# NVM (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -118,11 +120,7 @@ setopt SHARE_HISTORY         # Share history between sessions
 # Completion Configuration
 # ============================================================================
 
-# Better completion
-autoload -Uz compinit
-compinit
-
-# Case-insensitive completion
+# Completion styles (compinit is initialized by Oh My Zsh)
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
 # Partial completion suggestions
@@ -141,13 +139,13 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Zoxide (Smart directory navigation)
-eval "$(zoxide init zsh)"
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
 # Starship (Shell prompt)
-eval "$(starship init zsh)"
+command -v starship &>/dev/null && eval "$(starship init zsh)"
 
 # TheFuck (Command correction)
-eval $(thefuck --alias fix)
+command -v thefuck &>/dev/null && eval $(thefuck --alias fix)
 
 # ============================================================================
 # Custom Functions
@@ -256,43 +254,23 @@ alias szsh='source ~/.zshrc'
 # - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 
-# bun completions
-[ -s "/home/dzgeek/.bun/_bun" ] && source "/home/dzgeek/.bun/_bun"
-
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+[ -d "$BUN_INSTALL/bin" ] && export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
 # pnpm
-export PNPM_HOME="/home/dzgeek/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *) [ -d "$PNPM_HOME" ] && export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
 
-# bun completions
-[ -s "/home/dzgeek/.bun/_bun" ] && source "/home/dzgeek/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# pnpm
-export PNPM_HOME="/home/dzgeek/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-export PATH=$PATH:$(go env GOPATH)/bin
-
-
-# Added by Antigravity CLI installer
-export PATH="/home/dzgeek/.local/bin:$PATH"
+# Go binaries
+command -v go &>/dev/null && export PATH="$PATH:$(go env GOPATH)/bin"
 
 # opencode
-export PATH=/home/dzgeek/.opencode/bin:$PATH
+[ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
+
+# envman
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
