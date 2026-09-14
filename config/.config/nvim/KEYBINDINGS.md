@@ -82,8 +82,12 @@ Managed by `bufferline.nvim` and `mini.bufremove`.
 
 | Key | Mode | Action | Description |
 | :--- | :---: | :--- | :--- |
-| `<S-l>` or `]b` | `n` | **Next Buffer** | Jump to tab on the right |
-| `<S-h>` or `[b` | `n` | **Previous Buffer** | Jump to tab on the left |
+| `<Tab>` | `n` | **Next Buffer (Tab)** | Jump to next buffer (works in GNOME Terminal & all terminals) |
+| `<S-Tab>` | `n` | **Previous Buffer (Tab)** | Jump to previous buffer (works in GNOME Terminal & all terminals) |
+| `<C-Tab>` | `n` / `i` | **Next Buffer (Tab)** | Jump to next tab (terminals with Kitty/CSI-u protocol like WezTerm) |
+| `<C-S-Tab>` | `n` / `i` | **Previous Buffer (Tab)** | Jump to previous tab (terminals with Kitty/CSI-u protocol like WezTerm) |
+| `<A-Right>` / `<A-Left>` | `n` / `i` | **Next / Prev Tab** | Jump tabs with Alt+Arrows (works everywhere in Normal & Insert) |
+| `<S-l>` / `<S-h>` | `n` | **Next / Prev Tab** | Vim style (Capital `L` / `H`) |
 | `<leader>bd` | `n` | **Delete Buffer** | Safely close buffer (keeps splits open) |
 | `<leader>bD` | `n` | **Force Delete Buffer** | Close buffer ignoring unsaved changes |
 | `<leader>bp` | `n` | **Toggle Pin** | Pin buffer to left of tab bar |
@@ -197,6 +201,28 @@ Integrated seamlessly with `saghen/blink.cmp`.
 | `<M-\>` | `i` | **Dismiss** | Dismiss active suggestion |
 | `<S-Tab>` | `i` | **Snippet Prev** | Jump backward to previous snippet placeholder |
 
+### Copilot Chat & Cursor-like AI (`CopilotChat.nvim`)
+
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>aa` | `n` / `v` | **Toggle Chat** | Open / close Copilot Chat sidebar (VS Code / Cursor style) |
+| `<leader>ai` | `n` / `v` | **Inline Floating Chat** | Open centered floating chat window (Cursor style) |
+| `<leader>aq` | `n` / `v` | **Quick Chat** | Prompt AI inline with selection / buffer context |
+| `<leader>ap` | `n` / `v` | **Prompt Actions** | Open interactive picker for all preset AI actions |
+| `<leader>ae` | `n` / `v` | **Explain Code** | Ask AI to explain the selected code |
+| `<leader>af` | `n` / `v` | **Fix Bug / Error** | Ask AI to fix diagnostics or errors in selection |
+| `<leader>ao` | `n` / `v` | **Optimize** | Optimize performance and clean up code |
+| `<leader>at` | `n` / `v` | **Generate Tests** | Automatically create unit tests for selected code |
+| `<leader>ad` | `n` / `v` | **Generate Docs** | Generate comprehensive docstrings / JSDoc |
+| `<leader>ar` | `n` / `v` | **Review Code** | Code review for bugs, security & style |
+| `<leader>am` | `n` / `v` | **Commit Message** | Generate a Conventional Commit message |
+| `<leader>ax` | `n` / `v` | **Reset Chat** | Clear conversation history |
+
+### Auto Template Strings (`template-string.nvim`)
+* Typing `${` inside `'...'` or `"..."` automatically converts quotes to template backticks `` `...${}...` `` in JavaScript, TypeScript, JSX, TSX, and Python.
+* Deleting `${}` automatically reverts back to regular quotes.
+
+
 ---
 
 ## 8. Multi-Cursor (`vim-visual-multi`)
@@ -228,6 +254,10 @@ Integrated seamlessly with `saghen/blink.cmp`.
 | `<leader>co` | `n` | **Symbol Outline** | Floating outline of symbols in current file |
 | `<leader>cr` | `n` | **Rename Symbol** | Live incremental rename with `inc-rename.nvim` |
 | `<leader>ci` | `n` | **Auto-Import** | Automatically imports missing TS/JS identifier |
+| `<leader>cc` | `n` / `x` | **Run CodeLens** | Execute the CodeLens action under the cursor (view references/implementations) |
+| `<leader>cC` | `n` | **Refresh CodeLens** | Refresh & re-display inline reference counts ("X references") |
+| `<leader>cp` | `n` | **Visual Color Picker** | Open graphical color picker (2D palette + eyedropper) |
+| `Ctrl+Click` / `Double-Click` | `n` / `i` | **Click Color** | Click on any color code to open visual color picker |
 | `[d` | `n` | **Prev Diagnostic** | Jump to previous error/warning (Lspsaga) |
 | `]d` | `n` | **Next Diagnostic** | Jump to next error/warning (Lspsaga) |
 | `<leader>cd` | `n` | **Line Diagnostics** | Show floating diagnostics for current line (Lspsaga) |
@@ -410,6 +440,7 @@ Integrated seamlessly with `saghen/blink.cmp`.
 | `<leader>ut` | `n` | **Toggle Twilight** | Dim inactive code blocks to highlight active scope |
 | `<leader>uf` | `n` | **Toggle Auto-Format** | Toggle automatic format-on-save |
 | `<leader>ud` | `n` | **Toggle Diagnostics** | Show / hide inline diagnostic indicators |
+| `<leader>uD` | `n` | **Toggle Inline Diagnostic Details** | Toggle tiny-inline-diagnostic multi-line overlay |
 | `<leader>ul` | `n` | **Toggle Line Numbers** | Show / hide line numbers |
 | `<leader>sn` | `n` | **Noice History** | View notifications history |
 | `<leader>sl` | `n` | **Noice Last Message**| Display last notification popup |
@@ -440,6 +471,7 @@ Integrated seamlessly with `saghen/blink.cmp`.
 | `<leader>qc` | `n` | **Close Quickfix** | Close Quickfix list window |
 | `<leader>qn` or `]q` | `n` | **Next Quickfix** | Jump to next error or result |
 | `<leader>qp` or `[q` | `n` | **Prev Quickfix** | Jump to previous error or result |
+| `<leader>tc` | `n` | **TypeScript Type-Check** | Run asynchronous project-wide `tsc --noEmit` check |
 | `<leader>xx` | `n` | **Trouble Diagnostics**| Open Trouble diagnostic panel |
 | `<leader>xX` | `n` | **Trouble Buffer** | Open Trouble buffer-only diagnostics |
 | `<leader>xQ` | `n` | **Trouble Quickfix** | View Quickfix items in Trouble UI |
@@ -470,11 +502,30 @@ Integrated seamlessly with `saghen/blink.cmp`.
 | `i[` / `a[` | Inside / around square brackets `[]` |
 | `it` / `at` | Inside / around HTML/JSX tags |
 | `ip` / `ap` | Inside / around paragraph / code block |
-| `ih` | Inner Git hunk (via `gitsigns.nvim`) |
+---
+
+## 22. Task Runner (`overseer.nvim`) & Package Lens (`package-info.nvim`)
+
+### Overseer Task Runner (NPM scripts, dev servers, builds)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>or` | `n` | **Run Task** | Select and launch npm scripts, build commands |
+| `<leader>ot` | `n` | **Toggle Task Panel** | Open / close background tasks sidebar |
+| `<leader>oa` | `n` | **Task Action** | Restart, stop, or inspect current task |
+| `<leader>oi` | `n` | **Overseer Info** | View task runner diagnostics & status |
+
+### Package Info (package.json version lens)
+| Key | Mode | Action | Description |
+| :--- | :---: | :--- | :--- |
+| `<leader>np` | `n` | **Toggle Package Versions** | Show / hide outdated version badges in `package.json` |
+| `<leader>nu` | `n` | **Update Package** | Upgrade dependency to latest version |
+| `<leader>nd` | `n` | **Delete Package** | Remove dependency and uninstall |
+| `<leader>ni` | `n` | **Install Package** | Add a new npm dependency |
+| `<leader>nv` | `n` | **Change Version** | Select specific version to install |
 
 ---
 
-## 22. Complete Master `<leader>` Keymap Index
+## 23. Complete Master `<leader>` Keymap Index
 
 Quick alphabetical reference for all mapped `<leader>` commands:
 
@@ -491,8 +542,8 @@ Quick alphabetical reference for all mapped `<leader>` commands:
 <leader>f...    → Find (ff: files, fg: grep, fw: word, fr: recent, fb: buffers, fs: symbols)
 <leader>g...    → Git (gg: lazygit, gs: status, gc: commits, gd: diffview, gb: branches)
 <leader>h...    → Harpoon (ha: add, hh: menu, h1-h4: jump files) & Hunks (hs: stage, hr: reset, hp: preview)
-<leader>nh      → Clear search highlight
-<leader>o       → Focus Neo-tree File Explorer
+<leader>n...    → NPM Packages (np: toggle versions, nu: update, ni: install, nd: delete) & nh: clear highlight
+<leader>o...    → Focus Neo-tree (<leader>o) & Task Runner (or: run, ot: toggle panel, oa: action)
 <leader>p       → Yank History (Yanky picker)
 <leader>q...    → Session (qs: restore, ql: restore last, qd: don't save) & Quickfix (qo: open, qc: close)
 <leader>r...    → Refactor (re: extract func, rv: extract var) & REST API (rs: send, rt: response)

@@ -5,13 +5,9 @@ return {
       "b0o/schemastore.nvim",
     },
     opts = {
-      -- Diagnostic configuration
+      -- Diagnostic configuration (native virtual_text disabled for tiny-inline-diagnostic to avoid Copilot collisions)
       diagnostics = {
-        virtual_text = {
-          spacing = 4,
-          source = "if_many",
-          prefix = "●",
-        },
+        virtual_text = false,
         severity_sort = true,
       },
 
@@ -19,6 +15,11 @@ return {
       inlay_hints = {
         enabled = true,
         exclude = { "vue" }, -- disable for vue if needed
+      },
+
+      -- CodeLens (inline reference counts, implementations, etc.)
+      codelens = {
+        enabled = true,
       },
 
       -- LSP Server configurations
@@ -49,6 +50,13 @@ return {
                 functionLikeReturnTypes = { enabled = true },
                 enumMemberValues = { enabled = true },
               },
+              referencesCodeLens = {
+                enabled = true,
+                showOnAllFunctions = true,
+              },
+              implementationsCodeLens = {
+                enabled = true,
+              },
             },
             javascript = {
               updateImportsOnFileMove = { enabled = "always" },
@@ -62,6 +70,13 @@ return {
                 propertyDeclarationTypes = { enabled = true },
                 functionLikeReturnTypes = { enabled = true },
                 enumMemberValues = { enabled = true },
+              },
+              referencesCodeLens = {
+                enabled = true,
+                showOnAllFunctions = true,
+              },
+              implementationsCodeLens = {
+                enabled = true,
               },
             },
           },
@@ -185,5 +200,65 @@ return {
         },
       },
     },
+  },
+
+  -- Human-readable TypeScript errors (like VS Code "Pretty TypeScript Errors")
+  {
+    "dmmulroy/ts-error-translator.nvim",
+    ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+    opts = {},
+  },
+
+  -- Asynchronous project-wide TypeScript type checking (like VS Code Problems tab)
+  {
+    "dmmulroy/tsc.nvim",
+    cmd = "TSC",
+    keys = {
+      { "<leader>tc", "<cmd>TSC<cr>", desc = "Type-Check Project (TSC)" },
+    },
+    opts = {
+      auto_open_qflist = true,
+      auto_close_qflist = false,
+      enable_progress_notifications = true,
+      flags = {
+        noEmit = true,
+      },
+    },
+  },
+
+  -- Non-conflicting inline diagnostics (under-cursor, multi-line, Copilot-friendly)
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000,
+    cmd = "TinyInlineDiag",
+    keys = {
+      {
+        "<leader>uD",
+        "<cmd>TinyInlineDiag toggle<cr>",
+        desc = "Toggle Inline Diagnostics Details",
+      },
+    },
+    opts = {
+      preset = "modern",
+      transparent_bg = false,
+      options = {
+        show_source = {
+          enabled = true,
+        },
+        use_icons_from_diagnostic = true,
+        add_messages = {
+          display_count = true,
+        },
+        multilines = {
+          enabled = true,
+          always_show = false,
+        },
+      },
+    },
+    config = function(_, opts)
+      require("tiny-inline-diagnostic").setup(opts)
+      vim.diagnostic.config({ virtual_text = false })
+    end,
   },
 }

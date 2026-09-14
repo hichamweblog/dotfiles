@@ -4,6 +4,7 @@ Managed with GNU Stow for easy deployment across multiple machines.
 
 ## Stack
 
+- **Terminal Emulator:** WezTerm
 - **Shells:** Bash, Zsh (Oh-My-Zsh)
 - **Prompt:** Starship
 - **Terminal Multiplexer:** Tmux (with TPM plugin manager)
@@ -90,11 +91,12 @@ mkdir -p ~/.dotfiles_backup
 [ -d ~/.config/lazygit ] && mv ~/.config/lazygit ~/.dotfiles_backup/
 [ -d ~/.config/tmux ] && mv ~/.config/tmux ~/.dotfiles_backup/
 [ -d ~/.config/ranger ] && mv ~/.config/ranger ~/.dotfiles_backup/
+[ -d ~/.config/wezterm ] && mv ~/.config/wezterm ~/.dotfiles_backup/
 
 # Verify files are removed
 echo "Checking for conflicts..."
 ls -la ~ | grep -E "\.bashrc|\.zshrc|\.gitconfig|\.tmux\.conf"
-ls -la ~/.config/ | grep -E "nvim|starship|lazygit|tmux|ranger"
+ls -la ~/.config/ | grep -E "nvim|starship|lazygit|tmux|ranger|wezterm"
 ```
 
 ### 4. Install Oh-My-Zsh
@@ -132,10 +134,11 @@ stow zsh
 stow git
 stow tmux
 stow config
+stow wezterm
 
 # Verify symlinks were created
 ls -la ~ | grep -E "\.bashrc|\.zshrc|\.gitconfig|\.tmux\.conf"
-ls -la ~/.config/ | grep -E "nvim|starship|ranger"
+ls -la ~/.config/ | grep -E "nvim|starship|ranger|wezterm"
 ```
 
 ### 7. Install Neovim 0.11.5

@@ -148,6 +148,9 @@ return {
     },
     opts = {
       lsp = {
+        signature = {
+          auto_open = { enabled = false },
+        },
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
@@ -171,6 +174,14 @@ return {
           filter = {
             event = "notify",
             find = "vim.notify has been overwritten",
+          },
+          opts = { skip = true },
+        },
+        -- Filter out "No information available" popup
+        {
+          filter = {
+            event = "notify",
+            find = "No information available",
           },
           opts = { skip = true },
         },

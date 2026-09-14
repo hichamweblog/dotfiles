@@ -51,30 +51,40 @@ return {
 
       default_component_configs = {
         indent = {
-          with_expanders = true,
+          indent_size = 2,
+          padding = 0,
+          with_markers = true,
+          indent_marker = "│",
+          last_indent_marker = "└",
+          highlight = "NeoTreeIndentMarker",
+          with_expanders = false,
           expander_collapsed = "",
           expander_expanded = "",
+          expander_highlight = "NeoTreeExpander",
         },
         icon = {
-          folder_closed = "",
-          folder_open = "",
-          folder_empty = "󰜌",
-          default = "",
+          folder_closed = "",
+          folder_open = "",
+          folder_empty = "󰉖",
+          folder_empty_open = "󰷏",
+          default = "󰈔",
+          highlight = "NeoTreeFileIcon",
         },
         modified = {
           symbol = "●",
+          highlight = "NeoTreeModified",
         },
         git_status = {
           symbols = {
             added = "✚",
-            modified = "",
+            modified = "",
             deleted = "✖",
             renamed = "󰁕",
-            untracked = "",
-            ignored = "",
+            untracked = "",
+            ignored = "",
             unstaged = "󰄱",
-            staged = "",
-            conflict = "",
+            staged = "",
+            conflict = "",
           },
         },
       },
@@ -108,6 +118,20 @@ return {
       },
 
       filesystem = {
+        components = {
+          name = function(config, node, state)
+            local cc = require("neo-tree.sources.common.components")
+            local result = cc.name(config, node, state)
+            if node:get_depth() == 1 and node.type ~= "message" then
+              local title = vim.fn.fnamemodify(node.path, ":t")
+              if title == "" then
+                title = node.path
+              end
+              result.text = title
+            end
+            return result
+          end,
+        },
         follow_current_file = {
           enabled = true, -- Find and focus current file
         },
@@ -154,6 +178,12 @@ return {
       { "<leader>bl", "<cmd>BufferLineCloseLeft<cr>", desc = "Delete Buffers to the Left" },
       { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
       { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
+      { "<C-Tab>", "<cmd>BufferLineCycleNext<cr>", mode = { "n", "i" }, desc = "Next Buffer (Tab)" },
+      { "<C-S-Tab>", "<cmd>BufferLineCyclePrev<cr>", mode = { "n", "i" }, desc = "Prev Buffer (Tab)" },
+      { "<Tab>", "<cmd>BufferLineCycleNext<cr>", mode = "n", desc = "Next Buffer (Tab)" },
+      { "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", mode = "n", desc = "Prev Buffer (Tab)" },
+      { "<A-Right>", "<cmd>BufferLineCycleNext<cr>", mode = { "n", "i" }, desc = "Next Buffer (Tab)" },
+      { "<A-Left>", "<cmd>BufferLineCyclePrev<cr>", mode = { "n", "i" }, desc = "Prev Buffer (Tab)" },
     },
     opts = {
       options = {
@@ -198,7 +228,7 @@ return {
         show_tab_indicators = true,
         show_duplicate_prefix = true,
         persist_buffer_sort = true,
-        separator_style = "thin", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' }
+        separator_style = "thin",
         enforce_regular_tabs = false,
         always_show_bufferline = true,
         hover = {
@@ -223,20 +253,22 @@ return {
         options = {
           theme = "auto",
           globalstatus = true,
-          component_separators = { left = "|", right = "|" },
+          component_separators = { left = "│", right = "│" },
           section_separators = { left = "", right = "" },
         },
         sections = {
           lualine_a = { "mode" },
-          lualine_b = { "branch" },
+          lualine_b = {
+            { "branch", icon = "" },
+          },
           lualine_c = {
             {
               "diagnostics",
               symbols = {
-                error = diagnostics.Error or "E",
-                warn = diagnostics.Warn or "W",
-                info = diagnostics.Info or "I",
-                hint = diagnostics.Hint or "H",
+                error = diagnostics.Error or "E ",
+                warn = diagnostics.Warn or "W ",
+                info = diagnostics.Info or "I ",
+                hint = diagnostics.Hint or "H ",
               },
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
@@ -244,8 +276,8 @@ return {
               "filename",
               path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
               symbols = {
-                modified = "  ",
-                readonly = "",
+                modified = " ●",
+                readonly = " ",
                 unnamed = "",
               },
             },
@@ -269,43 +301,23 @@ return {
               end,
               color = { fg = "#ff9e64" },
             },
-            { "encoding" },
-            { "fileformat" },
           },
           lualine_y = {
             { "progress", separator = " ", padding = { left = 1, right = 0 } },
             { "location", padding = { left = 0, right = 1 } },
           },
           lualine_z = {
-            function()
-              return " " .. os.date("%R")
-            end,
+            {
+              function()
+                return os.date("%R")
+              end,
+              padding = { left = 1, right = 1 },
+            },
           },
         },
         extensions = { "neo-tree", "lazy", "mason", "trouble" },
       }
     end,
-  },
-
-  -- VSCode-like breadcrumbs
-  {
-    "utilyre/barbecue.nvim",
-    name = "barbecue",
-    version = "*",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "SmiteshP/nvim-navic",
-      "nvim-tree/nvim-web-devicons",
-    },
-    opts = {
-      theme = "auto",
-      include_buftypes = { "" },
-      exclude_filetypes = { "netrw", "toggleterm", "neo-tree" },
-      show_modified = true,
-      symbols = {
-        separator = "",
-      },
-    },
   },
 
   -- Smooth scrolling (like VSCode)
@@ -333,11 +345,13 @@ return {
       indent = {
         char = "│",
         tab_char = "│",
+        highlight = "IblIndent",
       },
       scope = {
         enabled = true, -- Highlight current scope
-        show_start = true,
+        show_start = false,
         show_end = false,
+        highlight = "IblScope",
       },
       exclude = {
         filetypes = {

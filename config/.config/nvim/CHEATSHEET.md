@@ -115,6 +115,27 @@ gUiw       → Turn current word to UPPERCASE
 | `<M-[>` | `i` | **Previous Suggestion**| Cycle to previous alternative suggestion |
 | `<M-\>` | `i` | **Dismiss Suggestion** | Hide currently displayed suggestion |
 
+### 💬 Copilot Chat & Cursor-like AI (`CopilotChat.nvim`)
+
+| Shortcut | Mode | Action | Notes |
+| :--- | :---: | :--- | :--- |
+| `<leader>aa` | `n` / `v` | **Toggle Chat** | Open / close Copilot Chat sidebar |
+| `<leader>ai` | `n` / `v` | **Inline Chat** | Open floating centered chat window (Cursor style) |
+| `<leader>aq` | `n` / `v` | **Quick Chat** | Inline question / prompt with context |
+| `<leader>ap` | `n` / `v` | **Prompt Actions** | Picker menu for all preset AI actions |
+| `<leader>ae` | `n` / `v` | **Explain Code** | Ask AI to explain the selected code |
+| `<leader>af` | `n` / `v` | **Fix Bug / Error** | Ask AI to fix errors & diagnostics |
+| `<leader>ao` | `n` / `v` | **Optimize** | Improve performance & code clarity |
+| `<leader>at` | `n` / `v` | **Generate Tests** | Auto-generate unit tests for selection |
+| `<leader>ad` | `n` / `v` | **Generate Docs** | Auto-generate docstrings / JSDoc comments |
+| `<leader>ar` | `n` / `v` | **Review Code** | Review code quality, security & best practices |
+| `<leader>am` | `n` / `v` | **Commit Message** | Generate Conventional Commit message from diff |
+| `<leader>ax` | `n` / `v` | **Reset Chat** | Clear conversation history |
+
+### ⚡ Auto Template Strings (`template-string.nvim`)
+* Typing `${` inside `'...'` or `"..."` auto-converts to backticks `` `...${}...` `` in TS, JS, JSX, TSX, Python.
+* Deleting `${}` reverts back to standard quotes automatically.
+
 > **Blink.cmp Integration**: Copilot also injects completion items directly into the `blink.cmp` popup menu, boosted to the top with a score offset of 100.
 
 ---
@@ -227,6 +248,10 @@ gUiw       → Turn current word to UPPERCASE
 | `<leader>cr` | **Rename Symbol** | Live incremental rename with `inc-rename.nvim` |
 | `<leader>ca` | **Code Actions** | Visual code actions menu with live diff preview |
 | `<leader>ci` | **Auto-Import** | Automatically imports missing TS/JS symbol under cursor |
+| `<leader>cc` | **Run CodeLens** | Execute the CodeLens action under cursor (view references/implementations) |
+| `<leader>cC` | **Refresh CodeLens** | Refresh & re-display inline reference counts ("X references") |
+| `<leader>cp` | **Visual Color Picker** | Graphical color picker with 2D palette & eyedropper |
+| `Ctrl+Click` | **Click to Pick Color** | Click directly on any color code with mouse to edit it |
 | `[d` / `]d` | **Prev / Next Diagnostic** | Jump to previous / next error or warning |
 | `<leader>cd` | **Line Diagnostics** | Open Lspsaga diagnostic popup for current line |
 | `<leader>do` | **Diagnostic Float** | Open Neovim standard diagnostic float |
@@ -344,8 +369,10 @@ gUiw       → Turn current word to UPPERCASE
 ### Buffer Tabs (`bufferline.nvim` + `mini.bufremove`)
 | Shortcut | Action |
 | :--- | :--- |
-| `<S-l>` or `]b` | Switch to **Next Buffer** |
-| `<S-h>` or `[b` | Switch to **Previous Buffer** |
+| `<Tab>` / `<S-Tab>` | Next / Previous Buffer in Normal mode (**works in GNOME Terminal & all terminals**) |
+| `<C-Tab>` / `<C-S-Tab>` | Next / Previous Buffer (Normal & Insert in modern terminals like WezTerm) |
+| `<A-Right>` / `<A-Left>` | Next / Previous Buffer (Normal & Insert in all terminals) |
+| `<S-l>` / `<S-h>` or `]b` / `[b` | Next / Previous Buffer (Vim motion: `L` / `H`) |
 | `<leader>bd` | **Delete Buffer** (safely keeps window layout intact) |
 | `<leader>bD` | Force delete buffer (discards unsaved) |
 | `<leader>bp` | Toggle pin on current buffer tab |
@@ -388,6 +415,43 @@ gUiw       → Turn current word to UPPERCASE
 
 ---
 
+## 🧪 Testing with Vitest (`neotest` + `neotest-vitest`)
+
+| Shortcut | Action |
+| :--- | :--- |
+| `<leader>tr` | **Run Nearest Test** (function under cursor) |
+| `<leader>tt` | **Run Test File** (all tests in active buffer) |
+| `<leader>ts` | **Toggle Test Summary** (tree with pass/fail icons) |
+| `<leader>to` | **Show Test Output** popup |
+| `<leader>tO` | **Toggle Output Panel** (bottom terminal) |
+| `<leader>tw` | **Toggle Watch Mode** on current test file |
+| `<leader>tS` | **Stop Test** execution |
+
+---
+
+## ⚡ Task Runner & NPM Scripts (`overseer.nvim`)
+
+| Shortcut | Action |
+| :--- | :--- |
+| `<leader>or` | **Run Task** (select from `package.json` scripts, build, etc.) |
+| `<leader>ot` | **Toggle Task Panel** (background servers & process list) |
+| `<leader>oa` | **Task Action** (restart, inspect, stop active task) |
+| `<leader>oi` | **Overseer Info** (system status & diagnostics) |
+
+---
+
+## 📦 Package Version Lens (`package-info.nvim` in `package.json`)
+
+| Shortcut | Action |
+| :--- | :--- |
+| `<leader>np` | **Toggle Version Badges** in `package.json` |
+| `<leader>nu` | **Update Dependency** to latest version |
+| `<leader>nd` | **Delete Dependency** |
+| `<leader>ni` | **Install New Dependency** |
+| `<leader>nv` | **Change Version** of dependency |
+
+---
+
 ## 🔎 Project-Wide Search & Replace (`nvim-spectre`)
 
 | Shortcut | Action |
@@ -402,6 +466,7 @@ gUiw       → Turn current word to UPPERCASE
 
 | Shortcut | Action |
 | :--- | :--- |
+| `<leader>tc` | Run project-wide TypeScript type-check (`tsc.nvim`) |
 | `<leader>xx` | Toggle Trouble project diagnostics panel |
 | `<leader>xX` | Toggle Trouble buffer diagnostics panel |
 | `<leader>cs` | Document symbols outline (Trouble) |
@@ -420,6 +485,8 @@ gUiw       → Turn current word to UPPERCASE
 | `<leader>z` | **Zen Mode** (centers buffer, hides clutter for deep focus) |
 | `<leader>ut` | **Toggle Twilight** (dims inactive code blocks) |
 | `<leader>uf` | **Toggle Auto-Format** on save |
+| `<leader>ud` | **Toggle Diagnostics** globally |
+| `<leader>uD` | **Toggle Inline Diagnostic Details** (tiny-inline-diagnostic) |
 | `<leader>sn` / `<leader>sl` | View Noice notification history / last message |
 | `<leader>sd` | Dismiss all notifications |
 | `<leader>qs` | **Restore Session** for current directory |

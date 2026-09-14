@@ -16,9 +16,22 @@ map("n", "<leader>ws", "<C-w>s", { desc = "Split window horizontally" })
 map("n", "<leader>we", "<C-w>=", { desc = "Make splits equal size" })
 map("n", "<leader>wx", "<cmd>close<CR>", { desc = "Close current split" })
 
--- Buffer navigation
-map("n", "<S-l>", ":bnext<CR>", { desc = "Next buffer" })
-map("n", "<S-h>", ":bprevious<CR>", { desc = "Previous buffer" })
+-- Buffer navigation (VSCode-like tab switching)
+-- 1. Ctrl+Tab / Ctrl+Shift+Tab (for terminals with Kitty/CSI-u protocol like WezTerm)
+map({ "n", "i" }, "<C-Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer (tab)" })
+map({ "n", "i" }, "<C-S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer (tab)" })
+
+-- 2. Tab / Shift+Tab in Normal mode (works in ALL terminals including GNOME Terminal / Ptyxis)
+map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer (tab)" })
+map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer (tab)" })
+
+-- 3. Alt+Right / Alt+Left (works in Normal & Insert modes across ALL terminals)
+map({ "n", "i" }, "<A-Right>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer (tab)" })
+map({ "n", "i" }, "<A-Left>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer (tab)" })
+
+-- 4. Shift+l / Shift+h (classic LazyVim navigation)
+map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })
 
 -- Clear search highlights
 map("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })

@@ -229,4 +229,70 @@ return {
       },
     },
   },
+
+  -- Vitest test runner (in-gutter indicators & runner for TypeScript/Node)
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "marilari88/neotest-vitest",
+    },
+    opts = function(_, opts)
+      opts.adapters = opts.adapters or {}
+      table.insert(
+        opts.adapters,
+        require("neotest-vitest")({
+          filter_dir = function(name)
+            return name ~= "node_modules"
+          end,
+        })
+      )
+    end,
+    keys = {
+      { "<leader>tr", function() require("neotest").run.run() end, desc = "Run Nearest Test" },
+      { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run Test File" },
+      { "<leader>ts", function() require("neotest").summary.toggle() end, desc = "Toggle Test Summary" },
+      { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Test Output" },
+      { "<leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle Test Output Panel" },
+      { "<leader>tS", function() require("neotest").run.stop() end, desc = "Stop Test" },
+      { "<leader>tw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle Watch Test File" },
+    },
+  },
+
+  -- Task runner & process manager (like VS Code NPM Scripts / tasks)
+  {
+    "stevearc/overseer.nvim",
+    cmd = {
+      "OverseerOpen",
+      "OverseerClose",
+      "OverseerToggle",
+      "OverseerRun",
+      "OverseerInfo",
+      "OverseerTaskAction",
+      "OverseerClearCache",
+    },
+    keys = {
+      { "<leader>or", "<cmd>OverseerRun<cr>", desc = "Run Task (npm, build, etc.)" },
+      { "<leader>ot", "<cmd>OverseerToggle<cr>", desc = "Toggle Task Panel" },
+      { "<leader>oa", "<cmd>OverseerTaskAction<cr>", desc = "Task Action" },
+      { "<leader>oi", "<cmd>OverseerInfo<cr>", desc = "Overseer Info" },
+    },
+    opts = {},
+  },
+
+  -- Package version lens for package.json (outdated dependency badges & updates)
+  {
+    "vuki656/package-info.nvim",
+    event = { "BufRead package.json", "BufNewFile package.json" },
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {
+      autostart = true,
+    },
+    keys = {
+      { "<leader>np", function() require("package-info").toggle() end, desc = "Toggle Package Versions" },
+      { "<leader>nu", function() require("package-info").update() end, desc = "Update Package" },
+      { "<leader>nd", function() require("package-info").delete() end, desc = "Delete Package" },
+      { "<leader>ni", function() require("package-info").install() end, desc = "Install Package" },
+      { "<leader>nv", function() require("package-info").change_version() end, desc = "Change Package Version" },
+    },
+  },
 }

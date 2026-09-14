@@ -6,6 +6,7 @@ return {
   -- Ghost text disabled here since Copilot handles inline suggestions
   {
     "saghen/blink.cmp",
+    dependencies = { "fang2hou/blink-copilot" },
     opts = {
       completion = {
         ghost_text = {
@@ -18,7 +19,7 @@ return {
         providers = {
           copilot = {
             name = "copilot",
-            module = "blink-cmp-copilot",
+            module = "blink-copilot",
             score_offset = 100, -- Pin Copilot suggestions to the top
             async = true,
           },
@@ -27,21 +28,45 @@ return {
     },
   },
 
-  -- GitHub Copilot — AI pair programmer
+  -- GitHub Copilot — AI pair programmer (pure Lua integration)
   -- After install: run :Copilot auth  to sign in
   {
-    "github/copilot.vim",
-    -- Managed by lazyvim.plugins.extras.ai.copilot extra
-    -- Custom keybindings below override the defaults
-    config = function()
-      -- Disable default <Tab> mapping so we can manage it with smart priority
-      vim.g.copilot_no_tab_map = true
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        hide_during_completion = false,
+        debounce = 75,
+        keymap = {
+          accept = false, -- Handled below by smart <Tab> and <C-j>
+          accept_word = "<C-Right>",
+          accept_line = "<C-Down>",
+          next = "<M-]>",
+          prev = "<M-[>",
+          dismiss = "<M-\\>",
+        },
+      },
+      panel = { enabled = false },
+      filetypes = {
+        markdown = true,
+        help = true,
+        gitcommit = true,
+        ["*"] = true,
+      },
+    },
+    config = function(_, opts)
+      require("copilot").setup(opts)
 
       -- Smart <Tab>: Copilot ghost text -> snippet placeholder -> normal Tab/indent
       vim.keymap.set("i", "<Tab>", function()
-        -- 1. If Copilot has a suggestion visible, accept it
-        if vim.fn.exists("*copilot#GetDisplayedSuggestion") == 1 and vim.fn["copilot#GetDisplayedSuggestion"]().text ~= "" then
-          return vim.fn["copilot#Accept"]()
+        -- 1. If Copilot has an inline ghost text suggestion visible, accept it
+        local suggestion = require("copilot.suggestion")
+        if suggestion.is_visible() then
+          suggestion.accept()
+          return ""
         end
 
         -- 2. If inside an active snippet, jump forward to next placeholder
@@ -68,41 +93,179 @@ return {
       })
 
       -- Also keep Ctrl+J as an alternative accept shortcut
-      vim.keymap.set("i", "<C-j>", 'copilot#Accept("")', {
-        expr = true,
-        replace_keycodes = false,
-        desc = "Copilot: Accept suggestion (alternative)",
-      })
-
-      -- Cycle through alternative suggestions
-      vim.keymap.set("i", "<M-]>", "<Plug>(copilot-next)", { desc = "Copilot: Next suggestion" })
-      vim.keymap.set("i", "<M-[>", "<Plug>(copilot-previous)", { desc = "Copilot: Previous suggestion" })
-
-      -- Dismiss current suggestion
-      vim.keymap.set("i", "<M-\\>", "<Plug>(copilot-dismiss)", { desc = "Copilot: Dismiss" })
-
-      -- Accept only the next word (not the whole line)
-      vim.keymap.set("i", "<C-Right>", "<Plug>(copilot-accept-word)", { desc = "Copilot: Accept word" })
-
-      -- Accept only the next line
-      vim.keymap.set("i", "<C-Down>", "<Plug>(copilot-accept-line)", { desc = "Copilot: Accept line" })
-
-      -- Filetypes where Copilot should be disabled
-      vim.g.copilot_filetypes = {
-        ["*"] = true,        -- enabled for all by default
-        TelescopePrompt = false,
-        ["neo-tree"] = false,
-        help = false,
-        gitcommit = true,    -- useful for commit messages
-        markdown = true,
-      }
+      vim.keymap.set("i", "<C-j>", function()
+        if require("copilot.suggestion").is_visible() then
+          require("copilot.suggestion").accept()
+        end
+      end, { desc = "Copilot: Accept suggestion (alternative)" })
     end,
   },
 
-  -- blink.cmp Copilot source (required for popup menu integration)
+  -- Copilot Chat & Inline Prompts (VS Code Copilot Chat / Cursor-like AI experience)
   {
-    "giuxtaposition/blink-cmp-copilot",
-    dependencies = { "github/copilot.vim", "saghen/blink.cmp" },
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "main",
+    cmd = {
+      "CopilotChat",
+      "CopilotChatOpen",
+      "CopilotChatClose",
+      "CopilotChatToggle",
+      "CopilotChatStop",
+      "CopilotChatReset",
+      "CopilotChatExplain",
+      "CopilotChatReview",
+      "CopilotChatFix",
+      "CopilotChatOptimize",
+      "CopilotChatDocs",
+      "CopilotChatTests",
+      "CopilotChatCommit",
+      "CopilotChatModels",
+      "CopilotChatPrompts",
+      "CopilotChatAgents",
+    },
+    dependencies = {
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim" },
+    },
+    build = "make tiktoken",
+    opts = function()
+      local user = vim.env.USER or "User"
+      user = user:sub(1, 1):upper() .. user:sub(2)
+      return {
+        model = "auto", -- Auto mode for GitHub Student Pack
+        auto_insert_mode = true,
+        headers = {
+          user = "  " .. user .. " ",
+          assistant = "  Copilot ",
+          tool = "󰊳  Tool ",
+        },
+        window = {
+          layout = "vertical", -- 'vertical', 'horizontal', 'float', 'replace'
+          width = 0.4, -- 40% editor width, matching VS Code sidebar
+          border = "rounded",
+        },
+      }
+    end,
+    keys = {
+      -- Submit prompt inside chat buffer
+      { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
+      -- Group description for which-key
+      { "<leader>a", "", desc = "+ai / copilot chat", mode = { "n", "v" } },
+      -- Toggle Chat Sidebar
+      {
+        "<leader>aa",
+        function()
+          return require("CopilotChat").toggle()
+        end,
+        desc = "Toggle Copilot Chat Sidebar",
+        mode = { "n", "v" },
+      },
+      -- Toggle Inline Floating Chat (Cursor style)
+      {
+        "<leader>ai",
+        function()
+          return require("CopilotChat").toggle({
+            window = {
+              layout = "float",
+              width = 0.7,
+              height = 0.5,
+              border = "rounded",
+              title = "   Copilot Inline Chat ",
+            },
+          })
+        end,
+        desc = "Toggle Inline Floating Chat",
+        mode = { "n", "v" },
+      },
+      -- Reset / Clear chat
+      {
+        "<leader>ax",
+        function()
+          return require("CopilotChat").reset()
+        end,
+        desc = "Reset Chat History",
+        mode = { "n", "v" },
+      },
+      -- Quick Inline Chat Prompt
+      {
+        "<leader>aq",
+        function()
+          vim.ui.input({
+            prompt = "Quick Chat (Auto): ",
+          }, function(input)
+            if input and input ~= "" then
+              require("CopilotChat").ask(input)
+            end
+          end)
+        end,
+        desc = "Quick Chat (Inline Prompt)",
+        mode = { "n", "v" },
+      },
+      -- Open Actions / Prompts Picker (Explain, Review, Fix, Optimize, Tests, etc.)
+      {
+        "<leader>ap",
+        function()
+          require("CopilotChat").select_prompt()
+        end,
+        desc = "Prompt Actions (Picker)",
+        mode = { "n", "v" },
+      },
+      -- Direct Shortcuts for common AI actions (like Cursor / VS Code)
+      { "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "Explain Selected Code", mode = { "n", "v" } },
+      { "<leader>af", "<cmd>CopilotChatFix<cr>", desc = "Fix Bugs / Diagnostic Errors", mode = { "n", "v" } },
+      { "<leader>ao", "<cmd>CopilotChatOptimize<cr>", desc = "Optimize Selected Code", mode = { "n", "v" } },
+      { "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "Generate Unit Tests", mode = { "n", "v" } },
+      { "<leader>ad", "<cmd>CopilotChatDocs<cr>", desc = "Generate Documentation / JSDoc", mode = { "n", "v" } },
+      { "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "Review Code Quality", mode = { "n", "v" } },
+      { "<leader>am", "<cmd>CopilotChatCommit<cr>", desc = "Generate Git Commit Message", mode = { "n", "v" } },
+    },
+    config = function(_, opts)
+      local chat = require("CopilotChat")
+
+      vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "copilot-chat",
+        callback = function()
+          vim.opt_local.relativenumber = false
+          vim.opt_local.number = false
+        end,
+      })
+
+      chat.setup(opts)
+    end,
+  },
+
+  -- Auto Template Strings (like VS Code / Cursor: typing ${} in strings auto-changes quotes to backticks)
+  {
+    "axelvc/template-string.nvim",
+    event = "InsertEnter",
+    ft = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "vue",
+      "svelte",
+      "python",
+      "html",
+    },
+    opts = {
+      filetypes = {
+        "html",
+        "typescript",
+        "javascript",
+        "typescriptreact",
+        "javascriptreact",
+        "vue",
+        "svelte",
+        "python",
+      },
+      jsx_brackets = true, -- add JSX brackets if inside JSX attribute
+      remove_template_string = true, -- revert to normal quotes when ${} is removed
+      restore_quotes = {
+        normal = [[']],
+        jsx = [["]],
+      },
+    },
   },
 
   -- Snippet engine and collection (VSCode-like snippets)
@@ -217,22 +380,10 @@ return {
     },
   },
 
-  -- Inline function signatures (parameter hints like VSCode)
+  -- Disable duplicate lsp_signature (prevents huge intrusive signature popups while typing)
   {
     "ray-x/lsp_signature.nvim",
-    event = "VeryLazy",
-    opts = {
-      bind = true,
-      handler_opts = {
-        border = "rounded",
-      },
-      hint_enable = true, -- Virtual hint text
-      hint_prefix = "󰊕 ",
-      hi_parameter = "LspSignatureActiveParameter",
-      max_width = 120,
-      floating_window = true,
-      floating_window_above_cur_line = true,
-    },
+    enabled = false,
   },
 
   -- Auto imports (like VSCode auto-import)
@@ -265,7 +416,7 @@ return {
         virtual_text = true,
       },
       symbol_in_winbar = {
-        enable = true, -- Show current symbol in winbar (like VSCode breadcrumbs)
+        enable = false,
       },
       outline = {
         layout = "float", -- Symbol outline
@@ -413,6 +564,131 @@ return {
       vim.schedule(function()
         pcall(require("colorizer").attach_to_buffer, 0)
       end)
+
+      ----------------------------------------------------------------------
+      -- Visual Graphical Color Picker (Click-to-pick like VSCode)
+      ----------------------------------------------------------------------
+      local function parse_zenity_color(str)
+        str = vim.trim(str)
+        local r, g, b = str:match("^rgb%s*%(%s*(%d+)%s*,%s*(%d+)%s*,%s*(%d+)%s*%)$")
+        if r and g and b then
+          return string.format("#%02x%02x%02x", tonumber(r), tonumber(g), tonumber(b))
+        end
+        local r2, g2, b2, a2 = str:match("^rgba%s*%(%s*(%d+)%s*,%s*(%d+)%s*,%s*(%d+)%s*,%s*([%d%.]+)%s*%)$")
+        if r2 and g2 and b2 then
+          local alpha = tonumber(a2) or 1
+          if alpha < 1 then
+            return string.format("rgba(%d, %d, %d, %s)", tonumber(r2), tonumber(g2), tonumber(b2), a2)
+          else
+            return string.format("#%02x%02x%02x", tonumber(r2), tonumber(g2), tonumber(b2))
+          end
+        end
+        if str:match("^#[0-9a-fA-F]+$") then
+          return str
+        end
+        return str
+      end
+
+      local function get_color_under_cursor()
+        local line = vim.api.nvim_get_current_line()
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        local row = cursor[1]
+        local col = cursor[2] + 1
+
+        -- 1. Check for #hex under cursor
+        for start_col, hex, end_col in line:gmatch("()(#%x+)()") do
+          if col >= start_col and col <= end_col then
+            return hex, row, start_col, end_col - 1
+          end
+        end
+        -- 2. Check for rgb(...) or rgba(...) under cursor
+        for start_col, rgb_str, end_col in line:gmatch("()(rgba?%b())()") do
+          if col >= start_col and col <= end_col then
+            return rgb_str, row, start_col, end_col - 1
+          end
+        end
+        -- 3. Check for hsl(...) or hsla(...) under cursor
+        for start_col, hsl_str, end_col in line:gmatch("()(hsla?%b())()") do
+          if col >= start_col and col <= end_col then
+            return hsl_str, row, start_col, end_col - 1
+          end
+        end
+        -- 4. Fallback: check if there is any color on the current line
+        for start_col, hex, end_col in line:gmatch("()(#%x+)()") do
+          return hex, row, start_col, end_col - 1
+        end
+        for start_col, rgb_str, end_col in line:gmatch("()(rgba?%b())()") do
+          return rgb_str, row, start_col, end_col - 1
+        end
+        return nil, row, col, col
+      end
+
+      local function open_visual_color_picker()
+        if vim.fn.executable("zenity") == 0 then
+          vim.notify("zenity is not installed (required for visual color picker)", vim.log.levels.WARN)
+          return
+        end
+
+        local current_color, row, start_col, end_col = get_color_under_cursor()
+        local bufnr = vim.api.nvim_get_current_buf()
+
+        local cmd = { "zenity", "--color-selection", "--show-palette" }
+        if current_color and (current_color:match("^#%x+") or current_color:match("^rgba?")) then
+          table.insert(cmd, "--color=" .. current_color)
+        end
+
+        vim.system(cmd, { text = true }, function(obj)
+          if obj.code == 0 and obj.stdout and obj.stdout ~= "" then
+            local selected_color = parse_zenity_color(obj.stdout)
+            vim.schedule(function()
+              if not vim.api.nvim_buf_is_valid(bufnr) then
+                return
+              end
+              local current_line = vim.api.nvim_buf_get_lines(bufnr, row - 1, row, false)[1] or ""
+              if current_color and start_col and end_col and start_col <= end_col then
+                local new_line = current_line:sub(1, start_col - 1) .. selected_color .. current_line:sub(end_col + 1)
+                vim.api.nvim_buf_set_lines(bufnr, row - 1, row, false, { new_line })
+              else
+                local cursor = vim.api.nvim_win_get_cursor(0)
+                local c = cursor[2]
+                local new_line = current_line:sub(1, c) .. selected_color .. current_line:sub(c + 1)
+                vim.api.nvim_buf_set_lines(bufnr, row - 1, row, false, { new_line })
+              end
+            end)
+          end
+        end)
+      end
+
+      -- User command
+      vim.api.nvim_create_user_command("ColorPicker", open_visual_color_picker, { desc = "Open Visual Color Picker" })
+
+      -- Keybinding: <leader>cp
+      vim.keymap.set("n", "<leader>cp", open_visual_color_picker, { desc = "Color Picker (Visual GUI)" })
+
+      -- Mouse click: Ctrl + Click on any color code
+      vim.keymap.set({ "n", "i" }, "<C-LeftMouse>", function()
+        local mouse = vim.fn.getmousepos()
+        if mouse.winid > 0 and mouse.line > 0 then
+          vim.api.nvim_set_current_win(mouse.winid)
+          vim.api.nvim_win_set_cursor(mouse.winid, { mouse.line, math.max(0, mouse.column - 1) })
+          open_visual_color_picker()
+        end
+      end, { desc = "Ctrl+Click color to open visual color picker" })
+
+      -- Mouse double-click on any color code
+      vim.keymap.set("n", "<2-LeftMouse>", function()
+        local mouse = vim.fn.getmousepos()
+        if mouse.winid > 0 and mouse.line > 0 then
+          vim.api.nvim_set_current_win(mouse.winid)
+          vim.api.nvim_win_set_cursor(mouse.winid, { mouse.line, math.max(0, mouse.column - 1) })
+          local color = get_color_under_cursor()
+          if color then
+            open_visual_color_picker()
+            return
+          end
+        end
+        vim.cmd("normal! viw")
+      end, { desc = "Double-click color to open visual color picker" })
     end,
   },
 
@@ -445,7 +721,7 @@ return {
         inline_symbol = "󰝤 ",
       },
       conceal = {
-        enabled = true,
+        enabled = false, -- classes stay visible; toggle anytime with <leader>uT
         symbol = "󱏿",
         highlight = {
           fg = "#38bdf8",
